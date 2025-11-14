@@ -1,0 +1,40 @@
+{
+  "name": "careerlink",
+  "version": "1.0.0",
+  "description": " a website for connecting students with experienced mentors",
+  "main": "dist/server.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/server.ts",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "git": "git add . && git commit -m \"${npm_config_m:-auto commit $(date)}\" && git push"
+  },
+  "keywords": [],
+  "author": "Minh Nguyen Do Tuan",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.5",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^24.10.0",
+    "@types/pg": "^8.15.6",
+    "drizzle-kit": "^0.31.6",
+    "eslint": "^9.39.1",
+    "ts-node": "^10.0.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "drizzle-orm": "^0.44.7",
+    "express": "^5.1.0",
+    "express-validator": "^7.3.0",
+    "googleapis": "^164.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.16.3",
+    "sendgrid": "^5.2.3"
+  }
+}
