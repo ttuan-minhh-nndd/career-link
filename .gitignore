@@ -1,4 +1,5 @@
-node_modules/
+Backend/node_modules/
+Backend/.env.local
+Backend/.env.production
 dist/
-.env
 *.log
