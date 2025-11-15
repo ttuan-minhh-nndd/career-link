@@ -168,3 +168,29 @@ export const validateMentorProfileUpdate = (data: {
 
   return errors;
 };
+
+// --- NEW ---
+/**
+ * @desc    Validate the body for adding an expertise tag
+ * @fields  tagId
+ */
+export const validateAddExpertise = (data: {
+  tagId?: number;
+}): ValidationError[] => {
+  const errors: ValidationError[] = [];
+
+  if (!data.tagId) {
+    errors.push({ field: 'tagId', message: 'tagId is required' });
+  } else if (
+    typeof data.tagId !== 'number' ||
+    !Number.isInteger(data.tagId) ||
+    data.tagId <= 0
+  ) {
+    errors.push({
+      field: 'tagId',
+      message: 'tagId must be a positive integer',
+    });
+  }
+
+  return errors;
+};

@@ -6,7 +6,9 @@ import {
   getMyProfile,
   updateMyProfile,
   updateMyPassword,
-  updateMyMentorProfile
+  updateMyMentorProfile,
+  addMyExpertise,
+  removeMyExpertise
 } from '../controllers/user.controller';
 import { protect, isMentor } from '../middleware/auth.middleware';
 
@@ -35,5 +37,21 @@ userRoutes.put('/me/password', protect, updateMyPassword);
 // @desc    Update current mentor's specific profile (bio, job, rate)
 // @access  Private (Mentor Only)
 userRoutes.put('/me/mentor-profile', protect, isMentor, updateMyMentorProfile);
+
+// @route   POST /api/v1/users/me/expertise
+// @desc    Add an expertise tag to current mentor's profile
+// @access  Private (Mentor Only)
+userRoutes.post('/me/expertise', protect, isMentor, addMyExpertise); // --- NEW ---
+
+// @route   DELETE /api/v1/users/me/expertise/:tagId
+// @desc    Remove an expertise tag from current mentor's profile
+// @access  Private (Mentor Only)
+userRoutes.delete(
+  '/me/expertise/:tagId',
+  protect,
+  isMentor,
+  removeMyExpertise
+); // --- NEW ---
+
 
 export default userRoutes;

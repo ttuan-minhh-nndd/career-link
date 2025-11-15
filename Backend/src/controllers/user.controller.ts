@@ -166,3 +166,89 @@ export const updateMyMentorProfile = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+
+// --- NEW ---
+/**
+ * @desc    Add an expertise tag to the current mentor's profile
+ * @route   POST /api/v1/users/me/expertise
+ * @access  Private (Mentors Only)
+ */
+export const addMyExpertise = async (req: Request, res: Response) => {
+  try {
+    // 1. Validate input body
+    const validationErrors = validationService.validateAddExpertise(req.body);
+    if (validationErrors.length > 0) {
+      return res.status(400).json({
+        message: 'Validation failed',
+        errors: validationErrors,
+      });
+    }
+
+    // 2. Get user ID (mentorId) from 'protect' middleware
+    const userId = req.user!.id;
+    const { tagId } = req.body;
+
+    // 3. Call the service to add the tag
+    const newLink = await userService.addExpertiseToMentor(userId, tagId);
+
+    // 4. Send success response
+    res.status(201).json({
+      message: 'Expertise added successfully',
+      link: newLink,
+    });
+  } catch (error: any) {
+    // 5. Handle specific errors from the service
+    if (error.message === 'TAG_NOT_FOUND') {
+      return res
+        .status(404)
+        .json({ message: 'Tag with the provided tagId not found' });
+    }
+    if (error.message === 'EXPERTISE_EXISTS') {
+      return res
+        .status(409)
+        .json({ message: 'You already have this expertise tag' });
+    }
+    // 6. Handle general errors
+    console.error('Add expertise error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+// --- NEW ---
+/**
+ * @desc    Remove an expertise tag from the current mentor's profile
+ * @route   DELETE /api/v1/users/me/expertise/:tagId
+ * @access  Private (Mentors Only)
+ */
+export const removeMyExpertise = async (req: Request, res: Response) => {
+  try {
+    // 1. Get user ID (mentorId) from 'protect' middleware
+    const userId = req.user!.id;
+
+    // 2. Get tagId from URL parameters and validate it
+    const tagId = parseInt(req.params.tagId, 10);
+    if (isNaN(tagId) || tagId <= 0) {
+      return res.status(400).json({
+        message: 'Validation failed',
+        errors: [{ field: 'tagId', message: 'tagId must be a positive integer' }],
+      });
+    }
+
+    // 3. Call the service to remove the tag
+    await userService.removeExpertiseFromMentor(userId, tagId);
+
+    // 4. Send success response (204 No Content)
+    res.status(204).send();
+  } catch (error: any) {
+    // 5. Handle specific errors from the service
+    if (error.message === 'LINK_NOT_FOUND') {
+      return res.status(404).json({
+        message: 'Expertise tag not found on your profile',
+      });
+    }
+    // 6. Handle general errors
+    console.error('Remove expertise error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
