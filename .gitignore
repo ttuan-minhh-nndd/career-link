@@ -1,5 +1,10 @@
 Backend/node_modules/
 Backend/.env.local
 Backend/.env.production
+
+Frontend/node_modules/
+Frontend/.env.local
+Frontend/.env.production
+
 dist/
 *.log
