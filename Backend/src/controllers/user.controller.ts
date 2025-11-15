@@ -11,18 +11,23 @@ import * as userService from '../services/user.service';
  * @access  Private
  */
 export const getMyProfile = async (req: Request, res: Response) => {
-  // The 'protect' middleware already fetched the user and attached it to req.user.
-  // We just need to return it.
-  // req.user contains { id, name, email, role } from the middleware.
-  // If you need more data (like avatar_url), you could re-fetch or add it in the middleware.
-  // For simplicity, let's just return what the middleware provides.
-  if (!req.user) {
-    return res.status(404).json({ message: 'User not found' });
+  try {
+    // 1. Get user ID from the 'protect' middleware
+    const userId = req.user!.id;
+
+    // 2. Call the new service to get the full profile
+    const userProfile = await userService.getFullUserProfile(userId);
+
+    // 3. Send response
+    res.status(200).json(userProfile);
+  } catch (error: any) {
+    if (error.message === 'USER_NOT_FOUND') {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    console.error('Get profile error:', error);
+    res.status(500).json({ message: 'Server error' });
   }
-  
-  // The user from `protect` middleware is good enough for a profile summary
-  res.status(200).json(req.user);
-};
+};    
 
 /**
  * @desc    Update the profile of the currently logged-in user
@@ -51,6 +56,9 @@ export const updateMyProfile = async (req: Request, res: Response) => {
     if (name !== undefined) dataToUpdate.name = name;
     if (email !== undefined) dataToUpdate.email = email;
     if (avatarUrl !== undefined) dataToUpdate.avatarUrl = avatarUrl;
+    console.log("dataToUpdate.name: ", dataToUpdate.name);
+    console.log("dataToUpdate.email: ", dataToUpdate.email);
+    console.log("dataToUpdate.avatarUrl: ", dataToUpdate.avatarUrl);            
 
     // Check if there is anything to update
     if (Object.keys(dataToUpdate).length === 0) {
@@ -113,5 +121,48 @@ export const updateMyPassword = async (req: Request, res: Response) => {
     }
     console.error('Update password error:', error);
     res.status(500).json({ message: 'Server error during password update' });
+  }
+};
+
+// --- NEW ---
+/**
+ * @desc    Update the *mentor-specific* profile
+ * @route   PUT /api/v1/users/me/mentor-profile
+ * @access  Private (Mentors Only)
+ */
+export const updateMyMentorProfile = async (req: Request, res: Response) => {
+  try {
+    // 1. Validate input
+    const validationErrors =
+      validationService.validateMentorProfileUpdate(req.body);
+    if (validationErrors.length > 0) {
+      return res.status(400).json({
+        message: 'Validation failed',
+        errors: validationErrors,
+      });
+    }
+
+    // 2. Get user ID from 'protect' middleware
+    const userId = req.user!.id;
+    const { bio, jobTitle, hourlyRate } = req.body;
+
+    // 3. Call service to update mentor profile
+    const updatedMentorProfile = await userService.updateMentorProfile(userId, {
+      bio,
+      jobTitle,
+      hourlyRate,
+    });
+
+    // 4. Send response
+    res.status(200).json(updatedMentorProfile);
+  } catch (error: any) {
+    if (error.message === 'NO_DATA_TO_UPDATE') {
+      return res.status(400).json({ message: 'No update data provided' });
+    }
+    if (error.message === 'MENTOR_PROFILE_NOT_FOUND') {
+      return res.status(404).json({ message: 'Mentor profile not found' });
+    }
+    console.error('Update mentor profile error:', error);
+    res.status(500).json({ message: 'Server error' });
   }
 };

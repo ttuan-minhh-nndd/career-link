@@ -3,7 +3,7 @@
 // ============================================
 import bcrypt from 'bcryptjs';
 import { db } from '../config/db';
-import { users } from '../models/schema';
+import { users, mentorProfiles } from '../models/schema';
 import { eq } from 'drizzle-orm';
 
 export interface RegisterUserData {
@@ -47,25 +47,45 @@ export const createUser = async (userData: RegisterUserData): Promise<UserRespon
   const salt = await bcrypt.genSalt(10);
   const passwordHash = await bcrypt.hash(password, salt);
 
-  // Insert the new user
-  const newUser = await db
-    .insert(users)
-    .values({
-      name,
-      email,
-      passwordHash,
-      role,
-      authProvider: 'email',
-    })
-    .returning({
-      id: users.id,
-      name: users.name,
-      email: users.email,
-      role: users.role,
-    });
+  // --- MODIFICATION: Use a transaction ---
+  // A transaction ensures that BOTH the user and the mentor profile are
+  // created successfully, or neither is.
+  const newUser = await db.transaction(async (tx) => {
+    // 1. Insert the new user
+    const newUserResult = await tx
+      .insert(users)
+      .values({
+        name,
+        email,
+        passwordHash,
+        role,
+        authProvider: 'email',
+      })
+      .returning({
+        id: users.id,
+        name: users.name,
+        email: users.email,
+        role: users.role,
+      });
 
-  return newUser[0];
+    const user = newUserResult[0];
+
+    // 2. --- NEW --- If the user is a mentor, create their profile
+    if (user.role === 'mentor') {
+      await tx
+        .insert(mentorProfiles)
+        .values({
+          userId: user.id,
+          // All other fields have defaults or are nullable
+        });
+    }
+
+    return user;
+  });
+
+  return newUser;
 };
+
 
 /**
  * Verify user credentials (email and password)

@@ -132,3 +132,39 @@ export const validatePasswordChange = (data: {
 
   return errors;
 };
+
+// --- NEW ---
+/**
+ * @desc    Validate mentor profile update data
+ * @fields  bio, jobTitle, hourlyRate (all optional)
+ */
+export const validateMentorProfileUpdate = (data: {
+  bio?: string;
+  jobTitle?: string;
+  hourlyRate?: string;
+}): ValidationError[] => {
+  const errors: ValidationError[] = [];
+
+  // If 'bio' is provided, it should be a string
+  if (data.bio !== undefined && typeof data.bio !== 'string') {
+    errors.push({ field: 'bio', message: 'Bio must be a string' });
+  }
+
+  // If 'jobTitle' is provided, it should be a string
+  if (data.jobTitle !== undefined && typeof data.jobTitle !== 'string') {
+    errors.push({ field: 'jobTitle', message: 'Job title must be a string' });
+  }
+
+  // If 'hourlyRate' is provided, it must be a valid positive number
+  if (data.hourlyRate !== undefined) {
+    const rate = parseFloat(data.hourlyRate);
+    if (isNaN(rate) || rate < 0) {
+      errors.push({
+        field: 'hourlyRate',
+        message: 'Hourly rate must be a positive number (e.g., "50.00")',
+      });
+    }
+  }
+
+  return errors;
+};

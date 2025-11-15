@@ -68,3 +68,18 @@ export const protect = async (req: Request, res: Response, next: NextFunction) =
         return res.status(401).json({ message: 'Not authorized, no token' }); 
     }
 };
+
+// --- NEW ---
+/**
+ * @desc    Middleware to check if the user is a mentor
+ * @pre     Must be used AFTER the 'protect' middleware
+ */
+export const isMentor = (req: Request, res: Response, next: NextFunction) => {
+  if (req.user && req.user.role === 'mentor') {
+    next();
+  } else {
+    res.status(403).json({
+      message: 'Forbidden: This action is only available to mentors.',
+    });
+  }
+};
