@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import cors from 'cors';
 import authRoutes from './routes/auth.routes';
 import userRoutes from './routes/user.routes';
+import tagRoutes from './routes/tag.routes';
 
 // We will add other routes here later
 // import userRoutes from './routes/user.routes';
@@ -96,6 +97,7 @@ app.use('/api/v1/auth', authRoutes);
 
 // Other routes will be added here...
 app.use('/api/v1/users', userRoutes); // --- NEW ---
+app.use('/api/v1/tags', tagRoutes); // --- NEW ---
 // app.seed('/api/v1/mentors', mentorRoutes);
 // app.use('/api/v1/bookings', bookingRoutes);
 
