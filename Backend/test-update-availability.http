@@ -1,0 +1,9 @@
+### Update Availability Slot
+PUT http://localhost:3000/api/v1/availabilities/1
+Content-Type: application/json
+Authorization: Bearer YOUR_MENTOR_JWT_TOKEN_HERE
+
+{
+  "startTime": "2025-12-15T14:00:00Z",
+  "endTime": "2025-12-15T15:30:00Z"
+}
