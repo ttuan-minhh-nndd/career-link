@@ -1,18 +1,9 @@
-import { Link } from "react-router-dom";
+import path from "../../constants/path";
+import {Link} from "react-router-dom";
 
 export default function MentorDetail() {
   return (
     <section className="mx-auto max-w-6xl px-4 py-12">
-      {/* Top bar */}
-      <div className="mb-8 flex items-center justify-between">
-        <Link
-          to="/mentors"
-          className="text-sm font-medium text-sky-700 hover:underline"
-        >
-          ← Quay lại danh sách Mentor
-        </Link>
-      </div>
-
 
       {/* Main layout: Left = Avatar (small), Right = Profile */}
       <div className="grid grid-cols-1 gap-8 md:grid-cols-12">
@@ -41,9 +32,9 @@ export default function MentorDetail() {
               <button className="rounded-lg border border-slate-200 px-3 py-2 font-medium text-slate-700 hover:bg-slate-50">
                 Nhắn tin
               </button>
-              <button className="rounded-lg bg-gradient-to-r from-sky-600 to-indigo-600 px-3 py-2 font-medium text-white hover:from-sky-700 hover:to-indigo-700">
+              <Link to = {path.booking} className="text-center rounded-lg bg-gradient-to-r from-sky-600 to-indigo-600 px-3 py-2 font-medium text-white hover:from-sky-700 hover:to-indigo-700">
                 Đặt lịch
-              </button>
+              </Link>
             </div>
           </div>
         </aside>

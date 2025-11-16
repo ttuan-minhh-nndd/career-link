@@ -59,60 +59,7 @@ const mentors: MentorShowcase[] = [
     tags: ["Figma", "UI", "UX"],
     rating: 4.9,
   },
-    {
-    id: 7,
-    name: "Nguyễn Văn Tài",
-    title: "AI Research Engineer",
-    avatar:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop",
-    tags: ["AI", "NLP", "LLM"],
-    rating: 4.7,
-  },
-  {
-    id: 8,
-    name: "Phạm Thu Hà",
-    title: "Marketing Strategist",
-    avatar:
-      "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=400&auto=format&fit=crop",
-    tags: ["Branding", "Digital Marketing", "Content"],
-    rating: 4.7,
-  },
-  {
-    id: 9,
-    name: "Vũ Ngọc Hưng",
-    title: "DevOps Engineer",
-    avatar:
-      "https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=400&auto=format&fit=crop",
-    tags: ["DevOps", "AWS", "Kubernetes"],
-    rating: 4.8,
-  },
-  {
-    id: 10,
-    name: "Trần Quốc Dũng",
-    title: "Mobile Developer",
-    avatar:
-      "https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=400&auto=format&fit=crop",
-    tags: ["Flutter", "React Native", "Mobile"],
-    rating: 4.9,
-  },
-  {
-    id: 11,
-    name: "Lưu Thanh Tùng",
-    title: "Data Engineer",
-    avatar:
-      "https://images.unsplash.com/photo-1624561172888-ac93c696e10c?q=80&w=400&auto=format&fit=crop",
-    tags: ["ETL", "Big Data", "Airflow"],
-    rating: 4.8,
-  },
-  {
-    id: 12,
-    name: "Phan Bảo Ngọc",
-    title: "Career Coach",
-    avatar:
-      "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?q=80&w=400&auto=format&fit=crop",
-    tags: ["Career Coaching", "Soft Skills", "CV Review"],
-    rating: 4.8,
-  },
+
 ];
 export default function Home() {
   return (

@@ -1,17 +1,11 @@
 import SectionTitle from "../../components/SectionTitle";
 import MentorCard from "../../components/MentorCard";
 import { mentorsSeed } from "../../constants/mentors";
-import SearchBar from "../../components/SearchBar/SearchBar";
 
 export default function Mentors() {
   return (
     <section id="mentors" className="mx-auto max-w-7xl px-4 py-12">
       
-      <div className="flex justify-center">
-        <div className="-mt-19  mb-10 w-full max-w-lg">
-          <SearchBar />
-        </div>
-      </div>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
         <div className="md:col-span-2">

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-
+import path from "../../constants/path";
 export type MentorShowcase = {
   id: number | string;
   name: string;
@@ -11,13 +11,11 @@ export type MentorShowcase = {
 };
 
 export default function MentorShowcaseCard({
-  id,
   name,
   title,
   avatar,
   rating,
   tags,
-  profileUrl
 }: MentorShowcase) {
   return (
     <div className="rounded-2xl bg-white p-6 shadow-md ring-1 ring-slate-100 hover:shadow-lg transition-all duration-300">
@@ -57,7 +55,7 @@ export default function MentorShowcaseCard({
       {/* CTA */}
       <div className="mt-6">
         <Link
-          to={profileUrl ?? `/mentors/${id}`}
+          to={path.mentor_details}
           className="block rounded-full bg-gradient-to-r from-sky-600 to-indigo-600 px-6 py-3 text-center text-sm font-semibold text-white shadow-md hover:from-sky-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-sky-300 transition-all duration-300"
         >
           Xem hồ sơ

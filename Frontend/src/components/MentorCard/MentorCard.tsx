@@ -1,7 +1,7 @@
 import Chip from "../Chip";
 import Rating from "../Rating";
 import { Link } from "react-router-dom";
-
+import path from "../../constants/path";
 export type Mentor = {
   id: number;
   name: string;
@@ -43,15 +43,15 @@ export default function MentorCard({ mentor }: { mentor: Mentor }) {
             </span>
           )}           
           <div className="flex justify-end items-center gap-3 mt-0">
-            <a
-              href="#"
+            <Link
+              to={path.mentee_booking}
               className="rounded-2xl bg-sky-600 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-sky-700"
             >
               Đặt lịch
-            </a>
+            </Link>
             
             <Link
-              to={`/mentors/${mentor.id}`}
+              to={path.mentor_details}
               className="rounded-2xl bg-white px-4 py-2 text-sm font-semibold text-sky-700 ring-1 ring-sky-200 shadow hover:bg-sky-50"
             >
               Xem hồ sơ

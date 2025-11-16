@@ -1,12 +1,14 @@
 import React from "react";
-import MentorShowcaseCard from "../../../components/MentorShowcaseCard";
+import MentorShowcaseCard, {
+  MentorShowcase,
+} from "../../../components/MentorShowcaseCard";
 import mentor1 from "../../../assets/mentors/mentor1.jpg";
 import mentor2 from "../../../assets/mentors/mentor2.jpg";
 import mentor3 from "../../../assets/mentors/mentor3.jpg";
 import mentor4 from "../../../assets/mentors/mentor4.jpg";
 import mentor5 from "../../../assets/mentors/mentor5.jpg";
-import { MentorShowcase } from "../../../components/MentorShowcaseCard";
-
+import SearchBar from "../../../components/SearchBar";
+import MentorChatWidget from "../../../components/MentorChatWidget";
 const mentors: MentorShowcase[] = [
   {
     id: 1,
@@ -57,146 +59,34 @@ const mentors: MentorShowcase[] = [
     tags: ["Figma", "UI", "UX"],
     rating: 4.9,
   },
-  {
-    id: 7,
-    name: "Nguyễn Văn Tài",
-    title: "AI Research Engineer",
-    avatar:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop",
-    tags: ["AI", "NLP", "LLM"],
-    rating: 4.7,
-  },
-  {
-    id: 8,
-    name: "Phạm Thu Hà",
-    title: "Marketing Strategist",
-    avatar:
-      "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=400&auto=format&fit=crop",
-    tags: ["Branding", "Digital Marketing", "Content"],
-    rating: 4.7,
-  },
-  {
-    id: 9,
-    name: "Vũ Ngọc Hưng",
-    title: "DevOps Engineer",
-    avatar:
-      "https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=400&auto=format&fit=crop",
-    tags: ["DevOps", "AWS", "Kubernetes"],
-    rating: 4.8,
-  },
-  {
-    id: 10,
-    name: "Trần Quốc Dũng",
-    title: "Mobile Developer",
-    avatar:
-      "https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=400&auto=format&fit=crop",
-    tags: ["Flutter", "React Native", "Mobile"],
-    rating: 4.9,
-  },
-  {
-    id: 11,
-    name: "Lưu Thanh Tùng",
-    title: "Data Engineer",
-    avatar:
-      "https://images.unsplash.com/photo-1624561172888-ac93c696e10c?q=80&w=400&auto=format&fit=crop",
-    tags: ["ETL", "Big Data", "Airflow"],
-    rating: 4.8,
-  },
-  {
-    id: 12,
-    name: "Phan Bảo Ngọc",
-    title: "Career Coach",
-    avatar:
-      "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?q=80&w=400&auto=format&fit=crop",
-    tags: ["Career Coaching", "Soft Skills", "CV Review"],
-    rating: 4.8,
-  },
+
 ];
 
 export default function MenteeHomePage() {
   return (
-    <div className="min-h-screen bg-white">
-      {/* HERO */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-sky-50 to-white">
-        <div className="mx-auto max-w-6xl px-6 py-16 md:py-20">
-          <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-2">
-            {/* Text */}
-            <div>
-              <h1 className="text-4xl font-bold tracking-tight text-slate-900 md:text-5xl">
-                Chào mừng Mentee đến với CareerLink!
-              </h1>
-              <p className="mt-4 text-slate-600">
-                Cùng khám phá và kết nối với những mentor hàng đầu để phát triển
-                sự nghiệp của bạn. Chọn lĩnh vực bạn yêu thích và bắt đầu hành
-                trình học hỏi ngay hôm nay.
-              </p>
+    <main className="bg-slate-50">
+      {/* Hero */}
+      <section className="relative mx-auto grid min-h-[70vh] max-w-6xl place-items-center px-4">
+        <div className="max-w-3xl text-center">
+          <h1 className="text-5xl font-extrabold text-slate-900">
+            Chào mừng Mentee đến với{" "}
+            <span className="text-sky-600">CareerLink</span>
+          </h1>
+          <p className="mt-4 text-slate-600">
+            Nền tảng trực tuyến kết nối chuyên gia với sinh viên cần định
+            hướng nghề nghiệp. Tìm mentor phù hợp, đặt lịch 1:1, nhận lộ
+            trình học tập &amp; phản hồi CV/Portfolio.
+          </p>
 
-              {/* Search & CTAs */}
-              <div className="mt-6 space-y-3 sm:space-y-0 sm:flex sm:items-center sm:gap-3">
-                {/* Input with icon */}
-                <div className="relative flex-1">
-                  <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
-                    {/* magnifier icon */}
-                    <svg
-                      className="h-5 w-5 text-slate-400"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      aria-hidden
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M8.5 3a5.5 5.5 0 1 1 3.9 9.4l3.2 3.2a1 1 0 0 1-1.4 1.4l-3.2-3.2A5.5 5.5 0 0 1 8.5 3Zm0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </span>
-                  <input
-                    placeholder="Tìm mentor về Java, UI/UX, Data..."
-                    className="w-full rounded-2xl border-0 bg-white pl-11 pr-4 py-3 text-sm text-slate-700 ring-1 ring-slate-200 placeholder:text-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-300"
-                    aria-label="Tìm kỹ năng"
-                  />
-                </div>
+          <SearchBar to="/mentors" />
 
-                {/* Buttons */}
-                <div className="flex shrink-0 gap-3">
-                  <button className="rounded-full bg-gradient-to-r from-sky-600 to-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow-md hover:from-sky-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-sky-300">
-                    Tìm Mentor ngay
-                  </button>
-                  <button className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-sky-700 ring-1 ring-sky-200 shadow-sm hover:bg-sky-50 focus:outline-none focus:ring-2 focus:ring-sky-300">
-                    Khám phá kỹ năng
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Illustration card */}
-            <div className="relative">
-              <div className="relative overflow-hidden rounded-3xl ring-1 ring-slate-100 shadow-md">
-                <img
-                  src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?q=80&w=1280&auto=format&fit=crop"
-                  alt="Mentor và mentee đang trao đổi"
-                  className="h-80 w-full object-cover md:h-[420px]"
-                />
-                {/* subtle gradient overlay */}
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-900/10 to-transparent" />
-              </div>
-
-              {/* floating pill */}
-              <div className="absolute -bottom-4 left-6 hidden md:flex items-center gap-2 rounded-full bg-white/80 backdrop-blur px-4 py-2 text-xs font-medium text-slate-700 ring-1 ring-slate-200 shadow-sm">
-                <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
-                Trực tuyến • Lịch linh hoạt
-              </div>
-            </div>
-          </div>
         </div>
 
-        {/* decorative blobs */}
-        <div className="pointer-events-none absolute -top-16 -right-16 h-56 w-56 rounded-full bg-sky-200/30 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-20 -left-10 h-64 w-64 rounded-full bg-indigo-200/30 blur-3xl" />
       </section>
 
       {/* BENEFITS */}
-      <section className="mx-auto max-w-6xl px-6 py-14">
+      <section className="mx-auto max-w-6xl px-6 py-14 -mt-25">
+      <div className="rounded-3xl bg-sky-100/80 ring-1 ring-sky-100 px-6 py-10 shadow-sm">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-slate-900">
             Lợi ích dành cho Mentee
@@ -211,13 +101,22 @@ export default function MenteeHomePage() {
               title: "Mentor chất lượng",
               desc: "Được kiểm duyệt & đánh giá minh bạch.",
             },
-            { title: "Học theo mục tiêu", desc: "Tập trung đúng kỹ năng bạn cần." },
-            { title: "Lịch linh hoạt", desc: "Đặt buổi học dễ dàng, phù hợp thời gian." },
-            { title: "Tư vấn 1:1", desc: "Học trực tiếp, cá nhân hóa lộ trình." },
+            {
+              title: "Học theo mục tiêu",
+              desc: "Tập trung đúng kỹ năng bạn cần.",
+            },
+            {
+              title: "Lịch linh hoạt",
+              desc: "Đặt buổi học dễ dàng, phù hợp thời gian.",
+            },
+            {
+              title: "Tư vấn 1:1",
+              desc: "Học trực tiếp, cá nhân hóa lộ trình.",
+            },
           ].map((b) => (
             <div
               key={b.title}
-              className="rounded-2xl bg-white p-6 ring-1 ring-slate-100 shadow-sm"
+              className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-100"
             >
               <h3 className="mt-1 text-lg font-semibold text-slate-900">
                 {b.title}
@@ -226,12 +125,16 @@ export default function MenteeHomePage() {
             </div>
           ))}
         </div>
-      </section>
+      </div>
+    </section>
+
 
       {/* FEATURED MENTORS */}
       <section className="w-full bg-gradient-to-b from-sky-50 via-indigo-50 to-white py-12">
         <div className="mx-auto max-w-7xl px-6">
-          <h2 className="mb-8 text-2xl font-bold text-slate-900">Mentor nổi bật</h2>
+          <h2 className="mb-8 text-2xl font-bold text-slate-900">
+            Mentor nổi bật
+          </h2>
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {mentors.map((m) => (
               <MentorShowcaseCard key={m.id} {...m} />
@@ -242,8 +145,12 @@ export default function MenteeHomePage() {
 
       {/* SKILL CATEGORIES */}
       <section className="mx-auto max-w-6xl px-6 py-14">
-        <h2 className="text-2xl font-bold text-slate-900">Danh mục kỹ năng phổ biến</h2>
-        <p className="mt-1 text-slate-600">Khám phá theo lĩnh vực bạn quan tâm.</p>
+        <h2 className="text-2xl font-bold text-slate-900">
+          Danh mục kỹ năng phổ biến
+        </h2>
+        <p className="mt-1 text-slate-600">
+          Khám phá theo lĩnh vực bạn quan tâm.
+        </p>
 
         <div className="mt-6 flex flex-wrap gap-2">
           {[
@@ -259,7 +166,7 @@ export default function MenteeHomePage() {
           ].map((t) => (
             <button
               key={t}
-              className="rounded-full bg-white px-3 py-1.5 text-xs font-medium text-slate-700 ring-1 ring-slate-200 shadow-sm hover:bg-slate-50"
+              className="rounded-full bg-white px-3 py-1.5 text-xs font-medium text-slate-700 shadow-sm ring-1 ring-slate-200 hover:bg-slate-50"
               aria-label={`Xem mentor theo kỹ năng ${t}`}
             >
               {t}
@@ -271,12 +178,14 @@ export default function MenteeHomePage() {
       {/* TESTIMONIALS */}
       <section className="bg-sky-50/50">
         <div className="mx-auto max-w-6xl px-6 py-14">
-          <h2 className="text-2xl font-bold text-slate-900">Cảm nhận từ Mentee</h2>
+          <h2 className="text-2xl font-bold text-slate-900">
+            Cảm nhận từ Mentee
+          </h2>
           <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[1, 2, 3].map((i) => (
               <blockquote
                 key={i}
-                className="rounded-2xl bg-white p-6 ring-1 ring-slate-100 shadow-sm"
+                className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-100"
               >
                 <p className="text-slate-700">
                   “Nhờ mentor X, tôi đã vượt qua vòng phỏng vấn ở công ty Y!”
@@ -291,7 +200,9 @@ export default function MenteeHomePage() {
                     <div className="text-sm font-semibold text-slate-900">
                       Mentee {i}
                     </div>
-                    <div className="text-xs text-slate-500">Sinh viên / Fresher</div>
+                    <div className="text-xs text-slate-500">
+                      Sinh viên / Fresher
+                    </div>
                   </div>
                 </div>
               </blockquote>
@@ -299,10 +210,12 @@ export default function MenteeHomePage() {
           </div>
         </div>
       </section>
-
+    
       {/* HOW IT WORKS */}
       <section className="mx-auto max-w-6xl px-6 py-14">
-        <h2 className="text-2xl font-bold text-slate-900">Cách hoạt động</h2>
+        <h2 className="text-2xl font-bold text-slate-900">
+          Cách hoạt động
+        </h2>
         <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
           {[
             {
@@ -323,9 +236,9 @@ export default function MenteeHomePage() {
           ].map((s) => (
             <div
               key={s.n}
-              className="rounded-2xl bg-white p-6 ring-1 ring-slate-100 shadow-sm"
+              className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-100"
             >
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-r from-sky-600 to-indigo-600 text-white font-semibold">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-r from-sky-600 to-indigo-600 font-semibold text-white">
                 {s.n}
               </div>
               <h3 className="mt-4 text-lg font-semibold text-slate-900">
@@ -350,12 +263,19 @@ export default function MenteeHomePage() {
             <button className="rounded-full bg-gradient-to-r from-sky-600 to-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow-md hover:from-sky-700 hover:to-indigo-700">
               Khám phá mentor ngay
             </button>
-            <button className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-sky-700 ring-1 ring-sky-200 shadow-sm hover:bg-sky-50">
+            <button className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-sky-700 shadow-sm ring-1 ring-sky-200 hover:bg-sky-50">
               Đăng ký tài khoản miễn phí
             </button>
           </div>
         </div>
       </section>
-    </div>
+
+      <MentorChatWidget
+        mentorName="Phạm Khôi Nguyên"
+        mentorTitle="Backend Mentor"
+        // mentorAvatar="link_ảnh_mentor_nếu_có"
+      />
+
+    </main>
   );
 }
