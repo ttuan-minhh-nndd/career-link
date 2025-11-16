@@ -111,3 +111,4 @@ export const logout = (req: Request, res: Response) => {
   // This endpoint can be used for token blocklisting in the future.
   res.status(200).json({ message: 'Logged out successfully' });
 };
+
