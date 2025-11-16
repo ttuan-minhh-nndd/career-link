@@ -26,10 +26,9 @@ import MenteeNotification from "./pages/mentee/MenteeNotification";
 // --- Mentor pages ---
 import MentorDashboard from "./pages/mentor/Dashboard";
 import MentorProfile from "./pages/Users/MentorProfile";
+import MentorSessions from "./pages/mentor/MySessions";
 // import Feedback from "./pages/mentor/Feedback/Feedback";
-// import Profile from "./pages/mentor/Profile/Profile";
-// import Wallet from "./pages/mentor/Wallet/Wallet";
-import Schedule from "./pages/mentor/Schedule";
+
 
 export default function useRouteElements() {
   const routeElements = useRoutes([
@@ -74,7 +73,7 @@ export default function useRouteElements() {
         // { path: "feedback", element: <Feedback /> },
         { path: path.mentor_profile, element: <MentorProfile /> },
         // { path: "wallet", element: <Wallet /> },
-        { path: "schedule", element: <Schedule /> },
+        { path: path.mentor_my_sessions, element: <MentorSessions  /> },
       ],
     },
   ]);

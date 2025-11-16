@@ -28,8 +28,6 @@ const path = {
   mentor_home: "/mentor/home",
   mentor_feedback: "/mentor/feedback",
   mentor_profile: "/api/v1/users/me/mentor-profile",
-  mentor_wallet: "/mentor/wallet",
-  mentor_schedule: "/mentor/schedule",
   mentor_notifications: "/mentor/notifications",
   mentor_my_sessions: "/mentor/my-sessions",
 

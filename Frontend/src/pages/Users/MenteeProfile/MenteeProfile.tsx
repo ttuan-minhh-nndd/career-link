@@ -93,13 +93,13 @@ export default function MyAccount() {
                 <img
                   src={profile.avatar}
                   alt={profile.name}
-                  className="h-24 w-24 rounded-2xl object-cover bg-slate-100"
+                  className="h-90 w-0-90 rounded-2xl object-cover bg-slate-100"
                 />
                 <button
                   type="button"
                   className="rounded-full border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50"
                 >
-                  Đổi avatar (sau)
+                  Đổi avatar 
                 </button>
               </div>
 

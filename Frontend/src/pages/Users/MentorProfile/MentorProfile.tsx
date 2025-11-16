@@ -13,7 +13,7 @@ type MentorProfile = {
 };
 
 const initialMentorProfile: MentorProfile = {
-  name: "Ruby Nguyen",
+  name: "Ruby Lieu",
   email: "mentor@example.com",
   avatar:
     "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=200&auto=format&fit=crop",
@@ -75,13 +75,13 @@ export default function MentorProfile() {
                 <img
                   src={profile.avatar}
                   alt={profile.name}
-                  className="h-24 w-24 rounded-2xl bg-slate-100 object-cover"
+                  className="h-90 w-0-90 rounded-2xl bg-slate-100 object-cover"
                 />
                 <button
                   type="button"
                   className="rounded-full border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50"
                 >
-                  Đổi avatar (sau)
+                  Đổi avatar 
                 </button>
                 <p className="text-[11px] text-slate-500 text-center">
                   Nên dùng ảnh rõ mặt, nền sáng, phù hợp môi trường chuyên nghiệp.
@@ -89,7 +89,7 @@ export default function MentorProfile() {
               </div>
 
               {/* Fields */}
-              <div className="grid flex-1 grid-cols-1 gap-4 md:grid-cols-2">
+              <div className="grid flex-1 grid-cols-1 gap-y-2 gap-x-2 md:grid-cols-2">
                 <div className="col-span-2">
                   <label className="block text-xs font-medium text-slate-700">
                     Họ và tên
@@ -103,7 +103,7 @@ export default function MentorProfile() {
                   />
                 </div>
 
-                <div className="col-span-2 md:col-span-1">
+                <div className="col-span-2 md:col-span-0">
                   <label className="block text-xs font-medium text-slate-700">
                     Email đăng nhập / liên hệ
                   </label>
@@ -118,16 +118,15 @@ export default function MentorProfile() {
                   </p>
                 </div>
 
-                <div className="col-span-2 md:col-span-1">
+                <div className="col-span-2 md:col-span-0">
                   <label className="block text-xs font-medium text-slate-700">
                     Chức danh / Job Title
                   </label>
-                  <textarea
-                    rows={2}
+                    <input
                     className="mt-1 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-sky-400 focus:bg-white focus:outline-none focus:ring-1 focus:ring-sky-400"
-                    value={profile.jobTitle}
+                    value={profile.company ?? ""}
                     onChange={(e) =>
-                      handleInputChange("jobTitle", e.target.value)
+                      handleInputChange("company", e.target.value)
                     }
                   />
                   <p className="mt-1 text-[11px] text-slate-500">
@@ -236,28 +235,6 @@ export default function MentorProfile() {
                 <p className="mt-1 text-[11px] text-slate-500">
                   Giá hiển thị theo giờ. Hệ thống sẽ tính phí theo thời lượng từng buổi.
                 </p>
-              </div>
-
-              <div className="md:col-span-2">
-                <div className="rounded-2xl bg-sky-50 px-4 py-3 text-[11px] text-slate-700 ring-1 ring-sky-100">
-                  Ví dụ hiển thị cho mentee:
-                  <div className="mt-2 rounded-xl bg-white px-3 py-2 text-xs shadow-sm ring-1 ring-slate-100">
-                    <div className="font-semibold text-slate-900">
-                      {profile.name}
-                    </div>
-                    <div className="mt-1 line-clamp-2 text-[11px] text-slate-600">
-                      {profile.jobTitle}
-                    </div>
-                    <div className="mt-2 inline-flex items-center gap-2">
-                      <span className="rounded-full bg-sky-50 px-2 py-0.5 text-[11px] font-semibold text-sky-700 ring-1 ring-sky-100">
-                        ${profile.hourlyRate}/hour
-                      </span>
-                      <span className="text-[11px] text-slate-500">
-                        (giá demo, mentee sẽ thấy trên card mentor)
-                      </span>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </section>

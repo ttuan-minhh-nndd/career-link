@@ -109,16 +109,7 @@ export default function MentorNavHeader() {
             Trang chủ
           </NavLink>
 
-          <NavLink
-            to={path.mentor_schedule}
-            className={({ isActive }) =>
-              isActive
-                ? "text-sm font-medium text-sky-600"
-                : "text-sm font-medium text-slate-600 hover:text-slate-900"
-            }
-          >
-            Schedule
-          </NavLink>
+
         </div>
 
         {/* RIGHT */}
@@ -312,12 +303,6 @@ export default function MentorNavHeader() {
                   className="block px-3 py-2 hover:bg-slate-50"
                 >
                   My sessions
-                </Link>
-                <Link
-                  to={path.mentor_wallet}
-                  className="block px-3 py-2 hover:bg-slate-50"
-                >
-                  My wallet
                 </Link>
                 <Link
                   to={path.mentor_profile}
