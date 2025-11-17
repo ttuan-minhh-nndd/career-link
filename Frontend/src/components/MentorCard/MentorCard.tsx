@@ -2,61 +2,87 @@ import Chip from "../Chip";
 import Rating from "../Rating";
 import { Link } from "react-router-dom";
 import path from "../../constants/path";
+
 export type Mentor = {
-  id: number;
+  userId: number;
   name: string;
-  title: string;
-  bio: string;
-  price: string;
-  avatar: string;
-  tags: string[];
-  rating: number;
+  email: string;
+  avatarUrl: string | null;
+  bio: string | null;
+  jobTitle: string | null;
+  hourlyRate: string;       // "69.00" | "0.00" ...
+  averageRating: string;    // "4.80" | "0.00" ...
+  totalReviews: number;
+  expertiseTags: string[];
 };
 
 export default function MentorCard({ mentor }: { mentor: Mentor }) {
+  const ratingValue = Number(mentor.averageRating) || 0;
+  const hourly = Number(mentor.hourlyRate || "0");
+
   return (
     <div className="rounded-2xl bg-white p-4 shadow-md ring-1 ring-slate-100 transition hover:-translate-y-1 hover:shadow-lg">
       <div className="flex items-start gap-4">
+        {/* Avatar */}
         <img
-          src={mentor.avatar}
+          src={
+            mentor.avatarUrl ??
+            `https://ui-avatars.com/api/?name=${encodeURIComponent(mentor.name)}`
+          }
           alt={mentor.name}
           className="h-16 w-16 rounded-full object-cover ring-2 ring-white shadow"
         />
+
         <div className="flex-1">
+          {/* Name + Title + Rating */}
           <div className="flex items-start justify-between">
             <div>
-              <h3 className="text-lg font-semibold text-slate-900">{mentor.name}</h3>
-              <p className="text-sm text-slate-600">Vị trí: {mentor.title}</p>
+              <h3 className="text-lg font-semibold text-slate-900">
+                {mentor.name}
+              </h3>
+              <p className="text-sm text-slate-600">
+                Vị trí: {mentor.jobTitle ?? "Chưa cập nhật"}
+              </p>
             </div>
-            <Rating value={mentor.rating} />
-          </div>
-          <p className="mt-2 text-sm text-slate-700">{mentor.bio}</p>
-          <div className="mt-3 flex flex-wrap items-center gap-2">
-            {mentor.tags.map((t) => (
-              <Chip key={t}>{t}</Chip>  
-            ))}
+            <Rating value={ratingValue} />
           </div>
 
-          {mentor.price && (
+          {/* Bio */}
+          {mentor.bio && (
+            <p className="mt-2 text-sm text-slate-700">{mentor.bio}</p>
+          )}
+
+          {/* Tags / expertise */}
+          {mentor.expertiseTags.length > 0 && (
+            <div className="mt-3 flex flex-wrap items-center gap-2">
+              {mentor.expertiseTags.map((t) => (
+                <Chip key={t}>{t}</Chip>
+              ))}
+            </div>
+          )}
+
+          {/* Hourly rate (nếu > 0) */}
+          {hourly > 0 && (
             <span className="mt-5 inline-block text-sm font-semibold text-sky-700">
-              {mentor.price}
+              {`$${mentor.hourlyRate} / hour`}
             </span>
-          )}           
-          <div className="flex justify-end items-center gap-3 mt-0">
+          )}
+
+          {/* Actions */}
+          <div className="mt-3 flex items-center justify-end gap-3">
             <Link
-              to={path.mentee_booking}
+              to={path.booking}
               className="rounded-2xl bg-sky-600 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-sky-700"
             >
               Đặt lịch
             </Link>
-            
+
             <Link
-              to={path.mentor_details}
+              to={`${path.mentor_details}/${mentor.userId}`}
               className="rounded-2xl bg-white px-4 py-2 text-sm font-semibold text-sky-700 ring-1 ring-sky-200 shadow hover:bg-sky-50"
             >
               Xem hồ sơ
             </Link>
-
           </div>
         </div>
       </div>

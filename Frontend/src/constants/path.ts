@@ -15,12 +15,11 @@ const path = {
   // Mentee
   mentee_root: "/mentee",
   mentee_home: "/mentee/home",
-  mentee_mentors: "/mentee/mentors",
   mentee_top_mentors: "/mentee/top-mentors",
 
 
-  mentors: "/mentee/mentors",
-  mentor_details: "/mentee/mentors/:id",
+  get_mentors: "/api/v1/mentors",
+  mentor_details: "/api/v1/mentors",
   mentee_my_sessions: "/mentee/my-sessions",
   mentee_notifications: "/mentee/notifications",
 

@@ -111,7 +111,7 @@ export default function MenteeNavHeader() {
           </NavLink>
 
           <NavLink
-            to={path.mentors}
+            to={path.get_mentors}
             className={({ isActive }) =>
               isActive
                 ? "text-sm font-medium text-sky-600"
@@ -176,7 +176,7 @@ export default function MenteeNavHeader() {
 
                 <div className="mt-3 border-t border-slate-100 pt-2">
                   <Link
-                    to={path.mentors}
+                    to={path.get_mentors}
                     className="text-[11px] font-medium text-sky-700 hover:text-sky-800"
                   >
                     Mở trang tìm kiếm mentor →

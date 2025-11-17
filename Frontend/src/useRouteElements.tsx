@@ -1,6 +1,9 @@
 import { useRoutes } from "react-router-dom";
 import path from "./constants/path";
 
+import GuestHome from "./pages/Home";
+import GuestAbout from "./pages/About";
+
 // Layout
 import MainLayout from "./layouts/MainLayout";
 import MenteeLayout from "./layouts/MenteeLayout";
@@ -11,14 +14,11 @@ import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 // -- User pages ---
 import Profile from "./pages/Users/MenteeProfile";
-
-import GuestHome from "./pages/Home";
-import GuestAbout from "./pages/About";
-
-import Mentors from "./pages/Mentors";
-import MentorDetail from "./pages/MentorDetails";
-
 import UpdateProfile from "./pages/Users/UpdateProfile";
+//-- Get mentor data page
+import Mentors from "./pages/MentorData/Mentors";
+import MentorDetail from "./pages/MentorData/MentorDetails";
+
 
 // --- Mentee pages ---
 import MenteeHome from "./pages/Users/Dashboard";
@@ -54,7 +54,7 @@ export default function useRouteElements() {
       children: [
         { index: true, element: <MenteeHome /> },
         { path: path.mentee_home, element: <MenteeHome /> },
-        { path: path.mentee_mentors, element: <Mentors /> },
+        { path: path.get_mentors, element: <Mentors /> },
         { path: path.booking, element: <Booking /> },
         { path: path.mentor_details, element: <MentorDetail /> },
         { path: path.mentee_my_sessions, element: <MenteeSessions /> },
