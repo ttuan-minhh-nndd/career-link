@@ -66,50 +66,48 @@ export default function MentorProfile() {
             Edit Profile
           </Link>
         </div>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-4">
           {/* Card: Thông tin cơ bản */}
-          <section className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-            <h2 className="text-base font-semibold text-slate-900">
-              Thông tin cá nhân & hiển thị
-            </h2>
-            <p className="mt-1 text-xs text-slate-500">
-              Thông tin này sẽ xuất hiện trên trang profile và trong trang đặt
-              lịch.
+        <section className="rounded-3xl bg-white p-4 shadow-sm ring-1 ring-slate-200">
+          <h2 className="text-sm font-semibold text-slate-900">
+            Thông tin cá nhân & hiển thị
+          </h2>
+          <p className="mt-1 text-[11px] text-slate-500">
+            Thông tin này sẽ xuất hiện trên trang profile và trong trang đặt lịch.
+          </p>
+
+          <div className="mt-3 flex flex-col gap-4 md:flex-row">
+          {/* Avatar */}
+          <div className="flex flex-col items-center gap-2 md:w-1/3">
+            <img
+              src={profile.avatarUrl}
+              alt={profile.name}
+              className="h-40 w-40 rounded-2xl bg-slate-100 object-cover"
+            />
+            <button
+              type="button"
+              className="rounded-full border border-slate-300 px-3 py-1 text-[11px] font-medium text-slate-700 hover:bg-slate-50"
+            >
+              Đổi avatar
+            </button>
+            <p className="text-[10px] leading-snug text-slate-500 text-center">
+              Nên dùng ảnh rõ mặt, nền sáng, phù hợp môi trường chuyên nghiệp.
             </p>
+          </div>
 
-            <div className="mt-5 flex flex-col gap-6 md:flex-row">
-              {/* Avatar */}
-              <div className="flex flex-col items-center gap-3 md:w-1/3">
-                <img
-                  src={profile.avatarUrl}
-                  alt={profile.name}
-                  className="h-90 w-0-90 rounded-2xl bg-slate-100 object-cover"
-                />
-                <button
-                  type="button"
-                  className="rounded-full border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50"
-                >
-                  Đổi avatar
-                </button>
-                <p className="text-[11px] text-slate-500 text-center">
-                  Nên dùng ảnh rõ mặt, nền sáng, phù hợp môi trường chuyên
-                  nghiệp.
-                </p>
-              </div>
+               {/* Fields */}
+          <div className="grid flex-1 grid-cols-2 gap-x-4 md:grid-cols-4 mx-auto w-full max-w-lg">
 
-              {/* Fields */}
-              <div className="grid flex-1 grid-cols-1 gap-y-2 gap-x-2 md:grid-cols-2">
                 <div className="col-span-2">
-                  <label className="block text-xs font-medium text-slate-700">
+                  <label className="block text-[11px] font-medium text-slate-700">
                     Họ và tên
                   </label>
                   <input
-                    className="mt-1 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-sky-400 focus:bg-white focus:outline-none focus:ring-1 focus:ring-sky-400"
+                    className="mt-1 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm text-slate-900 shadow-sm focus:border-sky-400 focus:bg-white focus:outline-none focus:ring-1 focus:ring-sky-400"
                     value={profile.name}
                     onChange={(e) => handleInputChange("name", e.target.value)}
                   />
                 </div>
-
                 <div className="col-span-2 md:col-span-0">
                   <label className="block text-xs font-medium text-slate-700">
                     Email đăng nhập / liên hệ
@@ -142,31 +140,27 @@ export default function MentorProfile() {
                     .
                   </p>
                 </div>
-
-                <div>
-                  <label className="block text-xs font-medium text-slate-700">
-                    Đơn vị công tác / Company
+                 {/* ⭐ Average Rating */}
+                <div className="col-span-2 md:col-span-0 mx-auto w-full max-w-xs">
+                  <label className="block text-[11px] font-medium text-slate-700">
+                    Điểm đánh giá trung bình
                   </label>
                   <input
-                    className="mt-1 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-sky-400 focus:bg-white focus:outline-none focus:ring-1 focus:ring-sky-400"
-                    value={profile.company ?? ""}
-                    onChange={(e) =>
-                      handleInputChange("company", e.target.value)
-                    }
+                    disabled
+                    className="mt-1 w-full rounded-xl border border-slate-200 bg-slate-100 px-3 py-1.5 text-sm text-slate-900 shadow-inner"
+                    value={profile.mentorProfile?.averageRating ?? "0.00"}
                   />
                 </div>
 
-                <div>
-                  <label className="block text-xs font-medium text-slate-700">
-                    Số năm kinh nghiệm
+                {/* 📝 Total Reviews */}
+                <div className="col-span-2 md:col-span-0 mx-auto w-full max-w-xs">
+                  <label className="block text-[11px] font-medium text-slate-700">
+                    Tổng số lượt đánh giá
                   </label>
                   <input
-                    className="mt-1 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-sky-400 focus:bg-white focus:outline-none focus:ring-1 focus:ring-sky-400"
-                    value={profile.yearsOfExperience ?? ""}
-                    onChange={(e) =>
-                      handleInputChange("yearsOfExperience", e.target.value)
-                    }
-                    placeholder="VD: 5+ năm, 10+ năm..."
+                    disabled
+                    className="mt-1 w-full rounded-xl border border-slate-200 bg-slate-100 px-3 py-1.5 text-sm text-slate-900 shadow-inner"
+                    value={profile.mentorProfile?.totalReviews ?? 0}
                   />
                 </div>
               </div>
@@ -194,20 +188,6 @@ export default function MentorProfile() {
                   value={profile.bio}
                   onChange={(e) => handleInputChange("bio", e.target.value)}
                   placeholder='VD: "Hi, my name is Ruby! It&apos;s a pleasure to have you in my network!"'
-                />
-              </div>
-
-              <div className="md:col-span-2">
-                <label className="block text-xs font-medium text-slate-700">
-                  Lĩnh vực & thế mạnh mentoring
-                </label>
-                <input
-                  className="mt-1 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-sky-400 focus:bg-white focus:outline-none focus:ring-1 focus:ring-sky-400"
-                  value={profile.expertise ?? ""}
-                  onChange={(e) =>
-                    handleInputChange("expertise", e.target.value)
-                  }
-                  placeholder="VD: Digital Marketing, Performance Ads, Personal Branding..."
                 />
               </div>
             </div>
