@@ -3,27 +3,32 @@ import path from "./constants/path";
 
 // Layout
 import MainLayout from "./layouts/MainLayout";
+import MenteeLayout from "./layouts/MenteeLayout";
+import MentorLayout from "./layouts/MentorLayout";
 
-// --- Guest pages ---
+// --- Authentication pages ---
+import Login from "./pages/Auth/Login";
+import Register from "./pages/Auth/Register";
+// -- User pages ---
+import Profile from "./pages/Users/MenteeProfile";
+
 import GuestHome from "./pages/Home";
 import GuestAbout from "./pages/About";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+
 import Mentors from "./pages/Mentors";
 import MentorDetail from "./pages/MentorDetails";
 
 // --- Mentee pages ---
 import MenteeHome from "./pages/mentee/Home";
 import Booking from "./pages/mentee/Booking";
-// import MenteeSessions from "./pages/mentee/Sessions/MenteeSessions";
-// import TopMentors from "./pages/mentee/TopMentors/TopMentors";
-
+import MenteeSessions from "./pages/mentee/MySession";
+import MenteeNotification from "./pages/mentee/MenteeNotification";
 // --- Mentor pages ---
 import MentorDashboard from "./pages/mentor/Dashboard";
+import MentorProfile from "./pages/Users/MentorProfile";
+import MentorSessions from "./pages/mentor/MySessions";
 // import Feedback from "./pages/mentor/Feedback/Feedback";
-// import Profile from "./pages/mentor/Profile/Profile";
-// import Wallet from "./pages/mentor/Wallet/Wallet";
-// import Schedule from "./pages/mentor/Schedule/Schedule";
+
 
 export default function useRouteElements() {
   const routeElements = useRoutes([
@@ -35,37 +40,40 @@ export default function useRouteElements() {
         { index: true, element: <GuestHome /> },
         { path: path.about.replace("/", ""), element: <GuestAbout /> },
         { path: path.login.replace("/", ""), element: <Login /> },
-        { path: path.register.replace("/", ""), element: <Register /> },
-        { path: path.mentors.replace("/", ""), element: <Mentors /> },
-        { path: path.mentor_details.replace("/", ""), element: <MentorDetail /> },
+        { path: path.register.replace("/", ""), element: <Register /> }
 
       ],
     },
 
     // ---------------- Mentee Pages ----------------
     {
-      path: path.mentee_root,
-      element: <MainLayout />,
+      path: "/",
+      element: <MenteeLayout />,
       children: [
         { index: true, element: <MenteeHome /> },
-        { path: "home", element: <MenteeHome /> },
-        { path: "mentors", element: <Mentors /> },
-        { path: "booking", element: <Booking /> },
-        // { path: "sessions", element: <MenteeSessions /> },
+        { path: path.mentee_home, element: <MenteeHome /> },
+        { path: path.mentee_mentors, element: <Mentors /> },
+        { path: path.booking, element: <Booking /> },
+        { path: path.mentor_details, element: <MentorDetail /> },
+        { path: path.mentee_my_sessions, element: <MenteeSessions /> },
+        { path: path.mentee_profile, element: <Profile /> },
+        { path: path.mentee_notifications, element: <MenteeNotification /> },
+
         // { path: "top-mentors", element: <TopMentors /> },
       ],
     },
 
     // ---------------- Mentor Pages ----------------
     {
-      path: path.mentor_root,
-      element: <MainLayout />,
+      path: "/",
+      element: <MentorLayout />,
       children: [
         { index: true, element: <MentorDashboard /> },
+        { path: path.mentor_home, element: <MentorDashboard /> },
         // { path: "feedback", element: <Feedback /> },
-        // { path: "profile", element: <Profile /> },
+        { path: path.mentor_profile, element: <MentorProfile /> },
         // { path: "wallet", element: <Wallet /> },
-        // { path: "schedule", element: <Schedule /> },
+        { path: path.mentor_my_sessions, element: <MentorSessions  /> },
       ],
     },
   ]);

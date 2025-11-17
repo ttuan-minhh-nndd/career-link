@@ -47,25 +47,6 @@ export default function MentorDashboard() {
             </div>
           </div>
         </div>
-
-        <div className="space-y-6">
-          <div className="rounded-3xl bg-white p-6 shadow">
-            <h3 className="mb-2 text-lg font-bold">Thông báo gần đây</h3>
-            <div className="space-y-3 text-sm">
-              {[
-                {n:"Nguyễn Hoàng Minh Ngọc", t:"3/10/2025 | 10:00 - 10:30", m:"đã đặt lịch tư vấn."},
-                {n:"Đặng Trung Anh", t:"3/10/2025 | 11:00 - 12:00", m:"đã đặt lịch tư vấn."},
-                {n:"Nguyễn Ngọc Hải Đăng", t:"", m:"đã để lại Feedback 5★."},
-              ].map((x,i)=>(
-                <div key={i} className="rounded-2xl bg-slate-50 p-3">
-                  <div className="font-semibold">{x.n}</div>
-                  <div className="text-slate-600">{x.t}</div>
-                  <div>{x.m}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );

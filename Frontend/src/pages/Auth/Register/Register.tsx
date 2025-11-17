@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { User, Mail, Lock, UserPlus } from "lucide-react";
-import path from "../../constants/path";
+import path from "../../../constants/path";
 
 export default function Register() {
   return (
