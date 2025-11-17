@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AppContext } from "../../../../context/app.context";
@@ -14,20 +14,6 @@ type MentorProfile = {
   company?: string;
   expertise?: string;
   yearsOfExperience?: string;
-};
-
-const initialMentorProfile: MentorProfile = {
-  name: "Ruby Lieu",
-  email: "mentor@example.com",
-  avatar:
-    "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=200&auto=format&fit=crop",
-  bio: "Hi, my name is Ruby! It's a pleasure to have you in my network!",
-  jobTitle:
-    "PhD, Senior Lecturer in Digital Marketing @ International University, Vietnam National University, HCMC",
-  hourlyRate: "69.00",
-  company: "International University, VNU-HCMC",
-  expertise: "Digital Marketing, Performance Marketing, Branding",
-  yearsOfExperience: "8+ năm",
 };
 
 export default function MentorProfile() {
@@ -68,36 +54,40 @@ export default function MentorProfile() {
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Card: Thông tin cơ bản */}
-        <section className="rounded-3xl bg-white p-4 shadow-sm ring-1 ring-slate-200">
-          <h2 className="text-sm font-semibold text-slate-900">
-            Thông tin cá nhân & hiển thị
-          </h2>
-          <p className="mt-1 text-[11px] text-slate-500">
-            Thông tin này sẽ xuất hiện trên trang profile và trong trang đặt lịch.
-          </p>
-
-          <div className="mt-3 flex flex-col gap-4 md:flex-row">
-          {/* Avatar */}
-          <div className="flex flex-col items-center gap-2 md:w-1/3">
-            <img
-              src={profile.avatarUrl}
-              alt={profile.name}
-              className="h-40 w-40 rounded-2xl bg-slate-100 object-cover"
-            />
-            <button
-              type="button"
-              className="rounded-full border border-slate-300 px-3 py-1 text-[11px] font-medium text-slate-700 hover:bg-slate-50"
-            >
-              Đổi avatar
-            </button>
-            <p className="text-[10px] leading-snug text-slate-500 text-center">
-              Nên dùng ảnh rõ mặt, nền sáng, phù hợp môi trường chuyên nghiệp.
+          <section className="rounded-3xl bg-white p-4 shadow-sm ring-1 ring-slate-200">
+            <h2 className="text-sm font-semibold text-slate-900">
+              Thông tin cá nhân & hiển thị
+            </h2>
+            <p className="mt-1 text-[11px] text-slate-500">
+              Thông tin này sẽ xuất hiện trên trang profile và trong trang đặt
+              lịch.
             </p>
-          </div>
 
-               {/* Fields */}
-          <div className="grid flex-1 grid-cols-2 gap-x-4 md:grid-cols-4 mx-auto w-full max-w-lg">
+            <div className="mt-3 flex flex-col gap-4 md:flex-row">
+              {/* Avatar */}
+              <div className="flex flex-col items-center gap-2 md:w-1/3">
+                <img
+                  src={
+                    profile.avatarUrl ||
+                    "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=200&auto=format&fit=crop"
+                  }
+                  alt={profile.name}
+                  className="h-40 w-40 rounded-2xl bg-slate-100 object-cover"
+                />
+                <button
+                  type="button"
+                  className="rounded-full border border-slate-300 px-3 py-1 text-[11px] font-medium text-slate-700 hover:bg-slate-50"
+                >
+                  Đổi avatar
+                </button>
+                <p className="text-[10px] leading-snug text-slate-500 text-center">
+                  Nên dùng ảnh rõ mặt, nền sáng, phù hợp môi trường chuyên
+                  nghiệp.
+                </p>
+              </div>
 
+              {/* Fields */}
+              <div className="grid flex-1 grid-cols-2 gap-x-4 md:grid-cols-4 mx-auto w-full max-w-lg">
                 <div className="col-span-2">
                   <label className="block text-[11px] font-medium text-slate-700">
                     Họ và tên
@@ -129,7 +119,7 @@ export default function MentorProfile() {
                   </label>
                   <input
                     className="mt-1 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-sky-400 focus:bg-white focus:outline-none focus:ring-1 focus:ring-sky-400"
-                    value={profile.company ?? ""}
+                    value={profile.mentorProfile.jobTitle ?? ""}
                     onChange={(e) =>
                       handleInputChange("company", e.target.value)
                     }
@@ -140,7 +130,7 @@ export default function MentorProfile() {
                     .
                   </p>
                 </div>
-                 {/* ⭐ Average Rating */}
+                {/* ⭐ Average Rating */}
                 <div className="col-span-2 md:col-span-0 mx-auto w-full max-w-xs">
                   <label className="block text-[11px] font-medium text-slate-700">
                     Điểm đánh giá trung bình
@@ -185,7 +175,7 @@ export default function MentorProfile() {
                 <textarea
                   rows={3}
                   className="mt-1 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-sky-400 focus:bg-white focus:outline-none focus:ring-1 focus:ring-sky-400"
-                  value={profile.bio}
+                  value={profile.mentorProfile.bio}
                   onChange={(e) => handleInputChange("bio", e.target.value)}
                   placeholder='VD: "Hi, my name is Ruby! It&apos;s a pleasure to have you in my network!"'
                 />
@@ -214,7 +204,7 @@ export default function MentorProfile() {
                   </span>
                   <input
                     className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-sky-400 focus:bg-white focus:outline-none focus:ring-1 focus:ring-sky-400"
-                    value={profile.hourlyRate}
+                    value={profile.mentorProfile.hourlyRate}
                     onChange={(e) =>
                       handleInputChange("hourlyRate", e.target.value)
                     }
