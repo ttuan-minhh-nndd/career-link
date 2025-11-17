@@ -16,6 +16,7 @@ const path = {
   mentee_root: "/mentee",
   mentee_home: "/mentee/home",
   mentee_top_mentors: "/mentee/top-mentors",
+  mentee_mentors: "/mentee/mentors",
 
 
   get_mentors: "/api/v1/mentors",
