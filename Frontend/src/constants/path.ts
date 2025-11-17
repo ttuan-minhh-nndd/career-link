@@ -7,8 +7,9 @@ const path = {
   logout: "api/v1/auth/logout",
 
   // Users
-  mentee_profile: "/api/v1/users/me",
-  update_mentor_profile: "users/me/mentor-profile",
+  mentee_profile: "/api/v1/users/me/mentee",
+  mentor_profile: "/api/v1/users/me",
+  update_mentor_profile: "/api/v1/users/me/mentor-profile",
   booking: "/api/v1/bookings",
 
   // Mentee
@@ -27,7 +28,6 @@ const path = {
   mentor_root: "/mentor",
   mentor_home: "/mentor/home",
   mentor_feedback: "/mentor/feedback",
-  mentor_profile: "/api/v1/users/me/mentor-profile",
   mentor_notifications: "/mentor/notifications",
   mentor_my_sessions: "/mentor/my-sessions",
 
