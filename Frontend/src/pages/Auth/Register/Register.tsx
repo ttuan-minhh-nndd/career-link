@@ -46,9 +46,10 @@ export default function Register() {
       onSuccess: async (data) => {
         setIsAuthenticated(true);
         setTokenToLocalStorage(data.data.token);
-        const getMeResponse = await usersApi.getMe()
-        setProfile(getMeResponse.data.result)
-        navigate(path.home);
+        const getMeResponse = await usersApi.getMe();
+        setProfile(getMeResponse.data);
+        setProfileToLocalStorage(getMeResponse.data);
+        navigate(path.mentor_profile);
       },
       onError: (error) => {
         if (

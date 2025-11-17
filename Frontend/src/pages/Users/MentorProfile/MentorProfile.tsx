@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { AppContext } from "../../../../context/app.context";
 import path from "../../../constants/path";
 
 type MentorProfile = {
@@ -29,12 +31,9 @@ const initialMentorProfile: MentorProfile = {
 };
 
 export default function MentorProfile() {
-  const [profile, setProfile] = useState<MentorProfile>(initialMentorProfile);
+  const { profile, setProfile } = useContext(AppContext);
 
-  const handleInputChange = (
-    field: keyof MentorProfile,
-    value: string
-  ) => {
+  const handleInputChange = (field: keyof MentorProfile, value: string) => {
     setProfile((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -56,14 +55,16 @@ export default function MentorProfile() {
               Mentor Profile
             </h1>
             <p className="mt-1 text-xs text-slate-500">
-              Cập nhật thông tin hiển thị trên trang cá nhân và khi mentee đặt lịch.
+              Cập nhật thông tin hiển thị trên trang cá nhân và khi mentee đặt
+              lịch.
             </p>
           </div>
-        <Link to = {path.update_mentor_profile}
-          className="self-start md:self-auto rounded-full bg-gradient-to-r from-sky-600 to-indigo-600 px-4 py-2 text-xs font-semibold text-white shadow-sm hover:from-sky-700 hover:to-indigo-700"
-        >
-          Edit Profile
-        </Link>
+          <Link
+            to={path.update_mentor_profile}
+            className="self-start md:self-auto rounded-full bg-gradient-to-r from-sky-600 to-indigo-600 px-4 py-2 text-xs font-semibold text-white shadow-sm hover:from-sky-700 hover:to-indigo-700"
+          >
+            Edit Profile
+          </Link>
         </div>
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Card: Thông tin cơ bản */}
@@ -72,14 +73,15 @@ export default function MentorProfile() {
               Thông tin cá nhân & hiển thị
             </h2>
             <p className="mt-1 text-xs text-slate-500">
-              Thông tin này sẽ xuất hiện trên trang profile và trong trang đặt lịch.
+              Thông tin này sẽ xuất hiện trên trang profile và trong trang đặt
+              lịch.
             </p>
 
             <div className="mt-5 flex flex-col gap-6 md:flex-row">
               {/* Avatar */}
               <div className="flex flex-col items-center gap-3 md:w-1/3">
                 <img
-                  src={profile.avatar}
+                  src={profile.avatarUrl}
                   alt={profile.name}
                   className="h-90 w-0-90 rounded-2xl bg-slate-100 object-cover"
                 />
@@ -87,10 +89,11 @@ export default function MentorProfile() {
                   type="button"
                   className="rounded-full border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50"
                 >
-                  Đổi avatar 
+                  Đổi avatar
                 </button>
                 <p className="text-[11px] text-slate-500 text-center">
-                  Nên dùng ảnh rõ mặt, nền sáng, phù hợp môi trường chuyên nghiệp.
+                  Nên dùng ảnh rõ mặt, nền sáng, phù hợp môi trường chuyên
+                  nghiệp.
                 </p>
               </div>
 
@@ -103,9 +106,7 @@ export default function MentorProfile() {
                   <input
                     className="mt-1 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-sky-400 focus:bg-white focus:outline-none focus:ring-1 focus:ring-sky-400"
                     value={profile.name}
-                    onChange={(e) =>
-                      handleInputChange("name", e.target.value)
-                    }
+                    onChange={(e) => handleInputChange("name", e.target.value)}
                   />
                 </div>
 
@@ -128,7 +129,7 @@ export default function MentorProfile() {
                   <label className="block text-xs font-medium text-slate-700">
                     Chức danh / Job Title
                   </label>
-                    <input
+                  <input
                     className="mt-1 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-sky-400 focus:bg-white focus:outline-none focus:ring-1 focus:ring-sky-400"
                     value={profile.company ?? ""}
                     onChange={(e) =>
@@ -136,7 +137,9 @@ export default function MentorProfile() {
                     }
                   />
                   <p className="mt-1 text-[11px] text-slate-500">
-                    Ví dụ: {`"PhD, Senior Lecturer in Digital Marketing @ International University, VNU-HCMC"`}.
+                    Ví dụ:{" "}
+                    {`"PhD, Senior Lecturer in Digital Marketing @ International University, VNU-HCMC"`}
+                    .
                   </p>
                 </div>
 
@@ -176,7 +179,8 @@ export default function MentorProfile() {
               Giới thiệu & chuyên môn
             </h2>
             <p className="mt-1 text-xs text-slate-500">
-              Phần này giúp mentee hiểu rõ hơn về background và phong cách mentoring của bạn.
+              Phần này giúp mentee hiểu rõ hơn về background và phong cách
+              mentoring của bạn.
             </p>
 
             <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -188,9 +192,7 @@ export default function MentorProfile() {
                   rows={3}
                   className="mt-1 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-sky-400 focus:bg-white focus:outline-none focus:ring-1 focus:ring-sky-400"
                   value={profile.bio}
-                  onChange={(e) =>
-                    handleInputChange("bio", e.target.value)
-                  }
+                  onChange={(e) => handleInputChange("bio", e.target.value)}
                   placeholder='VD: "Hi, my name is Ruby! It&apos;s a pleasure to have you in my network!"'
                 />
               </div>
@@ -217,7 +219,8 @@ export default function MentorProfile() {
               Thông tin mentoring & mức phí
             </h2>
             <p className="mt-1 text-xs text-slate-500">
-              Thiết lập mức phí mỗi giờ để hiển thị trên profile & khi mentee đặt lịch.
+              Thiết lập mức phí mỗi giờ để hiển thị trên profile & khi mentee
+              đặt lịch.
             </p>
 
             <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3">
@@ -239,7 +242,8 @@ export default function MentorProfile() {
                   />
                 </div>
                 <p className="mt-1 text-[11px] text-slate-500">
-                  Giá hiển thị theo giờ. Hệ thống sẽ tính phí theo thời lượng từng buổi.
+                  Giá hiển thị theo giờ. Hệ thống sẽ tính phí theo thời lượng
+                  từng buổi.
                 </p>
               </div>
             </div>

@@ -1,7 +1,23 @@
-import { SuccessResponse } from "./response.types";
-import { User } from "./user.types";
+export interface MentorProfile {
+  bio: string;
+  jobTitle: string;
+  hourlyRate: string;
+  averageRating: string;
+  totalReviews: number;
+}
 
-export type GetMeResponse = SuccessResponse<User>;
+export interface GetMeResponse {
+  id: number;
+  name: string;
+  email: string;
+  role: "mentor" | "mentee";
+  avatarUrl: string | null;
+  createdAt: string;
+  updatedAt: string;
+
+  // Only exists if role === "mentor"
+  mentorProfile?: MentorProfile;
+}
 
 export type AuthResponse = {
   user: {

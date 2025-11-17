@@ -18,7 +18,12 @@ export const registerSchema = yup.object({
     .oneOf(["mentee", "mentor"], "Role must be mentee or mentor"),
 });
 
+export const loginSchema = yup.object({
+  email: yup.string().required("Email is required"),
+  password: yup.string().required("Password is required"),
+});
 
 // --- TYPES ---
 export type RegisterSchema = Required<yup.InferType<typeof registerSchema>>;
+export type LoginSchema = Required<yup.InferType<typeof loginSchema>>;
 
