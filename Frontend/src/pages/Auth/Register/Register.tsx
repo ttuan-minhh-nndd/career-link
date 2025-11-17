@@ -13,12 +13,13 @@ import { useForm } from "react-hook-form";
 import { isAxiosUnprocessableEntityError } from "../../../utils/format";
 import {
   ErrorResponse,
-  ValidationErrorResponse,
+  ValidationErrorList,
 } from "../../../types/response.types";
 
 import usersApi from "../../../apis/auth.api";
 import path from "../../../constants/path";
 import Input from "../../../components/Input/Input";
+import { HttpStatusCode } from "axios";
 
 export default function Register() {
   const { setIsAuthenticated, setProfile } = useContext(AppContext);
@@ -44,26 +45,46 @@ export default function Register() {
     registerAccountMutation.mutate(data, {
       onSuccess: async (data) => {
         setIsAuthenticated(true);
-        setTokenToLocalStorage(data.data.result.token);
+        setTokenToLocalStorage(data.data.token);
         const getMeResponse = await usersApi.getMe();
-        setProfile(getMeResponse.data.result);
-        setProfileToLocalStorage(getMeResponse.data.result);
-        navigate(path.home);
+        setProfile(getMeResponse.data);
+        setProfileToLocalStorage(getMeResponse.data);
+        navigate(path.mentor_profile);
       },
       onError: (error) => {
         if (
-          isAxiosUnprocessableEntityError<
-            ErrorResponse<ValidationErrorResponse>
-          >(error)
+          isAxiosUnprocessableEntityError<ErrorResponse<ValidationErrorList>>(
+            error
+          )
         ) {
-          const formError = error.response?.data.errors;
-          if (formError) {
-            Object.keys(formError).forEach((key) => {
-              setError(key as keyof RegisterSchema, {
-                message: formError[key].msg,
+          const status = error.response?.status;
+          const data = error.response
+            ?.data as ErrorResponse<ValidationErrorList>;
+
+          switch (status) {
+            // 422 → field errors
+            case HttpStatusCode.UnprocessableEntity:
+              if (Array.isArray(data.errors)) {
+                data.errors.forEach((err) => {
+                  setError(err.field as keyof RegisterSchema, {
+                    type: "Server",
+                    message: err.message,
+                  });
+                });
+              }
+              break;
+
+            // 409 → "User already exists"
+            case HttpStatusCode.Conflict:
+              setError("email", {
                 type: "Server",
+                message: data.message,
               });
-            });
+              break;
+
+            // fallback → unknown
+            default:
+              console.error("Unexpected error", data);
           }
         }
       },
@@ -134,7 +155,7 @@ export default function Register() {
                     placeholder="you@example.com"
                     register={register}
                     className="w-full rounded-xl border border-slate-200 bg-white px-9 py-2.5 text-sm shadow-sm outline-none ring-sky-100 transition focus:border-sky-300 focus:ring-4 dark:border-slate-700 dark:bg-slate-900/70 dark:text-slate-100 dark:placeholder-slate-500"
-                    errorMessages={errors.name?.message}
+                    errorMessages={errors.email?.message}
                   />
 
                   {/* <input
@@ -154,12 +175,12 @@ export default function Register() {
                   </div>
                   <Input<RegisterSchema>
                     id="password"
-                    name="email"
+                    name="password"
                     type="password"
                     placeholder="Nhập mật khẩu"
                     register={register}
                     className="w-full rounded-xl border border-slate-200 bg-white px-9 py-2.5 text-sm shadow-sm outline-none ring-sky-100 transition focus:border-sky-300 focus:ring-4 dark:border-slate-700 dark:bg-slate-900/70 dark:text-slate-100 dark:placeholder-slate-500"
-                    errorMessages={errors.name?.message}
+                    errorMessages={errors.password?.message}
                   />
                 </div>
                 <div className="relative">
@@ -179,10 +200,22 @@ export default function Register() {
                 <label className="text-sm font-medium text-slate-700 dark:text-slate-200">
                   Đăng ký với vai trò
                 </label>
-                <select className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm outline-none transition focus:border-sky-300 focus:ring-4 focus:ring-sky-100 dark:border-slate-700 dark:bg-slate-900/70 dark:text-slate-100 dark:focus:ring-sky-900">
+                <select
+                  {...register("role")}
+                  defaultValue=""
+                  className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm outline-none transition focus:border-sky-300 focus:ring-4 focus:ring-sky-100 dark:border-slate-700 dark:bg-slate-900/70 dark:text-slate-100 dark:focus:ring-sky-900"
+                >
+                  <option value="" disabled>
+                    Chọn vai trò
+                  </option>
                   <option value="mentee">Mentee</option>
                   <option value="mentor">Mentor</option>
                 </select>
+                {errors.role && (
+                  <p className="mt-1 text-xs text-red-500">
+                    {errors.role.message}
+                  </p>
+                )}
               </div>
 
               {/* Button */}
