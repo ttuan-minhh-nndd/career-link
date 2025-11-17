@@ -59,10 +59,10 @@ export default function MentorProfile() {
               Cập nhật thông tin hiển thị trên trang cá nhân và khi mentee đặt lịch.
             </p>
           </div>
-        <Link to = {path.update_mentor_profile}
+        <Link to={path.mentor_profile}
           className="self-start md:self-auto rounded-full bg-gradient-to-r from-sky-600 to-indigo-600 px-4 py-2 text-xs font-semibold text-white shadow-sm hover:from-sky-700 hover:to-indigo-700"
         >
-          Edit Profile
+          Cancel
         </Link>
         </div>
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -120,7 +120,7 @@ export default function MentorProfile() {
                     disabled
                   />
                   <p className="mt-1 text-[11px] text-slate-500">
-                    Email được dùng để đăng nhập & nhận thông báo từ mentee.
+                    Email được dùng để đăng nhập     & nhận thông báo từ mentee.
                   </p>
                 </div>
 
@@ -244,6 +244,16 @@ export default function MentorProfile() {
               </div>
             </div>
           </section>
+
+          {/* Actions */}
+          <div className="flex items-center justify-end gap-3 pt-2">
+            <button
+              type="submit"
+              className="rounded-full bg-gradient-to-r from-sky-600 to-indigo-600 px-5 py-2 text-xs font-semibold text-white shadow-sm hover:from-sky-700 hover:to-indigo-700"
+            >
+              Lưu thay đổi
+            </button>
+          </div>
         </form>
       </section>
     </main>

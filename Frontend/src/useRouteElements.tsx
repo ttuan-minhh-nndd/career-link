@@ -18,8 +18,10 @@ import GuestAbout from "./pages/About";
 import Mentors from "./pages/Mentors";
 import MentorDetail from "./pages/MentorDetails";
 
+import UpdateProfile from "./pages/Users/UpdateProfile";
+
 // --- Mentee pages ---
-import MenteeHome from "./pages/mentee/Home";
+import MenteeHome from "./pages/Users/Dashboard";
 import Booking from "./pages/mentee/Booking";
 import MenteeSessions from "./pages/mentee/MySession";
 import MenteeNotification from "./pages/mentee/MenteeNotification";
@@ -59,7 +61,6 @@ export default function useRouteElements() {
         { path: path.mentee_profile, element: <Profile /> },
         { path: path.mentee_notifications, element: <MenteeNotification /> },
 
-        // { path: "top-mentors", element: <TopMentors /> },
       ],
     },
 
@@ -70,9 +71,8 @@ export default function useRouteElements() {
       children: [
         { index: true, element: <MentorDashboard /> },
         { path: path.mentor_home, element: <MentorDashboard /> },
-        // { path: "feedback", element: <Feedback /> },
         { path: path.mentor_profile, element: <MentorProfile /> },
-        // { path: "wallet", element: <Wallet /> },
+        { path: path.update_mentor_profile, element: <UpdateProfile /> },        
         { path: path.mentor_my_sessions, element: <MentorSessions  /> },
       ],
     },
