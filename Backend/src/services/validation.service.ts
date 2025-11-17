@@ -27,24 +27,24 @@ export const validateRegistration = (data: {
   const errors: ValidationError[] = [];
 
   if (!data.name || data.name.trim().length === 0) {
-    errors.push({ field: 'name', message: 'Name is required' });
+    errors.push({ field: "name", message: "Name is required" });
   }
 
   if (!data.email || data.email.trim().length === 0) {
-    errors.push({ field: 'email', message: 'Email is required' });
+    errors.push({ field: "email", message: "Email is required" });
   } else if (!isValidEmail(data.email)) {
-    errors.push({ field: 'email', message: 'Email is invalid' });
+    errors.push({ field: "email", message: "Email is invalid" });
   }
 
   if (!data.password || data.password.length < 6) {
     errors.push({
-      field: 'password',
-      message: 'Password must be at least 6 characters',
+      field: "password",
+      message: "Password must be at least 6 characters",
     });
   }
 
-  if (!data.role || !['mentee', 'mentor'].includes(data.role)) {
-    errors.push({ field: 'role', message: 'Role must be mentee or mentor' });
+  if (!data.role || !["mentee", "mentor"].includes(data.role)) {
+    errors.push({ field: "role", message: "Role must be mentee or mentor" });
   }
 
   return errors;
@@ -60,11 +60,11 @@ export const validateLogin = (data: {
   const errors: ValidationError[] = [];
 
   if (!data.email || data.email.trim().length === 0) {
-    errors.push({ field: 'email', message: 'Email is required' });
+    errors.push({ field: "email", message: "Email is required" });
   }
 
   if (!data.password || data.password.trim().length === 0) {
-    errors.push({ field: 'password', message: 'Password is required' });
+    errors.push({ field: "password", message: "Password is required" });
   }
 
   return errors;
@@ -84,24 +84,24 @@ export const validateProfileUpdate = (data: {
 
   // If 'name' is provided, it must not be empty
   if (data.name !== undefined && data.name.trim().length === 0) {
-    errors.push({ field: 'name', message: 'Name cannot be empty' });
+    errors.push({ field: "name", message: "Name cannot be empty" });
   }
 
   // If 'email' is provided, it must be valid
   if (data.email !== undefined) {
     if (data.email.trim().length === 0) {
-      errors.push({ field: 'email', message: 'Email cannot be empty' });
+      errors.push({ field: "email", message: "Email cannot be empty" });
     } else if (!isValidEmail(data.email)) {
-      errors.push({ field: 'email', message: 'Email is invalid' });
+      errors.push({ field: "email", message: "Email is invalid" });
     }
   }
-  
+
   // A simple check for avatarUrl. You could make this more robust.
   if (data.avatarUrl !== undefined && data.avatarUrl.trim().length > 0) {
     try {
       new URL(data.avatarUrl);
     } catch (error) {
-      errors.push({ field: 'avatarUrl', message: 'Avatar URL is not valid' });
+      errors.push({ field: "avatarUrl", message: "Avatar URL is not valid" });
     }
   }
 
@@ -120,13 +120,13 @@ export const validatePasswordChange = (data: {
   const errors: ValidationError[] = [];
 
   if (!data.oldPassword || data.oldPassword.trim().length === 0) {
-    errors.push({ field: 'oldPassword', message: 'Old password is required' });
+    errors.push({ field: "oldPassword", message: "Old password is required" });
   }
 
   if (!data.newPassword || data.newPassword.length < 6) {
     errors.push({
-      field: 'newPassword',
-      message: 'New password must be at least 6 characters',
+      field: "newPassword",
+      message: "New password must be at least 6 characters",
     });
   }
 
@@ -146,13 +146,13 @@ export const validateMentorProfileUpdate = (data: {
   const errors: ValidationError[] = [];
 
   // If 'bio' is provided, it should be a string
-  if (data.bio !== undefined && typeof data.bio !== 'string') {
-    errors.push({ field: 'bio', message: 'Bio must be a string' });
+  if (data.bio !== undefined && typeof data.bio !== "string") {
+    errors.push({ field: "bio", message: "Bio must be a string" });
   }
 
   // If 'jobTitle' is provided, it should be a string
-  if (data.jobTitle !== undefined && typeof data.jobTitle !== 'string') {
-    errors.push({ field: 'jobTitle', message: 'Job title must be a string' });
+  if (data.jobTitle !== undefined && typeof data.jobTitle !== "string") {
+    errors.push({ field: "jobTitle", message: "Job title must be a string" });
   }
 
   // If 'hourlyRate' is provided, it must be a valid positive number
@@ -160,7 +160,7 @@ export const validateMentorProfileUpdate = (data: {
     const rate = parseFloat(data.hourlyRate);
     if (isNaN(rate) || rate < 0) {
       errors.push({
-        field: 'hourlyRate',
+        field: "hourlyRate",
         message: 'Hourly rate must be a positive number (e.g., "50.00")',
       });
     }
@@ -180,15 +180,15 @@ export const validateAddExpertise = (data: {
   const errors: ValidationError[] = [];
 
   if (!data.tagId) {
-    errors.push({ field: 'tagId', message: 'tagId is required' });
+    errors.push({ field: "tagId", message: "tagId is required" });
   } else if (
-    typeof data.tagId !== 'number' ||
+    typeof data.tagId !== "number" ||
     !Number.isInteger(data.tagId) ||
     data.tagId <= 0
   ) {
     errors.push({
-      field: 'tagId',
-      message: 'tagId must be a positive integer',
+      field: "tagId",
+      message: "tagId must be a positive integer",
     });
   }
 
@@ -207,25 +207,25 @@ export const validateUpdateAvailability = (data: {
   const errors: ValidationError[] = [];
 
   if (!data.startTime) {
-    errors.push({ field: 'startTime', message: 'startTime is required' });
+    errors.push({ field: "startTime", message: "startTime is required" });
   } else {
     const d = new Date(data.startTime);
     if (isNaN(d.getTime())) {
       errors.push({
-        field: 'startTime',
-        message: 'startTime must be a valid ISO 8601 timestamp',
+        field: "startTime",
+        message: "startTime must be a valid ISO 8601 timestamp",
       });
     }
   }
 
   if (!data.endTime) {
-    errors.push({ field: 'endTime', message: 'endTime is required' });
+    errors.push({ field: "endTime", message: "endTime is required" });
   } else {
     const d = new Date(data.endTime);
     if (isNaN(d.getTime())) {
       errors.push({
-        field: 'endTime',
-        message: 'endTime must be a valid ISO 8601 timestamp',
+        field: "endTime",
+        message: "endTime must be a valid ISO 8601 timestamp",
       });
     }
   }
@@ -235,7 +235,10 @@ export const validateUpdateAvailability = (data: {
     const s = new Date(data.startTime);
     const e = new Date(data.endTime);
     if (!isNaN(s.getTime()) && !isNaN(e.getTime()) && e <= s) {
-      errors.push({ field: 'endTime', message: 'endTime must be after startTime' });
+      errors.push({
+        field: "endTime",
+        message: "endTime must be after startTime",
+      });
     }
   }
 
@@ -257,21 +260,21 @@ export const validateBulkAvailabilities = (data: {
 
   // Check if slots is provided
   if (!data.slots) {
-    errors.push({ field: 'slots', message: 'slots array is required' });
+    errors.push({ field: "slots", message: "slots array is required" });
     return errors;
   }
 
   // Check if slots is an array
   if (!Array.isArray(data.slots)) {
-    errors.push({ field: 'slots', message: 'slots must be an array' });
+    errors.push({ field: "slots", message: "slots must be an array" });
     return errors;
   }
 
   // Check if slots is not empty
   if (data.slots.length === 0) {
     errors.push({
-      field: 'slots',
-      message: 'slots array must contain at least one slot',
+      field: "slots",
+      message: "slots array must contain at least one slot",
     });
     return errors;
   }
@@ -283,12 +286,12 @@ export const validateBulkAvailabilities = (data: {
     if (!slot.startTime) {
       errors.push({
         field: `slots[${i}].startTime`,
-        message: 'startTime is required',
+        message: "startTime is required",
       });
-    } else if (typeof slot.startTime !== 'string') {
+    } else if (typeof slot.startTime !== "string") {
       errors.push({
         field: `slots[${i}].startTime`,
-        message: 'startTime must be a string',
+        message: "startTime must be a string",
       });
     } else {
       const startDate = new Date(slot.startTime);
@@ -296,7 +299,7 @@ export const validateBulkAvailabilities = (data: {
         errors.push({
           field: `slots[${i}].startTime`,
           message:
-            'startTime must be a valid ISO 8601 timestamp (e.g., 2025-12-01T14:00:00Z)',
+            "startTime must be a valid ISO 8601 timestamp (e.g., 2025-12-01T14:00:00Z)",
         });
       }
     }
@@ -304,12 +307,12 @@ export const validateBulkAvailabilities = (data: {
     if (!slot.endTime) {
       errors.push({
         field: `slots[${i}].endTime`,
-        message: 'endTime is required',
+        message: "endTime is required",
       });
-    } else if (typeof slot.endTime !== 'string') {
+    } else if (typeof slot.endTime !== "string") {
       errors.push({
         field: `slots[${i}].endTime`,
-        message: 'endTime must be a string',
+        message: "endTime must be a string",
       });
     } else {
       const endDate = new Date(slot.endTime);
@@ -317,7 +320,7 @@ export const validateBulkAvailabilities = (data: {
         errors.push({
           field: `slots[${i}].endTime`,
           message:
-            'endTime must be a valid ISO 8601 timestamp (e.g., 2025-12-01T15:00:00Z)',
+            "endTime must be a valid ISO 8601 timestamp (e.g., 2025-12-01T15:00:00Z)",
         });
       }
     }
@@ -325,9 +328,9 @@ export const validateBulkAvailabilities = (data: {
     // If both timestamps are valid, check that endTime is after startTime
     if (
       slot.startTime &&
-      typeof slot.startTime === 'string' &&
+      typeof slot.startTime === "string" &&
       slot.endTime &&
-      typeof slot.endTime === 'string'
+      typeof slot.endTime === "string"
     ) {
       const startDate = new Date(slot.startTime);
       const endDate = new Date(slot.endTime);
@@ -336,7 +339,7 @@ export const validateBulkAvailabilities = (data: {
         if (endDate <= startDate) {
           errors.push({
             field: `slots[${i}]`,
-            message: 'endTime must be after startTime',
+            message: "endTime must be after startTime",
           });
         }
       }

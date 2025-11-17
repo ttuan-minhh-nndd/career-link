@@ -1,4 +1,10 @@
-export type EventCard = { id: number; date: string; title: string; meta: string; trending?: boolean };
+export type EventCard = {
+  id: number;
+  date: string;
+  title: string;
+  meta: string;
+  trending?: boolean;
+};
 
 export const EventsAPI = {
   async listExplore(): Promise<EventCard[]> {

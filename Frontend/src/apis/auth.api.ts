@@ -1,11 +1,11 @@
-import type { AuthResponse } from '../types/auth.types'
-import http from '../utils/http'
+import { AuthResponse } from "../types/auth.types";
+import http from "../http";
 
 export interface RegisterRequest {
   name: string;
   email: string;
   password: string;
-  confirm_password: string;
+  role: string;
 }
 
 export interface LoginRequest {
@@ -13,16 +13,19 @@ export interface LoginRequest {
   password: string;
 }
 
-const authApi = {
+const usersApi = {
   registerAccount: (body: RegisterRequest) => {
-    return http.post<AuthResponse>('/users/register', body)
+    return http.post<AuthResponse>("/api/v1/auth/register", body);
   },
   loginAccount: (body: LoginRequest) => {
-    return http.post<AuthResponse>('/users/login', body)
+    return http.post<AuthResponse>("/api/v1/auth/register", body);
   },
   logout: () => {
-    return http.post('/users/logout')
-  }
-}
+    return http.post("/api/v1/auth/logout");
+  },
+  getMe: () => {
+    return http.get("/api/v1/users/me");
+  },
+};
 
-export default authApi
+export default usersApi;
