@@ -109,6 +109,16 @@ export default function MentorNavHeader() {
             Trang chủ
           </NavLink>
 
+          <NavLink
+            to={path.mentor_my_sessions}
+            className={({ isActive }) =>
+              isActive
+                ? "text-sm font-medium text-sky-600"
+                : "text-sm font-medium text-slate-600 hover:text-slate-900"
+            }
+          >
+            My sessions
+          </NavLink>
 
         </div>
 
@@ -298,12 +308,6 @@ export default function MentorNavHeader() {
 
             {openProfileMenu && (
               <div className="absolute right-0 mt-2 bg-white rounded-xl shadow-lg ring-1 ring-slate-100 w-48 py-2 text-sm">
-                <Link
-                  to={path.mentor_my_sessions}
-                  className="block px-3 py-2 hover:bg-slate-50"
-                >
-                  My sessions
-                </Link>
                 <Link
                   to={path.mentor_profile}
                   className="block px-3 py-2 hover:bg-slate-50"
