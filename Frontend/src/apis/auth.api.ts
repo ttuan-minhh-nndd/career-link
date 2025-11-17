@@ -24,7 +24,7 @@ const usersApi = {
     return http.post("/api/v1/auth/logout");
   },
   getMe: () => {
-    return http.get("/api/v1/users/me");
+    return http.get<AuthResponse>("/api/v1/users/me");
   },
 };
 
