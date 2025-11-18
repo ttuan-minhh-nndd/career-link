@@ -4,22 +4,10 @@ import { useContext } from "react";
 import { AppContext } from "../../../../context/app.context";
 import path from "../../../constants/path";
 
-type MentorProfile = {
-  name: string;
-  email: string;
-  avatar: string;
-  jobTitle: string;
-  bio: string;
-  hourlyRate: string;
-  company?: string;
-  expertise?: string;
-  yearsOfExperience?: string;
-};
-
 export default function MentorProfile() {
   const { profile, setProfile } = useContext(AppContext);
 
-  const handleInputChange = (field: keyof MentorProfile, value: string) => {
+  const handleInputChange = (field: keyof typeof profile, value: string) => {
     setProfile((prev) => ({ ...prev, [field]: value }));
   };
 

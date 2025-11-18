@@ -10,10 +10,10 @@ export type Mentor = {
   avatarUrl: string | null;
   bio: string | null;
   jobTitle: string | null;
-  hourlyRate: string;       // "69.00" | "0.00" ...
-  averageRating: string;    // "4.80" | "0.00" ...
+  hourlyRate: string;
+  averageRating: string;
   totalReviews: number;
-  expertiseTags: string[];
+  expertiseTags: number[];
 };
 
 export default function MentorCard({ mentor }: { mentor: Mentor }) {

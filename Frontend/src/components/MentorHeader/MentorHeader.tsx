@@ -1,9 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { clearLocalStorage } from "../../utils/auth";
+import { AppContext } from "../../../context/app.context";
 
 import Logo from "../Logo";
 import SearchButton from "../SearchButton";
 import path from "../../constants/path";
+import usersApi from "../../apis/auth.api";
+import { useMutation } from "@tanstack/react-query";
 
 type NotificationType =
   | "new_request"
@@ -25,8 +29,7 @@ const seedNotifications: NotificationItem[] = [
     id: 1,
     type: "new_request",
     title: "Mentee mới gửi yêu cầu",
-    message:
-      "Nguyễn Hoàng Minh vừa gửi yêu cầu mentoring về Java Backend.",
+    message: "Nguyễn Hoàng Minh vừa gửi yêu cầu mentoring về Java Backend.",
     createdAt: "2025-11-15T09:30:00.000Z",
     isRead: false,
   },
@@ -42,8 +45,7 @@ const seedNotifications: NotificationItem[] = [
     id: 3,
     type: "session_feedback",
     title: "Mentee đã gửi đánh giá",
-    message:
-      "Mentee Trần Quốc Dũng đã để lại đánh giá cho buổi học gần đây.",
+    message: "Mentee Trần Quốc Dũng đã để lại đánh giá cho buổi học gần đây.",
     createdAt: "2025-11-10T15:00:00.000Z",
     isRead: true,
   },
@@ -53,6 +55,20 @@ export default function MentorNavHeader() {
   const [openProfileMenu, setOpenProfileMenu] = useState(false);
   const [openNotifMenu, setOpenNotifMenu] = useState(false);
   const [openSearchMenu, setOpenSearchMenu] = useState(false);
+  const { setIsAuthenticated, setProfile, profile, isAuthenticated } =
+    useContext(AppContext);
+
+  const logoutMutation = useMutation({
+    mutationFn: () => usersApi.logout(),
+    onSuccess: () => {
+      clearLocalStorage();
+      setIsAuthenticated(false);
+      setProfile(null);
+    },
+  });
+  const handleLogout = () => {
+    logoutMutation.mutate();
+  };
 
   const [notifications, setNotifications] =
     useState<NotificationItem[]>(seedNotifications);
@@ -119,7 +135,6 @@ export default function MentorNavHeader() {
           >
             My sessions
           </NavLink>
-
         </div>
 
         {/* RIGHT */}
@@ -315,12 +330,12 @@ export default function MentorNavHeader() {
                   My account
                 </Link>
 
-                <Link
-                  to={path.logout}
+                <button
+                  onClick={handleLogout}
                   className="block px-3 py-2 hover:bg-slate-50"
                 >
                   Log out
-                </Link>
+                </button>
               </div>
             )}
           </div>
@@ -337,20 +352,12 @@ function NotificationIcon({ type }: { type: NotificationType }) {
 
   switch (type) {
     case "new_request":
-      return (
-        <span className={`${base} bg-indigo-50 text-indigo-600`}>+</span>
-      );
+      return <span className={`${base} bg-indigo-50 text-indigo-600`}>+</span>;
     case "session_reminder":
-      return (
-        <span className={`${base} bg-sky-50 text-sky-600`}>⏰</span>
-      );
+      return <span className={`${base} bg-sky-50 text-sky-600`}>⏰</span>;
     case "session_feedback":
-      return (
-        <span className={`${base} bg-amber-50 text-amber-600`}>★</span>
-      );
+      return <span className={`${base} bg-amber-50 text-amber-600`}>★</span>;
     default:
-      return (
-        <span className={`${base} bg-slate-100 text-slate-500`}>ℹ</span>
-      );
+      return <span className={`${base} bg-slate-100 text-slate-500`}>ℹ</span>;
   }
 }
