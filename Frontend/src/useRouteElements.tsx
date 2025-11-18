@@ -12,13 +12,18 @@ import MentorLayout from "./layouts/MentorLayout";
 // --- Authentication pages ---
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
+
 // -- User pages ---
 import Profile from "./pages/Users/MenteeProfile";
 import UpdateProfile from "./pages/Users/UpdateProfile";
+
 //-- Get mentor data page
 import Mentors from "./pages/MentorData/Mentors";
 import MentorDetail from "./pages/MentorData/MentorDetails";
 
+// -- Availability pages --
+import MentorSessions from "./pages/Availability/MySessions";
+import CreateSession from "./pages/Availability/CreateSession";
 
 // --- Mentee pages ---
 import MenteeHome from "./pages/Users/Dashboard";
@@ -28,7 +33,7 @@ import MenteeNotification from "./pages/mentee/MenteeNotification";
 // --- Mentor pages ---
 import MentorDashboard from "./pages/mentor/Dashboard";
 import MentorProfile from "./pages/Users/MentorProfile";
-import MentorSessions from "./pages/mentor/MySessions";
+
 // import Feedback from "./pages/mentor/Feedback/Feedback";
 
 
@@ -74,6 +79,7 @@ export default function useRouteElements() {
         { path: path.mentor_profile, element: <MentorProfile /> },
         { path: path.update_mentor_profile, element: <UpdateProfile /> },        
         { path: path.mentor_my_sessions, element: <MentorSessions  /> },
+        { path: path.create_session, element: <CreateSession /> },
       ],
     },
   ]);
