@@ -187,10 +187,6 @@ export default function MentorChatWidget({
                 ➤
               </button>
             </div>
-            <p className="mt-1 text-[10px] text-slate-400">
-              Đây là bản demo UI. Sau này sẽ kết nối với chat thật / session thực
-              tế.
-            </p>
           </div>
         </div>
       )}
