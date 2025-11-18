@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import path from "../../../constants/path";
+import { useState } from "react";
 
 export default function Booking() {
+  const [date, setDate] = useState("2025-01-31");
   return (
     <section className="mx-auto max-w-5xl px-4 py-12">
       {/* Top bar */}
@@ -47,13 +49,7 @@ export default function Booking() {
             <div className="mb-3 text-sm font-semibold text-slate-900">
               Tóm tắt booking
             </div>
-            <div className="space-y-2 text-sm">
-              <div className="flex items-center justify-between">
-                <span>Loại phiên</span>
-                <span className="font-medium text-slate-800">
-                  1:1 Mentoring
-                </span>
-              </div>
+            <div className="space-y-2 text-sm"> 
               <div className="flex items-center justify-between">
                 <span>Thời lượng dự kiến</span>
                 <span className="font-medium text-slate-800">60 phút</span>
@@ -69,13 +65,6 @@ export default function Booking() {
               <div className="flex items-center justify-between text-base">
               </div>
             </div>
-            <p className="mt-3 text-xs text-slate-500">
-              Sau khi bạn bấm <span className="font-semibold">Tạo booking</span>, hệ
-              thống sẽ tạo một booking mới với trạng thái{" "}
-              <span className="font-mono text-[11px]">"pending"</span> cùng{" "}
-              <span className="font-mono text-[11px]">sessionPrice</span> từ
-              backend.
-            </p>
           </div>
 
           {/* Bảo đảm / lưu ý */}
@@ -94,7 +83,7 @@ export default function Booking() {
                   1
                 </span>
                 <span className="font-semibold text-slate-900">
-                  Chọn lịch & slot (availability)
+                  Chọn lịch & slot 
                 </span>
               </div>
               <div className="h-px flex-1 bg-slate-200" />
@@ -102,7 +91,7 @@ export default function Booking() {
                 <span className="flex h-6 w-6 items-center justify-center rounded-full bg-slate-200 text-slate-600">
                   2
                 </span>
-                <span>Xác nhận booking (pending)</span>
+                <span>Xác nhận booking </span>
               </div>
             </div>
 
@@ -113,9 +102,11 @@ export default function Booking() {
                   Ngày
                 </label>
                 <input
-                  type="date"
-                  className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm"
-                />
+                    type="date"
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                    className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm"
+                  />
               </div>
               <div>
                 <label className="mb-1 block text-sm font-medium text-slate-700">
@@ -126,85 +117,14 @@ export default function Booking() {
                   className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm"
                 />
               </div>
-              <div>
+               <div>
                 <label className="mb-1 block text-sm font-medium text-slate-700">
-                  Thời lượng
+                  Giờ kết thúc
                 </label>
-                <select className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm">
-                  <option>30 phút</option>
-                  <option>45 phút</option>
-                  <option>60 phút</option>
-                </select>
-              </div>
-              <div>
-                <label className="mb-1 block text-sm font-medium text-slate-700">
-                  Loại phiên
-                </label>
-                <select className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm">
-                  <option>1:1 Mentoring</option>
-                  <option>Review CV/Portfolio</option>
-                  <option>Mock Interview</option>
-                </select>
-              </div>
-            </div>
-
-            {/* Note */}
-            <div className="mt-4">
-              <div className="mb-1 flex items-center justify-between">
-                <label className="block text-sm font-medium text-slate-700">
-                  Ghi chú cho mentor (tuỳ chọn)
-                </label>
-              </div>
-              <textarea
-                className="h-28 w-full resize-none rounded-xl border border-slate-200 px-3 py-2 text-sm"
-                placeholder="Mục tiêu buổi tư vấn, background, câu hỏi chính…"
-              />
-            </div>
-
-            {/* Contact info (UI only) */}
-            <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <div>
-                <div className="mb-1 flex items-center justify-between">
-                  <label className="block text-sm font-medium text-slate-700">
-                    Họ và tên
-                  </label>
-                  <span className="text-xs text-slate-400">UI-only</span>
-                </div>
                 <input
+                  type="time"
                   className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm"
-                  placeholder="Nguyễn Văn A"
                 />
-              </div>
-              <div>
-                <div className="mb-1 flex items-center justify-between">
-                  <label className="block text-sm font-medium text-slate-700">
-                    Email nhận xác nhận
-                  </label>
-                  <span className="text-xs text-slate-400">UI-only</span>
-                </div>
-                <input
-                  className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm"
-                  placeholder="email@domain.com"
-                />
-              </div>
-            </div>
-
-            {/* Payment info (chỉ mô tả, không phải bước thanh toán) */}
-            <div className="mt-6">
-              <div className="mb-1 flex items-center justify-between">
-                <div className="text-sm font-semibold text-slate-900">
-                  Thông tin thanh toán
-                </div>
-              </div>
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                <label className="flex cursor-not-allowed items-center gap-3 rounded-xl border border-dashed border-slate-200 p-3 text-slate-400">
-                  <input type="radio" name="pay" disabled />
-                  <span className="text-sm">Momo</span>
-                </label>
-                <label className="flex cursor-not-allowed items-center gap-3 rounded-xl border border-dashed border-slate-200 p-3 text-slate-400">
-                  <input type="radio" name="pay" disabled />
-                  <span className="text-sm">Zalopay</span>
-                </label>
               </div>
             </div>
 

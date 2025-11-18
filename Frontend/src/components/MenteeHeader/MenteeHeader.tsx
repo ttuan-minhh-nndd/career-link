@@ -317,6 +317,13 @@ export default function MenteeNavHeader() {
                 >
                   My account
                 </Link>
+                
+                <Link
+                  to={path.logout}
+                  className="block px-3 py-2 hover:bg-slate-50"
+                >
+                  Log out
+                </Link>
               </div>
             )}
           </div>

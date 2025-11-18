@@ -12,9 +12,11 @@ import MentorLayout from "./layouts/MentorLayout";
 // --- Authentication pages ---
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
+
 // -- User pages ---
 import Profile from "./pages/Users/MenteeProfile";
 import UpdateProfile from "./pages/Users/UpdateProfile";
+
 //-- Get mentor data page
 import Mentors from "./pages/MentorData/Mentors";
 import MentorDetail from "./pages/MentorData/MentorDetails";
