@@ -348,3 +348,32 @@ export const validateBulkAvailabilities = (data: {
 
   return errors;
 };
+
+// --- NEW ---
+/**
+ * @desc    Validate create booking request
+ * @fields  availabilityId (required, positive integer)
+ */
+export const validateCreateBooking = (data: {
+  availabilityId?: number;
+}): ValidationError[] => {
+  const errors: ValidationError[] = [];
+
+  if (!data.availabilityId) {
+    errors.push({
+      field: 'availabilityId',
+      message: 'availabilityId is required',
+    });
+  } else if (
+    typeof data.availabilityId !== 'number' ||
+    !Number.isInteger(data.availabilityId) ||
+    data.availabilityId <= 0
+  ) {
+    errors.push({
+      field: 'availabilityId',
+      message: 'availabilityId must be a positive integer',
+    });
+  }
+
+  return errors;
+};

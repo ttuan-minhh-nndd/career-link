@@ -31,6 +31,7 @@ export default function About() {
           <div className="relative">
             <div className="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-xl backdrop-blur">
               <ul className="space-y-4">
+                {/* Vibe coding nhưng không chọn lọc (BAD) */}
                 {[
                   {
                     title: "Chuyển cảnh mượt mà",
@@ -76,6 +77,7 @@ export default function About() {
           </div>
 
           {/* Right: Quick booking form */}
+          {/* Loz nào code thẳng form vào trong page luôn? */}
           <div className="relative">
             <div className="absolute -inset-x-6 -top-6 -z-10 h-24 rounded-3xl bg-gradient-to-r from-sky-200/60 to-indigo-200/60 blur-2xl" />
             <div className="overflow-hidden rounded-3xl border border-white/70 bg-white/90 shadow-2xl backdrop-blur">
