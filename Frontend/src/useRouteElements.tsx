@@ -1,4 +1,4 @@
-import { useRoutes } from "react-router-dom";
+import { Navigate, Outlet, useRoutes } from "react-router-dom";
 import path from "./constants/path";
 
 import GuestHome from "./pages/Home";
@@ -19,7 +19,6 @@ import UpdateProfile from "./pages/Users/UpdateProfile";
 import Mentors from "./pages/MentorData/Mentors";
 import MentorDetail from "./pages/MentorData/MentorDetails";
 
-
 // --- Mentee pages ---
 import MenteeHome from "./pages/Users/Dashboard";
 import Booking from "./pages/mentee/Booking";
@@ -29,8 +28,21 @@ import MenteeNotification from "./pages/mentee/MenteeNotification";
 import MentorDashboard from "./pages/mentor/Dashboard";
 import MentorProfile from "./pages/Users/MentorProfile";
 import MentorSessions from "./pages/mentor/MySessions";
+import { useContext } from "react";
+import { AppContext } from "../context/app.context";
 // import Feedback from "./pages/mentor/Feedback/Feedback";
 
+// eslint-disable-next-line react-refresh/only-export-components
+function ProtectedRoute() {
+  const { isAuthenticated } = useContext(AppContext);
+  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
+}
+
+// eslint-disable-next-line react-refresh/only-export-components
+function RejectedRoute() {
+  const { isAuthenticated } = useContext(AppContext);
+  return !isAuthenticated ? <Outlet /> : <Navigate to="/" />;
+}
 
 export default function useRouteElements() {
   const routeElements = useRoutes([
@@ -42,8 +54,7 @@ export default function useRouteElements() {
         { index: true, element: <GuestHome /> },
         { path: path.about.replace("/", ""), element: <GuestAbout /> },
         { path: path.login.replace("/", ""), element: <Login /> },
-        { path: path.register.replace("/", ""), element: <Register /> }
-
+        { path: path.register.replace("/", ""), element: <Register /> },
       ],
     },
 
@@ -60,7 +71,6 @@ export default function useRouteElements() {
         { path: path.mentee_my_sessions, element: <MenteeSessions /> },
         { path: path.mentee_profile, element: <Profile /> },
         { path: path.mentee_notifications, element: <MenteeNotification /> },
-
       ],
     },
 
@@ -72,8 +82,8 @@ export default function useRouteElements() {
         { index: true, element: <MentorDashboard /> },
         { path: path.mentor_home, element: <MentorDashboard /> },
         { path: path.mentor_profile, element: <MentorProfile /> },
-        { path: path.update_mentor_profile, element: <UpdateProfile /> },        
-        { path: path.mentor_my_sessions, element: <MentorSessions  /> },
+        { path: path.update_mentor_profile, element: <UpdateProfile /> },
+        { path: path.mentor_my_sessions, element: <MentorSessions /> },
       ],
     },
   ]);

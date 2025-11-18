@@ -1,4 +1,8 @@
-import { AuthResponse, GetMeResponse } from "../types/auth.types";
+import {
+  AuthResponse,
+  GetMentorsResponse,
+  GetMeResponse,
+} from "../types/auth.types";
 import http from "../http";
 
 export interface RegisterRequest {
@@ -25,6 +29,9 @@ const usersApi = {
   },
   getMe: () => {
     return http.get<GetMeResponse>("/api/v1/users/me");
+  },
+  getMentors: () => {
+    return http.get<GetMentorsResponse>("/api/v1/mentors");
   },
 };
 

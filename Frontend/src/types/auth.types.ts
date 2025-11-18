@@ -19,6 +19,20 @@ export interface GetMeResponse {
   mentorProfile?: MentorProfile;
 }
 
+export interface GetMentorResponse {
+  userId: number;
+  name: string;
+  email: string;
+  avatarUrl: string | null;
+  bio: string | null;
+  jobTitle: string | null;
+  hourlyRate: string;
+  averageRating: string;
+  totalReviews: number;
+  expertiseTags: number[];
+}
+export type GetMentorsResponse = GetMentorResponse[];
+
 export type AuthResponse = {
   user: {
     name: string;
