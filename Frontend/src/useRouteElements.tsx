@@ -29,7 +29,7 @@ import MenteeNotification from "./pages/mentee/MenteeNotification";
 // --- Mentor pages ---
 import MentorDashboard from "./pages/mentor/Dashboard";
 import MentorProfile from "./pages/Users/MentorProfile";
-import MentorSessions from "./pages/mentor/MySessions";
+// import MentorSessions from "./pages/mentor/MySessions";
 import { useContext } from "react";
 import { AppContext } from "../context/app.context";
 // import Feedback from "./pages/mentor/Feedback/Feedback";
