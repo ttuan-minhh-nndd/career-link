@@ -93,8 +93,10 @@ export default function MenteeNavHeader() {
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
 
         {/* LEFT: Logo */}
-        <Link to={path.mentee_home}>
-          <Logo className="h-8 w-auto" />
+        <Link to={path.mentee_home} className="flex items-center gap-2">
+                  <div className="flex items-center gap-3">
+          <Logo className="h-10" />  
+        </div>
         </Link>
 
         {/* CENTER menu */}

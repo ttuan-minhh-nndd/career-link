@@ -34,7 +34,6 @@ const path = {
   mentee_notifications: "/mentee/notifications",
 
   // Mentor
-  mentor_root: "/mentor",
   mentor_home: "/mentor/home",
   mentor_feedback: "/mentor/feedback",
   mentor_notifications: "/mentor/notifications",
