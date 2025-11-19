@@ -6,10 +6,7 @@ import { loginSchema, LoginSchema } from "../../../utils/rules";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import {
-  setProfileToLocalStorage,
-  setTokenToLocalStorage,
-} from "../../../utils/auth";
+import { setProfileToLocalStorage } from "../../../utils/auth";
 import { isAxiosUnprocessableEntityError } from "../../../utils/format";
 import {
   ErrorResponse,
@@ -45,10 +42,8 @@ export default function Login() {
     loginAccountMutation.mutate(data, {
       onSuccess: async (data) => {
         setIsAuthenticated(true);
-        setTokenToLocalStorage(data.data.token);
-        const getMeResponse = await usersApi.getMe();
-        setProfile(getMeResponse.data);
-        setProfileToLocalStorage(getMeResponse.data);
+        setProfileToLocalStorage(data.data.user);
+        setProfile(data.data.user);
         navigate(path.mentor_profile);
       },
       onError: (error) => {

@@ -2,10 +2,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { User, Mail, Lock, UserPlus } from "lucide-react";
 import { useContext } from "react";
 import { AppContext } from "../../../../context/app.context";
-import {
-  setProfileToLocalStorage,
-  setTokenToLocalStorage,
-} from "../../../utils/auth";
 import { useMutation } from "@tanstack/react-query";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema, RegisterSchema } from "../../../utils/rules";
@@ -45,10 +41,7 @@ export default function Register() {
     registerAccountMutation.mutate(data, {
       onSuccess: async (data) => {
         setIsAuthenticated(true);
-        setTokenToLocalStorage(data.data.token);
-        const getMeResponse = await usersApi.getMe();
-        setProfile(getMeResponse.data);
-        setProfileToLocalStorage(getMeResponse.data);
+        setProfile(data.data.user);
         navigate(path.mentor_profile);
       },
       onError: (error) => {

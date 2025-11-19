@@ -1,13 +1,12 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { clearLocalStorage } from "../../utils/auth";
 import { AppContext } from "../../../context/app.context";
+import { useMutation } from "@tanstack/react-query";
 
 import Logo from "../Logo";
 import SearchButton from "../SearchButton";
 import path from "../../constants/path";
 import usersApi from "../../apis/auth.api";
-import { useMutation } from "@tanstack/react-query";
 
 type NotificationType =
   | "new_request"
@@ -55,13 +54,11 @@ export default function MentorNavHeader() {
   const [openProfileMenu, setOpenProfileMenu] = useState(false);
   const [openNotifMenu, setOpenNotifMenu] = useState(false);
   const [openSearchMenu, setOpenSearchMenu] = useState(false);
-  const { setIsAuthenticated, setProfile, profile, isAuthenticated } =
-    useContext(AppContext);
+  const { setIsAuthenticated, setProfile } = useContext(AppContext);
 
   const logoutMutation = useMutation({
     mutationFn: () => usersApi.logout(),
     onSuccess: () => {
-      clearLocalStorage();
       setIsAuthenticated(false);
       setProfile(null);
     },

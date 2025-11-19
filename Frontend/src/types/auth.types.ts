@@ -35,10 +35,13 @@ export type GetMentorsResponse = GetMentorResponse[];
 
 export type AuthResponse = {
   user: {
+    id: number;
     name: string;
     email: string;
+    role: "mentor" | "mentee";
     password: string;
-    role: string;
+    avatarUrl: string | null;
+    mentorProfile?: MentorProfile;
   };
   token: string;
 };
