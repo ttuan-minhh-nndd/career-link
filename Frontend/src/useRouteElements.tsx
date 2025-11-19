@@ -39,25 +39,54 @@ import { AppContext } from "../context/app.context";
 // eslint-disable-next-line react-refresh/only-export-components
 function ProtectedRoute() {
   const { isAuthenticated } = useContext(AppContext);
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
+  return isAuthenticated ? <Outlet /> : <Navigate to="/api/v1/auth/login" />;
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
 function RejectedRoute() {
-  const { isAuthenticated } = useContext(AppContext);
-  return isAuthenticated ? <Outlet /> : <Navigate to="/" />;
+  const { isAuthenticated, profile } = useContext(AppContext);
+
+  if (!isAuthenticated) return <Outlet />;
+
+  if (profile?.role === "mentor") {
+    return <Navigate to={path.mentor_home} />;
+  }
+
+  if (profile?.role === "mentee") {
+    return <Navigate to={path.mentee_home} />;
+  }
+}
+
+// eslint-disable-next-line react-refresh/only-export-components
+function MentorRoute() {
+  const { profile } = useContext(AppContext);
+  return profile.role == "mentor" ? (
+    <Outlet />
+  ) : (
+    <Navigate to={path.mentor_home} />
+  );
+}
+
+// eslint-disable-next-line react-refresh/only-export-components
+function MenteeRoute() {
+  const { profile } = useContext(AppContext);
+  return profile.role == "mentee" ? (
+    <Outlet />
+  ) : (
+    <Navigate to={path.mentee_home} />
+  );
 }
 
 export default function useRouteElements() {
   const routeElements = useRoutes([
     // ---------------- Guest Pages ----------------
     {
-      path: '/',
+      path: "/",
       element: (
         <MainLayout>
           <GuestHome />
         </MainLayout>
-      )
+      ),
     },
     {
       path: path.about,
@@ -65,63 +94,103 @@ export default function useRouteElements() {
         <MainLayout>
           <GuestAbout />
         </MainLayout>
-      )
+      ),
     },
     {
       element: <RejectedRoute />,
       children: [
-        { path: path.login, element: (
-          <MainLayout>
-            <Login />
-          </MainLayout>
-        )},
-        { path: path.register, element: (
-          <MainLayout>
-            <Register />
-          </MainLayout>
-        )}
-      ]
+        {
+          path: path.login,
+          element: (
+            <MainLayout>
+              <Login />
+            </MainLayout>
+          ),
+        },
+        {
+          path: path.register,
+          element: (
+            <MainLayout>
+              <Register />
+            </MainLayout>
+          ),
+        },
+      ],
     },
 
     // ---------------- Mentee Pages ----------------
     {
       element: <ProtectedRoute />,
       children: [
-        { path: path.mentee_home, element: (
-          <MenteeLayout>
-            <MenteeHome />
-          </MenteeLayout>
-        )},
-        { path: path.get_mentors, element: (
-          <MenteeLayout>
-            <Mentors />
-            </MenteeLayout>
-        ) },
-        { path: path.booking, element: (
-          <MenteeLayout>
-            <Booking />
-            </MenteeLayout>
-        ) },
-        { path: path.mentor_details, element: (
-          <MenteeLayout>
-            <MentorDetail />
-            </MenteeLayout>
-        ) },
-        { path: path.mentee_my_sessions, element: (
-          <MenteeLayout>
-            <MenteeSessions />
-            </MenteeLayout>
-        ) },
-        { path: path.mentee_profile, element: (
-          <MenteeLayout>
-            <Profile />
-            </MenteeLayout>
-        ) },
-        { path: path.mentee_notifications, element: (
-          <MenteeLayout>
-            <MenteeNotification />
-            </MenteeLayout>
-        )  },
+        {
+          element: <MenteeRoute />,
+          children: [
+            {
+              path: path.mentee_home,
+              element: (
+                <MenteeLayout>
+                  <MenteeHome />
+                </MenteeLayout>
+              ),
+            },
+            {
+              path: path.get_mentors,
+              element: (
+                <MenteeLayout>
+                  <Mentors />
+                </MenteeLayout>
+              ),
+            },
+            {
+              path: path.get_mentors,
+              element: (
+                <MenteeLayout>
+                  <Mentors />
+                </MenteeLayout>
+              ),
+            },
+            {
+              path: path.booking,
+              element: (
+                <MenteeLayout>
+                  <Booking />
+                </MenteeLayout>
+              ),
+            },
+            {
+              path: path.mentor_details,
+              element: (
+                <MenteeLayout>
+                  <MentorDetail />
+                </MenteeLayout>
+              ),
+            },
+            {
+              path: path.mentee_my_sessions,
+              element: (
+                <MenteeLayout>
+                  <MenteeSessions />
+                </MenteeLayout>
+              ),
+            },
+            {
+              path: path.mentee_profile,
+              element: (
+                <MenteeLayout>
+                  <Profile />
+                </MenteeLayout>
+              ),
+            },
+            {
+              path: path.mentee_notifications,
+              element: (
+                <MenteeLayout>
+                  <MenteeNotification />
+                </MenteeLayout>
+              ),
+            },
+          ],
+        },
       ],
     },
 
@@ -129,31 +198,51 @@ export default function useRouteElements() {
     {
       element: <ProtectedRoute />,
       children: [
-        { path: path.mentor_home, element: (
-        <MentorLayout>
-          <MentorDashboard /> 
-          </MentorLayout>
-        ) },
-        { path: path.mentor_profile, element: (
-        <MentorLayout>
-          <MentorProfile />
-          </MentorLayout>
-        ) },
-        { path: path.update_mentor_profile, element: (
-        <MentorLayout>
-          <UpdateProfile />
-          </MentorLayout>
-        ) },
-        { path: path.mentor_my_sessions, element: (
-          <MentorLayout>
-            <MentorSessions />
-          </MentorLayout>
-        ) },
-        { path: path.create_session, element: (
-          <MentorLayout>
-            <CreateSession />
-          </MentorLayout>
-        ) },
+        {
+          element: <MentorRoute />,
+          children: [
+            {
+              path: path.mentor_home,
+              element: (
+                <MentorLayout>
+                  <MentorDashboard />
+                </MentorLayout>
+              ),
+            },
+            {
+              path: path.mentor_profile,
+              element: (
+                <MentorLayout>
+                  <MentorProfile />
+                </MentorLayout>
+              ),
+            },
+            {
+              path: path.update_mentor_profile,
+              element: (
+                <MentorLayout>
+                  <UpdateProfile />
+                </MentorLayout>
+              ),
+            },
+            {
+              path: path.mentor_my_sessions,
+              element: (
+                <MentorLayout>
+                  <MentorSessions />
+                </MentorLayout>
+              ),
+            },
+            {
+              path: path.create_session,
+              element: (
+                <MentorLayout>
+                  <CreateSession />
+                </MentorLayout>
+              ),
+            },
+          ],
+        },
       ],
     },
   ]);

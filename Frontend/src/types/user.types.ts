@@ -4,8 +4,6 @@ export interface User {
   email: string;
   role: "mentor" | "mentee";
   avatarUrl: string | null;
-  createdAt: string;
-  updatedAt: string;
   mentorProfile?: MentorProfile; // ← make optional
 }
 
