@@ -85,7 +85,7 @@ export default function useRouteElements() {
         { path: path.mentor_home, element: <MentorDashboard /> },
         { path: path.mentor_profile, element: <MentorProfile /> },
         { path: path.update_mentor_profile, element: <UpdateProfile /> },
-        { path: path.mentor_my_sessions, element: <MentorSessions /> },
+        // { path: path.mentor_my_sessions, element: <MentorSessions /> },
       ],
     },
   ]);

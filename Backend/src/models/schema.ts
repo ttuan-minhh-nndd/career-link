@@ -139,6 +139,7 @@ export const bookings = pgTable(
       precision: 10,
       scale: 2,
     }).notNull(), // Price at time of booking
+    expiresAt: timestamp("expires_at", { withTimezone: true }), // Payment hold expiration
     googleCalendarEventId: text("google_calendar_event_id"),
     ...auditTimestamps,
   },

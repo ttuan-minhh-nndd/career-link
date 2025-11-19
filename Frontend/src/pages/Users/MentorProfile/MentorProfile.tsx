@@ -108,9 +108,9 @@ export default function MentorProfile() {
                   <input
                     className="mt-1 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-sky-400 focus:bg-white focus:outline-none focus:ring-1 focus:ring-sky-400"
                     value={profile.mentorProfile.jobTitle ?? ""}
-                    onChange={(e) =>
-                      handleInputChange("company", e.target.value)
-                    }
+                    // onChange={(e) =>
+                    //   handleInputChange("company", e.target.value)
+                    // }
                   />
                   <p className="mt-1 text-[11px] text-slate-500">
                     Ví dụ:{" "}
@@ -164,7 +164,7 @@ export default function MentorProfile() {
                   rows={3}
                   className="mt-1 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-sky-400 focus:bg-white focus:outline-none focus:ring-1 focus:ring-sky-400"
                   value={profile.mentorProfile.bio}
-                  onChange={(e) => handleInputChange("bio", e.target.value)}
+                  // onChange={(e) => handleInputChange("bio", e.target.value)}
                   placeholder='VD: "Hi, my name is Ruby! It&apos;s a pleasure to have you in my network!"'
                 />
               </div>
@@ -193,9 +193,9 @@ export default function MentorProfile() {
                   <input
                     className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-sky-400 focus:bg-white focus:outline-none focus:ring-1 focus:ring-sky-400"
                     value={profile.mentorProfile.hourlyRate}
-                    onChange={(e) =>
-                      handleInputChange("hourlyRate", e.target.value)
-                    }
+                    // onChange={(e) =>
+                    //   handleInputChange("hourlyRate", e.target.value)
+                    // }
                     placeholder="VD: 69.00"
                   />
                 </div>

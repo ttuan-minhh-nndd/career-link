@@ -51,8 +51,95 @@ export const createBooking = async (req: Request, res: Response) => {
         message: 'Mentor profile not found',
       });
     }
+    if (error.message === 'MOMO_WALLET_NOT_CONFIGURED') {
+      return res.status(500).json({
+        message: 'Payment system not configured',
+      });
+    }
     // 6. Handle general errors
     console.error('Create booking error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+/**
+ * @desc    Confirm payment for a booking (manual verification)
+ * @route   PUT /api/v1/bookings/:id/confirm-payment
+ * @access  Private (Any authenticated user - for competition, later add admin role)
+ */
+export const confirmBookingPayment = async (req: Request, res: Response) => {
+  try {
+    const bookingId = parseInt(req.params.id, 10);
+    if (isNaN(bookingId) || bookingId <= 0) {
+      return res.status(400).json({
+        message: 'Invalid booking ID',
+      });
+    }
+
+    await bookingService.confirmPayment(bookingId);
+
+    res.status(200).json({
+      message: 'Payment confirmed successfully',
+    });
+  } catch (error: any) {
+    if (error.message === 'BOOKING_NOT_FOUND') {
+      return res.status(404).json({
+        message: 'Booking not found',
+      });
+    }
+    if (error.message === 'BOOKING_NOT_PENDING') {
+      return res.status(400).json({
+        message: 'Booking is not in pending status',
+      });
+    }
+    console.error('Confirm payment error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+/**
+ * @desc    Cancel a booking
+ * @route   PUT /api/v1/bookings/:id/cancel
+ * @access  Private (Booking owner)
+ */
+export const cancelBooking = async (req: Request, res: Response) => {
+  try {
+    const bookingId = parseInt(req.params.id, 10);
+    if (isNaN(bookingId) || bookingId <= 0) {
+      return res.status(400).json({
+        message: 'Invalid booking ID',
+      });
+    }
+
+    const userId = req.user!.id;
+
+    await bookingService.cancelBooking(bookingId, userId);
+
+    res.status(200).json({
+      message: 'Booking cancelled successfully',
+    });
+  } catch (error: any) {
+    if (error.message === 'BOOKING_NOT_FOUND') {
+      return res.status(404).json({
+        message: 'Booking not found',
+      });
+    }
+    if (error.message === 'FORBIDDEN') {
+      return res.status(403).json({
+        message: 'You do not have permission to cancel this booking',
+      });
+    }
+    if (error.message === 'BOOKING_ALREADY_CANCELLED') {
+      return res.status(400).json({
+        message: 'Booking is already cancelled',
+      });
+    }
+    if (error.message === 'CANNOT_CANCEL_CONFIRMED_BOOKING') {
+      return res.status(400).json({
+        message: 'Cannot cancel a confirmed or completed booking',
+      });
+    }
+    console.error('Cancel booking error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };

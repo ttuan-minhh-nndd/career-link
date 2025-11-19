@@ -6,6 +6,7 @@ import tagRoutes from './routes/tag.routes';
 import availabilityRoutes from './routes/availability.routes';
 import mentorRoutes from './routes/mentor.routes';
 import bookingRoutes from './routes/booking.routes';
+import paymentRoutes from './routes/payment.routes';
 
 // We will add other routes here later
 // import userRoutes from './routes/user.routes';
@@ -104,6 +105,7 @@ app.use('/api/v1/tags', tagRoutes); // --- NEW ---
 app.use('/api/v1/availabilities', availabilityRoutes); // --- NEW ---
 app.use('/api/v1/mentors', mentorRoutes); // --- NEW ---
 app.use('/api/v1/bookings', bookingRoutes); // --- NEW ---
+app.use('/api/v1/payment', paymentRoutes); // --- NEW ---
 
 // Export the configured app
 export default app;
