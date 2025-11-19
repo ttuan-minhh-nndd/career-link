@@ -24,7 +24,7 @@ class Http {
 
     this.instance.interceptors.request.use((config) => {
       if (this.token && config.headers) {
-        config.headers.authorization = this.token;
+        config.headers.Authorization = `Bearer ${this.token}`;
         return config;
       }
       return config;

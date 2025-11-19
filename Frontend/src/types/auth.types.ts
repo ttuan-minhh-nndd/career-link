@@ -49,3 +49,15 @@ export type AuthResponse = {
 export interface MessageOnly {
   message: string;
 }
+
+export interface ScheduleSlot {
+  id: number;
+  mentorId: number;
+  startTime: string; // ISO datetime string
+  endTime: string; // ISO datetime string
+  isBooked: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type GetMentorsAvailabilityResponse = ScheduleSlot[];

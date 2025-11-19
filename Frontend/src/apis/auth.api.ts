@@ -1,5 +1,6 @@
 import {
   AuthResponse,
+  GetMentorsAvailabilityResponse,
   GetMentorsResponse,
   GetMeResponse,
 } from "../types/auth.types";
@@ -32,6 +33,11 @@ const usersApi = {
   },
   getMentors: () => {
     return http.get<GetMentorsResponse>("/api/v1/mentors");
+  },
+  getMentorsAvailability: () => {
+    return http.get<GetMentorsAvailabilityResponse>(
+      "/api/v1/availabilities/mentor/mine"
+    );
   },
 };
 

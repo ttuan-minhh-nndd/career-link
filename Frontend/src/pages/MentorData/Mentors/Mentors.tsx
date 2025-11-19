@@ -3,7 +3,6 @@ import { useQuery } from "@tanstack/react-query";
 import SectionTitle from "../../../components/SectionTitle";
 import MentorCard from "../../../components/MentorCard";
 import usersApi from "../../../apis/auth.api";
-import { useEffect } from "react";
 
 export default function Mentors() {
   const mentorsData = useQuery({
