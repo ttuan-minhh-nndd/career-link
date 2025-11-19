@@ -25,7 +25,7 @@ export const createBooking = async (req: Request, res: Response) => {
     const menteeId = req.user!.id;
 
     // 3. Call service to create booking
-    const booking = await bookingService.createBooking(menteeId, req.body);
+    const booking = await bookingService.createNewBookingAndTransaction(menteeId, req.body);
 
     // 4. Return success response
     res.status(201).json(booking);

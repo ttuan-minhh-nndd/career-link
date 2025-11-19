@@ -38,7 +38,7 @@ export interface BookingWithPaymentResponse extends BookingResponse {
  * Create a booking for a mentee
  * Uses transaction to prevent double-booking and creates payment transaction
  */
-export const createBooking = async (
+export const createNewBookingAndTransaction = async (
   menteeId: number,
   request: CreateBookingRequest
 ): Promise<BookingWithPaymentResponse> => {
@@ -97,6 +97,7 @@ export const createBooking = async (
     // 5. Calculate expiration time
     const expiresAt = new Date();
     expiresAt.setMinutes(expiresAt.getMinutes() + holdMinutes);
+    console.log("value for expiresAt: ", expiresAt); 
 
     // 6. Create the booking
     const newBooking = await tx
