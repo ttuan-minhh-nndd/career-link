@@ -198,6 +198,13 @@ export default function useRouteElements() {
     {
       element: <ProtectedRoute />,
       children: [
+<<<<<<< HEAD
+        { index: true, element: <MentorDashboard /> },
+        { path: path.mentor_home, element: <MentorDashboard /> },
+        { path: path.mentor_profile, element: <MentorProfile /> },
+        { path: path.update_mentor_profile, element: <UpdateProfile /> },
+        // { path: path.mentor_my_sessions, element: <MentorSessions /> },
+=======
         {
           element: <MentorRoute />,
           children: [
@@ -243,6 +250,7 @@ export default function useRouteElements() {
             },
           ],
         },
+>>>>>>> 5320a9855205add3c5dbd1e9f6035b6385afe45a
       ],
     },
   ]);
