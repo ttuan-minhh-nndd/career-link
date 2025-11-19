@@ -1,9 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import { AppContext } from "../../../context/app.context";
 
 import Logo from "../Logo";
 import SearchButton from "../SearchButton";
 import path from "../../constants/path";
+import usersApi from "../../apis/auth.api";
 
 type NotificationType =
   | "session_accepted"
@@ -34,7 +37,8 @@ const seedNotifications: NotificationItem[] = [
     id: 2,
     type: "session_reminder",
     title: "Nhắc lịch buổi hẹn sắp diễn ra",
-    message: "Bạn có buổi hẹn với mentor Đỗ Thị Như Ý vào ngày 20/11 lúc 19:30.",
+    message:
+      "Bạn có buổi hẹn với mentor Đỗ Thị Như Ý vào ngày 20/11 lúc 19:30.",
     createdAt: "2025-11-14T07:00:00.000Z",
     isRead: false,
   },
@@ -53,6 +57,18 @@ export default function MenteeNavHeader() {
   const [openProfileMenu, setOpenProfileMenu] = useState(false);
   const [openNotifMenu, setOpenNotifMenu] = useState(false);
   const [openSearchMenu, setOpenSearchMenu] = useState(false);
+  const { setIsAuthenticated, setProfile } = useContext(AppContext);
+
+  const logoutMutation = useMutation({
+    mutationFn: () => usersApi.logout(),
+    onSuccess: () => {
+      setIsAuthenticated(false);
+      setProfile(null);
+    },
+  });
+  const handleLogout = () => {
+    logoutMutation.mutate();
+  };
 
   const [notifications, setNotifications] =
     useState<NotificationItem[]>(seedNotifications);
@@ -91,10 +107,11 @@ export default function MenteeNavHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-slate-100 bg-white/80 backdrop-blur">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-
         {/* LEFT: Logo */}
-        <Link to={path.mentee_home}>
-          <Logo className="h-8 w-auto" />
+        <Link to={path.mentee_home} className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
+            <Logo className="h-10" />
+          </div>
         </Link>
 
         {/* CENTER menu */}
@@ -124,7 +141,6 @@ export default function MenteeNavHeader() {
 
         {/* RIGHT */}
         <div className="flex items-center gap-4">
-
           {/* 🔍 SEARCH POPUP */}
           <div className="relative" ref={searchRef}>
             <SearchButton
@@ -162,16 +178,19 @@ export default function MenteeNavHeader() {
                 </p>
 
                 <div className="flex flex-wrap gap-2">
-                  {["Java Backend", "UI/UX", "Data Analyst", "Career Coaching"].map(
-                    (t) => (
-                      <button
-                        key={t}
-                        className="rounded-full bg-sky-50 px-3 py-1 text-[11px] font-medium text-sky-700 ring-1 ring-sky-100 hover:bg-sky-100"
-                      >
-                        {t}
-                      </button>
-                    )
-                  )}
+                  {[
+                    "Java Backend",
+                    "UI/UX",
+                    "Data Analyst",
+                    "Career Coaching",
+                  ].map((t) => (
+                    <button
+                      key={t}
+                      className="rounded-full bg-sky-50 px-3 py-1 text-[11px] font-medium text-sky-700 ring-1 ring-sky-100 hover:bg-sky-100"
+                    >
+                      {t}
+                    </button>
+                  ))}
                 </div>
 
                 <div className="mt-3 border-t border-slate-100 pt-2">
@@ -224,8 +243,12 @@ export default function MenteeNavHeader() {
               <div className="absolute right-0 mt-3 w-80 bg-white rounded-2xl shadow-lg ring-1 ring-slate-200 py-2">
                 <div className="flex justify-between px-3 pb-2">
                   <div>
-                    <p className="text-xs font-semibold text-slate-900">Thông báo</p>
-                    <p className="text-[11px] text-slate-500">{unreadCount} chưa đọc</p>
+                    <p className="text-xs font-semibold text-slate-900">
+                      Thông báo
+                    </p>
+                    <p className="text-[11px] text-slate-500">
+                      {unreadCount} chưa đọc
+                    </p>
                   </div>
 
                   <button
@@ -248,8 +271,12 @@ export default function MenteeNavHeader() {
                       <NotificationIcon type={n.type} />
 
                       <div className="flex-1">
-                        <p className="font-semibold text-slate-900">{n.title}</p>
-                        <p className="text-[11px] text-slate-600 line-clamp-2">{n.message}</p>
+                        <p className="font-semibold text-slate-900">
+                          {n.title}
+                        </p>
+                        <p className="text-[11px] text-slate-600 line-clamp-2">
+                          {n.message}
+                        </p>
                         <span className="text-[10px] text-slate-400 block">
                           {new Date(n.createdAt).toLocaleString("vi-VN", {
                             day: "2-digit",
@@ -260,7 +287,9 @@ export default function MenteeNavHeader() {
                         </span>
                       </div>
 
-                      {!n.isRead && <span className="h-2 w-2 rounded-full bg-sky-600 mt-1" />}
+                      {!n.isRead && (
+                        <span className="h-2 w-2 rounded-full bg-sky-600 mt-1" />
+                      )}
                     </button>
                   ))}
                 </div>
@@ -317,17 +346,16 @@ export default function MenteeNavHeader() {
                 >
                   My account
                 </Link>
-                
-                <Link
-                  to={path.logout}
+
+                <button
+                  onClick={handleLogout}
                   className="block px-3 py-2 hover:bg-slate-50"
                 >
                   Log out
-                </Link>
+                </button>
               </div>
             )}
           </div>
-
         </div>
       </nav>
     </header>
@@ -341,7 +369,9 @@ function NotificationIcon({ type }: { type: NotificationType }) {
 
   switch (type) {
     case "session_accepted":
-      return <span className={`${base} bg-emerald-50 text-emerald-600`}>✓</span>;
+      return (
+        <span className={`${base} bg-emerald-50 text-emerald-600`}>✓</span>
+      );
     case "session_reminder":
       return <span className={`${base} bg-sky-50 text-sky-600`}>⏰</span>;
     case "session_feedback":

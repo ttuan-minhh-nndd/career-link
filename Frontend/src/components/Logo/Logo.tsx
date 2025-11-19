@@ -1,9 +1,25 @@
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { AppContext } from "../../../context/app.context";
+
 import logo from "../../assets/CAREERLINK.svg";
+import path from "../../constants/path";
 
 export default function Logo({ className = "" }: { className?: string }) {
+  const { profile, isAuthenticated } = useContext(AppContext);
+
+  let target_path = "/";
+
+  if (isAuthenticated) {
+    if (profile?.role === "mentor") {
+      target_path = path.mentor_home;
+    } else if (profile?.role === "mentee") {
+      target_path = path.mentee_home;
+    }
+  }
+
   return (
-    <Link to="/" className="flex items-center gap-2">
+    <Link to={target_path} className="flex items-center gap-2">
       <img
         src={logo}
         alt="CareerLink — Your link to career clarity"
@@ -11,7 +27,6 @@ export default function Logo({ className = "" }: { className?: string }) {
         loading="eager"
         decoding="async"
       />
-      {/* Optional accessible text (hidden visually) */}
       <span className="sr-only">CareerLink</span>
     </Link>
   );

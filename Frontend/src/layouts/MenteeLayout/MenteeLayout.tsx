@@ -1,14 +1,16 @@
-// src/layouts/MainLayout.tsx
-import { Outlet } from "react-router-dom";
-import NavHeader from "../../components/MenteeHeader";
-import Footer from "../../components/Footer";
+import Footer from '../../components/Footer'
+import Header from '../../components/MenteeHeader'
 
-export default function MainLayout() {
+interface Props {
+  children?: React.ReactNode
+}
+
+export default function MainLayout({ children }: Props) {
   return (
     <div className="min-h-screen bg-white text-slate-800">
-      <NavHeader />
-      <Outlet />   
+      <Header />
+      {children}
       <Footer />
     </div>
-  );
+  )
 }
