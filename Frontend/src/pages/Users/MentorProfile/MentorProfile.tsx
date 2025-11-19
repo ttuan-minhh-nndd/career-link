@@ -101,23 +101,6 @@ export default function MentorProfile() {
                   </p>
                 </div>
 
-                <div className="col-span-2 md:col-span-0">
-                  <label className="block text-xs font-medium text-slate-700">
-                    Chức danh / Job Title
-                  </label>
-                  <input
-                    className="mt-1 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-sky-400 focus:bg-white focus:outline-none focus:ring-1 focus:ring-sky-400"
-                    value={profile.mentorProfile.jobTitle ?? ""}
-                    onChange={(e) =>
-                      handleInputChange("company", e.target.value)
-                    }
-                  />
-                  <p className="mt-1 text-[11px] text-slate-500">
-                    Ví dụ:{" "}
-                    {`"PhD, Senior Lecturer in Digital Marketing @ International University, VNU-HCMC"`}
-                    .
-                  </p>
-                </div>
                 {/* ⭐ Average Rating */}
                 <div className="col-span-2 md:col-span-0 mx-auto w-full max-w-xs">
                   <label className="block text-[11px] font-medium text-slate-700">
@@ -129,6 +112,7 @@ export default function MentorProfile() {
                     value={profile.mentorProfile?.averageRating ?? "0.00"}
                   />
                 </div>
+
 
                 {/* 📝 Total Reviews */}
                 <div className="col-span-2 md:col-span-0 mx-auto w-full max-w-xs">
@@ -145,15 +129,33 @@ export default function MentorProfile() {
             </div>
           </section>
 
+          {/* Card: Chức danh */}
+          <section className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+            <h2 className="text-base font-semibold text-slate-900">
+              Chức danh
+            </h2>
+
+            <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
+              <div className="md:col-span-2">
+                <label className="block text-xs font-medium text-slate-700">
+                  Job title
+                </label>
+                <textarea
+                  rows={1}
+                  className="mt-1 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-sky-400 focus:bg-white focus:outline-none focus:ring-1 focus:ring-sky-400"
+                  value={profile.mentorProfile.jobTitle}
+                  onChange={(e) => handleInputChange("jobTitle", e.target.value)}
+                  placeholder='PhD, Senior Lecturer in Digital Marketing @ International University, Vietnam National University, HCMC'
+                />
+              </div>
+            </div>
+          </section>
+
           {/* Card: Bio & chuyên môn */}
           <section className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
             <h2 className="text-base font-semibold text-slate-900">
               Giới thiệu & chuyên môn
             </h2>
-            <p className="mt-1 text-xs text-slate-500">
-              Phần này giúp mentee hiểu rõ hơn về background và phong cách
-              mentoring của bạn.
-            </p>
 
             <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
               <div className="md:col-span-2">
