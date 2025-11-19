@@ -44,7 +44,11 @@ export default function Login() {
         setIsAuthenticated(true);
         setProfileToLocalStorage(data.data.user);
         setProfile(data.data.user);
-        navigate(path.mentor_profile);
+        if (data.data.user.role == "mentee") {
+          navigate(path.mentee_home);
+        } else {
+          navigate(path.mentor_home);
+        }
       },
       onError: (error) => {
         if (

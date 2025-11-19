@@ -81,22 +81,6 @@ export default function useRouteElements() {
   const routeElements = useRoutes([
     // ---------------- Guest Pages ----------------
     {
-      path: "/",
-      element: (
-        <MainLayout>
-          <GuestHome />
-        </MainLayout>
-      ),
-    },
-    {
-      path: path.about,
-      element: (
-        <MainLayout>
-          <GuestAbout />
-        </MainLayout>
-      ),
-    },
-    {
       element: <RejectedRoute />,
       children: [
         {
@@ -112,6 +96,22 @@ export default function useRouteElements() {
           element: (
             <MainLayout>
               <Register />
+            </MainLayout>
+          ),
+        },
+        {
+          path: "/",
+          element: (
+            <MainLayout>
+              <GuestHome />
+            </MainLayout>
+          ),
+        },
+        {
+          path: path.about,
+          element: (
+            <MainLayout>
+              <GuestAbout />
             </MainLayout>
           ),
         },
