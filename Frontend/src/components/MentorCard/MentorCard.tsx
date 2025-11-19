@@ -1,6 +1,6 @@
 import Chip from "../Chip";
 import Rating from "../Rating";
-import { Link } from "react-router-dom";
+import { Link , generatePath } from "react-router-dom";
 import path from "../../constants/path";
 
 export type Mentor = {
@@ -70,18 +70,12 @@ export default function MentorCard({ mentor }: { mentor: Mentor }) {
 
           {/* Actions */}
           <div className="mt-3 flex items-center justify-end gap-3">
-            <Link
-              to={path.booking}
-              className="rounded-2xl bg-sky-600 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-sky-700"
-            >
-              Đặt lịch
-            </Link>
 
             <Link
-              to={`${path.mentor_details}/${mentor.userId}`}
-              className="rounded-2xl bg-white px-4 py-2 text-sm font-semibold text-sky-700 ring-1 ring-sky-200 shadow hover:bg-sky-50"
+             to={generatePath(path.mentor_details, { id: mentor.userId.toString() })}
+              className="rounded-2xl bg-sky-600 px-4 py-2 text-sm font-semibold text-white ring-1 ring-sky-200 shadow hover:bg-sky-500"
             >
-              Xem hồ sơ
+              Xem chi tiết
             </Link>
           </div>
         </div>

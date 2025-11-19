@@ -49,11 +49,11 @@ export default function Booking() {
             <div className="mb-3 text-sm font-semibold text-slate-900">
               Tóm tắt booking
             </div>
-            <div className="space-y-2 text-sm"> 
-              <div className="flex items-center justify-between">
-                <span>Thời lượng dự kiến</span>
-                <span className="font-medium text-slate-800">60 phút</span>
-              </div>
+              <div className="space-y-2 text-sm"> 
+                <div className="flex items-center justify-between">
+                  <span>Thời lượng dự kiến</span>
+                  <span className="font-medium text-slate-800">60 phút</span>
+                </div>
               <div className="flex items-center justify-between">
                 <span>Đơn giá</span>
                 <span className="font-medium text-slate-800">

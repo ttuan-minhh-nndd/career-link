@@ -29,7 +29,7 @@ const path = {
 
 
   get_mentors: "/api/v1/mentors",
-  mentor_details: "/api/v1/mentors",
+  mentor_details: "/api/v1/mentors/:id",
   mentee_my_sessions: "/mentee/my-sessions",
   mentee_notifications: "/mentee/notifications",
 
