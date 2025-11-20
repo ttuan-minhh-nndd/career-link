@@ -158,9 +158,7 @@ export default function Login() {
                   control={form.control}
                   render={({ field, fieldState }) => (
                     <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel htmlFor="login-password">
-                        Mật khẩu
-                      </FieldLabel>
+                      <FieldLabel htmlFor="login-password">Mật khẩu</FieldLabel>
                       <InputGroup>
                         <InputGroupInput
                           {...field}
@@ -182,10 +180,7 @@ export default function Login() {
                 />
 
                 {/* Submit Button */}
-                <Button
-                  type="submit"
-                  className="w-full cursor-pointer"
-                >
+                <Button type="submit" className="w-full cursor-pointer">
                   Đăng nhập
                 </Button>
               </FieldGroup>
