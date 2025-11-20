@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
@@ -54,12 +54,9 @@ const MOCK_BOOKING: BookingDetailData = {
 
 export default function BookingPage() {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
   const location = useLocation();
 
   const {
-    mentorId,
-    mentorName,
     slotId,
     startTime: bookedStartTime,
     endTime: bookedEndTime,
@@ -73,21 +70,17 @@ export default function BookingPage() {
 
   const availabilityId = Number(slotId);
 
-  const { data: bookingDetailsData } = useQuery({
+  const {
+    data: bookingDetailsData,
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ["bookingDetails", availabilityId],
     queryFn: () => usersApi.booking(availabilityId),
     enabled: !!availabilityId,
   });
 
   const booking = bookingDetailsData?.data ?? null;
-
-  // Fake fetch booking
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 300000);
-    return () => clearTimeout(timer);
-  }, []);
 
   const { startDate, startTime, endTime, expiresAt } = useMemo(() => {
     if (!booking) {
@@ -128,7 +121,7 @@ export default function BookingPage() {
     };
   }, [booking]);
 
-  if (loading) {
+  if (isLoading) {
     return (
       <section className="min-h-screen bg-blue-50">
         <div className="mx-auto flex max-w-4xl items-center justify-center px-4 py-16">
@@ -140,7 +133,7 @@ export default function BookingPage() {
     );
   }
 
-  if (!booking) {
+  if (isError || !booking) {
     return (
       <section className="min-h-screen bg-blue-50">
         <div className="mx-auto max-w-4xl px-4 py-16">
