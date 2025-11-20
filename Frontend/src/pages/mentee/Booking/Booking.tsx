@@ -85,7 +85,7 @@ export default function BookingPage() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 300);
+    }, 300000);
     return () => clearTimeout(timer);
   }, []);
 

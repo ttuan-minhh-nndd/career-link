@@ -1,3 +1,4 @@
+import { AppContext } from "../../../../context/app.context";
 import {
   User,
   Wallet,
@@ -6,6 +7,7 @@ import {
   Clock3,
   ListChecks,
 } from "lucide-react";
+import { useContext } from "react";
 
 /* =========================
     RANDOM SESSION LOGIC 
@@ -67,8 +69,7 @@ function generateRandomSessionsForDay(day: string): Session[] {
     usedSlots.add(slotIndex);
 
     const time = TIME_SLOTS[slotIndex];
-    const title =
-      SESSION_TITLES[getRandomInt(0, SESSION_TITLES.length - 1)];
+    const title = SESSION_TITLES[getRandomInt(0, SESSION_TITLES.length - 1)];
 
     sessions.push({
       id: `${day}-${i}`,
@@ -95,6 +96,8 @@ const WEEKLY_SESSIONS: Record<string, Session[]> = days.reduce(
 ========================= */
 
 export default function MentorDashboard() {
+  const { profile } = useContext(AppContext);
+
   return (
     <section className="relative min-h-screen bg-slate-50/80 py-10">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_#38bdf81a,_transparent_55%),_radial-gradient(circle_at_bottom,_#4f46e51a,_transparent_55%)]" />
@@ -113,7 +116,7 @@ export default function MentorDashboard() {
                   <h1 className="mt-1 text-2xl font-bold">
                     Chào mừng trở lại,{" "}
                     <span className="whitespace-nowrap">
-                      Mentor Tuấn Minh
+                      Mentor {profile.name}
                     </span>
                   </h1>
                   <p className="mt-2 text-sm text-sky-50/90">
@@ -148,9 +151,7 @@ export default function MentorDashboard() {
                       Có thể rút
                     </span>
                   </div>
-                  <p className="mt-2 text-2xl font-extrabold">
-                    5.050.000 VND
-                  </p>
+                  <p className="mt-2 text-2xl font-extrabold">5.050.000 VND</p>
                   <p className="mt-1 text-xs text-sky-100/90">
                     +350.000 VND tuần này
                   </p>
