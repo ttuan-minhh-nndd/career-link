@@ -143,3 +143,19 @@ body {
     @apply bg-background text-foreground;
   }
 }
+/* Fix nền đen / nền lạ khi autofill (Chrome) */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  /* Dùng màu input/background từ design token của bạn */
+  box-shadow: 0 0 0px 1000px var(--#F3FAFF) inset;
+
+  /* Màu chữ */
+  -webkit-text-fill-color: var(--foreground);
+  caret-color: var(--foreground);
+
+  border-radius: inherit;
+  transition: background-color 5000s ease-in-out 0s;
+}
