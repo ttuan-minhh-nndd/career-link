@@ -9,6 +9,7 @@ import mentor4 from "../../../assets/mentors/mentor4.jpg";
 import mentor5 from "../../../assets/mentors/mentor5.jpg";
 import SearchBar from "../../../components/SearchBar";
 import MentorChatWidget from "../../../components/MentorChatWidget";
+import { BackgroundRippleEffect } from "@/components/ui/ripple-background";
 const mentors: MentorShowcase[] = [
   {
     id: 1,
@@ -67,7 +68,8 @@ export default function MenteeHomePage() {
     <main className="bg-slate-50">
       {/* Hero */}
       <section className="relative mx-auto grid min-h-[70vh] max-w-6xl place-items-center px-4">
-        <div className="max-w-3xl text-center">
+        <BackgroundRippleEffect rows={11} />
+        <div className="max-w-3xl text-center z-10">
           <h1 className="text-5xl font-extrabold text-slate-900">
             Chào mừng Mentee đến với{" "}
             <span className="text-sky-600">CareerLink</span>
