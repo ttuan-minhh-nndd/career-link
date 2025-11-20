@@ -84,49 +84,7 @@ export default function MenteeHomePage() {
 
       </section>
 
-      {/* BENEFITS */}
-      <section className="mx-auto max-w-6xl px-6 py-14 -mt-25">
-      <div className="rounded-3xl bg-sky-100/80 ring-1 ring-sky-100 px-6 py-10 shadow-sm">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-slate-900">
-            Lợi ích dành cho Mentee
-          </h2>
-          <p className="mt-2 text-slate-600">
-            Học nhanh hơn, đúng trọng tâm và hiệu quả hơn.
-          </p>
-        </div>
-        <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {[
-            {
-              title: "Mentor chất lượng",
-              desc: "Được kiểm duyệt & đánh giá minh bạch.",
-            },
-            {
-              title: "Học theo mục tiêu",
-              desc: "Tập trung đúng kỹ năng bạn cần.",
-            },
-            {
-              title: "Lịch linh hoạt",
-              desc: "Đặt buổi học dễ dàng, phù hợp thời gian.",
-            },
-            {
-              title: "Tư vấn 1:1",
-              desc: "Học trực tiếp, cá nhân hóa lộ trình.",
-            },
-          ].map((b) => (
-            <div
-              key={b.title}
-              className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-100"
-            >
-              <h3 className="mt-1 text-lg font-semibold text-slate-900">
-                {b.title}
-              </h3>
-              <p className="mt-2 text-sm text-slate-600">{b.desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
+      
 
 
       {/* FEATURED MENTORS */}
