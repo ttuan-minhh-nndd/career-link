@@ -1,5 +1,6 @@
 import {
   AuthResponse,
+  BookingDetail,
   CreateMentorsAvailabilityResponse,
   GetMentorsAvailabilityResponse,
   GetMentorsResponse,
@@ -64,6 +65,12 @@ const usersApi = {
   },
   deleteMentorAvailabilityById: (id: number) => {
     return http.delete(`/api/v1/availabilities/${id}`);
+  },
+  getMentorDetails: (id: number) => {
+    return http.get(`/api/v1/mentors/${id}`);
+  },
+  booking: (availabilityId: number) => {
+    return http.post<BookingDetail>(`/api/v1/bookings`, { availabilityId });
   },
 };
 

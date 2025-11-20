@@ -1,6 +1,10 @@
 import { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+
 import path from "../../../constants/path";
+import usersApi from "@/apis/auth.api";
 
 type BookingPayment = {
   orderId: string;
@@ -50,13 +54,36 @@ const MOCK_BOOKING: BookingDetailData = {
 
 export default function BookingPage() {
   const navigate = useNavigate();
-  const [booking, setBooking] = useState<BookingDetailData | null>(null);
   const [loading, setLoading] = useState(true);
+  const location = useLocation();
+
+  const {
+    mentorId,
+    mentorName,
+    slotId,
+    startTime: bookedStartTime,
+    endTime: bookedEndTime,
+  } = location.state as {
+    mentorId: number;
+    mentorName: string;
+    slotId: number;
+    startTime: string;
+    endTime: string;
+  };
+
+  const availabilityId = Number(slotId);
+
+  const { data: bookingDetailsData } = useQuery({
+    queryKey: ["bookingDetails", availabilityId],
+    queryFn: () => usersApi.booking(availabilityId),
+    enabled: !!availabilityId,
+  });
+
+  const booking = bookingDetailsData?.data ?? null;
 
   // Fake fetch booking
   useEffect(() => {
     const timer = setTimeout(() => {
-      setBooking(MOCK_BOOKING);
       setLoading(false);
     }, 300);
     return () => clearTimeout(timer);
@@ -166,8 +193,8 @@ export default function BookingPage() {
                   booking.status === "pending"
                     ? "bg-amber-50 text-amber-700 border border-amber-200"
                     : booking.status === "paid"
-                    ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
-                    : "bg-slate-100 text-slate-600 border border-slate-200"
+                      ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                      : "bg-slate-100 text-slate-600 border border-slate-200"
                 }`}
               >
                 Trạng thái: {booking.status}
@@ -239,8 +266,8 @@ export default function BookingPage() {
                 alt="QR thanh toán"
                 className="h-64 w-64 object-contain"
               />
-            </div>  
-                
+            </div>
+
             <button
               onClick={() => navigate(path.home || "/")}
               className="mt-5 inline-flex items-center justify-center rounded-full bg-sky-600 px-4 py-2 text-xs font-medium text-white hover:bg-sky-500"

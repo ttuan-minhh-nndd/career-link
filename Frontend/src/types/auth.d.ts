@@ -77,3 +77,25 @@ export interface CreateMentorsAvailabilityResponse {
   slots: MentorAvailabilitySlotResponse[];
 }
 
+export interface BookingPayment {
+  orderId: string;
+  qrImage: string;
+  momoPhone: string;
+  note: string;
+}
+
+export interface BookingDetail {
+  id: number;
+  menteeId: number;
+  mentorId: number;
+  availabilityId: number;
+  status: string; // adjust if needed
+  sessionPrice: string;
+  expiresAt: string;
+  startTime: string;
+  endTime: string;
+  mentorName: string;
+  createdAt: string;
+  updatedAt: string;
+  payment: BookingPayment;
+}

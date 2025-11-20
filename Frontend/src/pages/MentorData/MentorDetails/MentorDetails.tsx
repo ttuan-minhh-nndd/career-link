@@ -2,6 +2,8 @@ import { useEffect, useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import path from "../../../constants/path";
 import ConfirmBookingModal from "../../../components/ConfimBookingModal";
+import usersApi from "@/apis/auth.api";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 type AvailableSlot = {
   id: number;
@@ -9,76 +11,80 @@ type AvailableSlot = {
   endTime: string;
 };
 
-type MentorDetailData = {
-  userId: number;
-  name: string;
-  email: string;
-  avatarUrl: string | null;
-  bio: string | null;
-  jobTitle: string | null;
-  hourlyRate: string;
-  averageRating: string;
-  totalReviews: number;
-  expertiseTags: string[];
-  availableSlots: AvailableSlot[];
-};
+// type MentorDetailData = {
+//   userId: number;
+//   name: string;
+//   email: string;
+//   avatarUrl: string | null;
+//   bio: string | null;
+//   jobTitle: string | null;
+//   hourlyRate: string;
+//   averageRating: string;
+//   totalReviews: number;
+//   expertiseTags: string[];
+//   availableSlots: AvailableSlot[];
+// };
 
-// 👉 MOCK DATA
-const MOCK_MENTOR: MentorDetailData = {
-  userId: 7,
-  name: "Ruby Lieu",
-  email: "rubylieu@testgmail.com",
-  avatarUrl: null,
-  bio: "Hi, my name is Ruby! It's a pleasure to have you in my network!",
-  jobTitle:
-    "PhD, Senior Lecturer in Digital Marketing @ International University, Vietnam National University, HCMC",
-  hourlyRate: "69.00",
-  averageRating: "4.80",
-  totalReviews: 12,
-  expertiseTags: ["Digital Marketing", "Performance Marketing", "Branding"],
-  availableSlots: [
-    {
-      id: 5,
-      startTime: "2025-12-01T15:00:00.000Z",
-      endTime: "2025-12-01T16:00:00.000Z",
-    },
-    {
-      id: 6,
-      startTime: "2025-12-01T16:00:00.000Z",
-      endTime: "2025-12-01T17:00:00.000Z",
-    },
-    {
-      id: 7,
-      startTime: "2025-12-01T14:00:00.000Z",
-      endTime: "2025-12-01T15:00:00.000Z",
-    },
-    {
-      id: 8,
-      startTime: "2025-12-01T15:00:00.000Z",
-      endTime: "2025-12-01T16:00:00.000Z",
-    },
-  ],
-};
+// // 👉 MOCK DATA
+// const MOCK_MENTOR: MentorDetailData = {
+//   userId: 7,
+//   name: "Ruby Lieu",
+//   email: "rubylieu@testgmail.com",
+//   avatarUrl: null,
+//   bio: "Hi, my name is Ruby! It's a pleasure to have you in my network!",
+//   jobTitle:
+//     "PhD, Senior Lecturer in Digital Marketing @ International University, Vietnam National University, HCMC",
+//   hourlyRate: "69.00",
+//   averageRating: "4.80",
+//   totalReviews: 12,
+//   expertiseTags: ["Digital Marketing", "Performance Marketing", "Branding"],
+//   availableSlots: [
+//     {
+//       id: 5,
+//       startTime: "2025-12-01T15:00:00.000Z",
+//       endTime: "2025-12-01T16:00:00.000Z",
+//     },
+//     {
+//       id: 6,
+//       startTime: "2025-12-01T16:00:00.000Z",
+//       endTime: "2025-12-01T17:00:00.000Z",
+//     },
+//     {
+//       id: 7,
+//       startTime: "2025-12-01T14:00:00.000Z",
+//       endTime: "2025-12-01T15:00:00.000Z",
+//     },
+//     {
+//       id: 8,
+//       startTime: "2025-12-01T15:00:00.000Z",
+//       endTime: "2025-12-01T16:00:00.000Z",
+//     },
+//   ],
+// };
 
 export default function MentorDetailPage() {
   const [showConfirm, setShowConfirm] = useState(false);
   const [selectedSlot, setSelectedSlot] = useState<AvailableSlot | null>(null);
 
+  //   const mentorsData = useQuery({
+  //     queryKey: ["mentors"],
+  //     queryFn: () => usersApi.getMentors(),
+  //   });
+  //   const mentors = mentorsData.data?.data ?? [];
+
   const { id } = useParams<{ id: string }>();
+  const mentorId = Number(id);
+
   const navigate = useNavigate();
 
-  const [mentor, setMentor] = useState<MentorDetailData | null>(null);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      console.log("Dùng MOCK_MENTOR, id param:", id);
-      setMentor(MOCK_MENTOR);
-      setLoading(false);
-    }, 300);
+  const { data: mentorDetailsData } = useQuery({
+    queryKey: ["mentors_detail", mentorId],
+    queryFn: () => usersApi.getMentorDetails(mentorId),
+    enabled: !!mentorId,
+  });
 
-    return () => clearTimeout(timer);
-  }, [id]);
+  const mentor = mentorDetailsData?.data ?? null;
 
   const sortedSlots = useMemo(() => {
     if (!mentor?.availableSlots) return [];
@@ -114,17 +120,17 @@ export default function MentorDetailPage() {
     });
   };
 
-  if (loading) {
-    return (
-      <section className="min-h-screen bg-blue-50">
-        <div className="mx-auto flex max-w-4xl items-center justify-center px-4 py-16">
-          <div className="rounded-xl bg-white px-4 py-3 text-sm text-blue-700 shadow-sm border border-blue-100">
-            Đang tải thông tin mentor (mock)...
-          </div>
-        </div>
-      </section>
-    );
-  }
+//   if (loading) {
+//     return (
+//       <section className="min-h-screen bg-blue-50">
+//         <div className="mx-auto flex max-w-4xl items-center justify-center px-4 py-16">
+//           <div className="rounded-xl bg-white px-4 py-3 text-sm text-blue-700 shadow-sm border border-blue-100">
+//             Đang tải thông tin mentor (mock)...
+//           </div>
+//         </div>
+//       </section>
+//     );
+//   }
 
   if (!mentor) {
     return (
@@ -181,9 +187,7 @@ export default function MentorDetailPage() {
                 <h2 className="text-base font-semibold text-slate-800">
                   {mentor.name}
                 </h2>
-                <p className="mt-1 text-xs text-slate-500">
-                  {mentor.jobTitle}
-                </p>
+                <p className="mt-1 text-xs text-slate-500">{mentor.jobTitle}</p>
 
                 {/* Stats */}
                 <div className="mt-4 grid w-full grid-cols-3 gap-2 text-xs">
@@ -191,17 +195,13 @@ export default function MentorDetailPage() {
                     <span className="font-semibold text-slate-800">
                       {ratingValue.toFixed(1)}
                     </span>
-                    <span className="text-[11px] text-slate-500">
-                      Đánh giá
-                    </span>
+                    <span className="text-[11px] text-slate-500">Đánh giá</span>
                   </div>
                   <div className="flex flex-col items-center rounded-lg bg-blue-50/60 px-2 py-2">
                     <span className="font-semibold text-slate-800">
                       {mentor.totalReviews}
                     </span>
-                    <span className="text-[11px] text-slate-500">
-                      Review
-                    </span>
+                    <span className="text-[11px] text-slate-500">Review</span>
                   </div>
                   <div className="flex flex-col items-center rounded-lg bg-blue-50/60 px-2 py-2">
                     <span className="font-semibold text-slate-800">
