@@ -3,7 +3,7 @@
 // ============================================
 import { db } from '../config/db';
 import { users, mentorProfiles, mentorExpertise, tags, availabilities } from '../models/schema';
-import { eq, and } from 'drizzle-orm';
+import { eq, and, desc } from 'drizzle-orm';
 
 export interface MentorListItem {
   userId: number;
@@ -38,10 +38,10 @@ export interface MentorDetailResponse {
 
 /**
  * Get all mentor profiles (for home page listing)
- * @returns List of mentors with basic info and expertise tags
+ * @returns List of mentors with basic info and expertise tags, sorted by newest first
  */
 export const getAllMentorProfiles = async (): Promise<MentorListItem[]> => {
-  // 1. Get all mentors with their user info
+  // 1. Get all mentors with their user info, sorted by creation time (newest first)
   const mentors = await db
     .select({
       userId: mentorProfiles.userId,
@@ -55,7 +55,8 @@ export const getAllMentorProfiles = async (): Promise<MentorListItem[]> => {
       totalReviews: mentorProfiles.totalReviews,
     })
     .from(mentorProfiles)
-    .innerJoin(users, eq(mentorProfiles.userId, users.id));
+    .innerJoin(users, eq(mentorProfiles.userId, users.id))
+    .orderBy(desc(users.createdAt));
 
   // 2. For each mentor, get their expertise tags
   const mentorsWithTags = await Promise.all(
