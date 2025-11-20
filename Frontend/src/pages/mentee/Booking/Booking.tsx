@@ -29,28 +29,28 @@ type BookingDetailData = {
   payment: BookingPayment;
 };
 
-// 👉 MOCK BOOKING (từ JSON bạn gửi)
-const MOCK_BOOKING: BookingDetailData = {
-  id: 9,
-  menteeId: 21,
-  mentorId: 7,
-  availabilityId: 5,
-  status: "pending",
-  sessionPrice: "69.00",
-  expiresAt: "2025-11-20T08:56:45.149Z",
-  startTime: "2025-12-01T15:00:00.000Z",
-  endTime: "2025-12-01T16:00:00.000Z",
-  mentorName: "Ruby Lieu",
-  createdAt: "2025-11-20T08:41:45.142Z",
-  updatedAt: "2025-11-20T08:41:45.142Z",
-  payment: {
-    orderId: "CL_1763628105166",
-    qrImage:
-      "data:image/png;base64,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",
-    momoPhone: "0933419625",
-    note: "CareerLink_CL_1763628105166",
-  },
-};
+// // 👉 MOCK BOOKING (từ JSON bạn gửi)
+// const MOCK_BOOKING: BookingDetailData = {
+//   id: 9,
+//   menteeId: 21,
+//   mentorId: 7,
+//   availabilityId: 5,
+//   status: "pending",
+//   sessionPrice: "69.00",
+//   expiresAt: "2025-11-20T08:56:45.149Z",
+//   startTime: "2025-12-01T15:00:00.000Z",
+//   endTime: "2025-12-01T16:00:00.000Z",
+//   mentorName: "Ruby Lieu",
+//   createdAt: "2025-11-20T08:41:45.142Z",
+//   updatedAt: "2025-11-20T08:41:45.142Z",
+//   payment: {
+//     orderId: "CL_1763628105166",
+//     qrImage:
+//       "data:image/png;base64,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",
+//     momoPhone: "0933419625",
+//     note: "CareerLink_CL_1763628105166",
+//   },
+// };
 
 export default function BookingPage() {
   const navigate = useNavigate();
