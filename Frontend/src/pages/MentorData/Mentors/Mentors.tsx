@@ -10,6 +10,7 @@ export default function Mentors() {
     queryFn: () => usersApi.getMentors(),
   });
   const mentors = mentorsData.data?.data ?? [];
+
   return (
     <section id="mentors" className="mx-auto max-w-7xl px-4 py-12">
       <div className="grid grid-cols-1 gap-6 md:grid-cols-3">

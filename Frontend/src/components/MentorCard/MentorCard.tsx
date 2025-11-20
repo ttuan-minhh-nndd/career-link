@@ -72,7 +72,7 @@ export default function MentorCard({ mentor }: { mentor: Mentor }) {
           <div className="mt-3 flex items-center justify-end gap-3">
 
             <Link
-             to={generatePath(path.mentor_details, { id: mentor.userId.toString() })}
+             to={generatePath(path.mentor_details, { id: mentor.userId })}
               className="rounded-2xl bg-sky-600 px-4 py-2 text-sm font-semibold text-white ring-1 ring-sky-200 shadow hover:bg-sky-500"
             >
               Xem chi tiết

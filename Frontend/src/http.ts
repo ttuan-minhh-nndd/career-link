@@ -15,7 +15,7 @@ class Http {
   constructor() {
     this.token = getTokenFromLocalStorage();
     this.instance = axios.create({
-      baseURL: "http://localhost:8386",
+      baseURL: "http://26.200.50.169:8386",
       timeout: 10000,
       headers: {
         "Content-Type": "application/json",
