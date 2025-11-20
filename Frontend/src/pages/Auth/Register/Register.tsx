@@ -3,32 +3,49 @@ import { User, Mail, Lock, UserPlus } from "lucide-react";
 import { useContext } from "react";
 import { AppContext } from "../../../../context/app.context";
 import { useMutation } from "@tanstack/react-query";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { registerSchema, RegisterSchema } from "../../../utils/rules";
-import { useForm } from "react-hook-form";
-import { isAxiosUnprocessableEntityError } from "../../../utils/format";
-import {
-  ErrorResponse,
-  ValidationErrorList,
-} from "../../../types/response.types";
-
-import usersApi from "../../../apis/auth.api";
-import path from "../../../constants/path";
-import Input from "../../../components/Input/Input";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { registerSchema, RegisterSchema } from "@/utils/rules";
+import { Controller, useForm } from "react-hook-form";
+import { isAxiosUnprocessableEntityError } from "@/utils/format";
+import { ErrorResponse, ValidationErrorList } from "@/types/response";
 import { HttpStatusCode } from "axios";
+
+import usersApi from "@/apis/auth.api";
+import path from "@/constants/path";
+import { Button } from "@/components/ui/button";
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Card } from "@/components/ui/card";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/ui/input-group";
 
 export default function Register() {
   const { setIsAuthenticated, setProfile } = useContext(AppContext);
   const navigate = useNavigate();
 
-  const {
-    register,
-    handleSubmit,
-    setError,
-    formState: { errors },
-  } = useForm<RegisterSchema>({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    resolver: yupResolver(registerSchema) as any,
+  const form = useForm<RegisterSchema>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      role: undefined,
+    },
   });
 
   const registerAccountMutation = useMutation({
@@ -37,7 +54,7 @@ export default function Register() {
     },
   });
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = form.handleSubmit((data) => {
     registerAccountMutation.mutate(data, {
       onSuccess: async (data) => {
         setIsAuthenticated(true);
@@ -59,7 +76,7 @@ export default function Register() {
             case HttpStatusCode.UnprocessableEntity:
               if (Array.isArray(data.errors)) {
                 data.errors.forEach((err) => {
-                  setError(err.field as keyof RegisterSchema, {
+                  form.setError(err.field as keyof RegisterSchema, {
                     type: "Server",
                     message: err.message,
                   });
@@ -69,7 +86,7 @@ export default function Register() {
 
             // 409 → "User already exists"
             case HttpStatusCode.Conflict:
-              setError("email", {
+              form.setError("email", {
                 type: "Server",
                 message: data.message,
               });
@@ -101,123 +118,138 @@ export default function Register() {
           </div>
 
           {/* Card */}
-          <div className="rounded-3xl bg-white/90 p-6 shadow-xl ring-1 ring-slate-100 backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:bg-slate-900/60 dark:ring-white/10">
-            <form className="space-y-4" onSubmit={onSubmit} noValidate>
-              {/* Name */}
-              <div>
-                <label
-                  htmlFor="name"
-                  className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-200"
+          <Card className="p-6">
+            <form
+              id="register-form"
+              className="space-y-4"
+              onSubmit={onSubmit}
+              noValidate
+            >
+              <FieldGroup>
+                {/* Name */}
+                <Controller
+                  name="name"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <Field data-invalid={fieldState.invalid}>
+                      <FieldLabel htmlFor="register-name">
+                        Họ và tên
+                      </FieldLabel>
+                      <InputGroup>
+                        <InputGroupInput
+                          {...field}
+                          id="register-name"
+                          type="text"
+                          placeholder="Nguyễn Văn A"
+                          aria-invalid={fieldState.invalid}
+                        />
+                        <InputGroupAddon>
+                          <User />
+                        </InputGroupAddon>
+                      </InputGroup>
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
+                    </Field>
+                  )}
+                />
+
+                {/* Email */}
+                <Controller
+                  name="email"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <Field data-invalid={fieldState.invalid}>
+                      <FieldLabel htmlFor="register-email">Email</FieldLabel>
+                      <InputGroup>
+                        <InputGroupInput
+                          {...field}
+                          id="register-email"
+                          type="email"
+                          placeholder="you@example.com"
+                          aria-invalid={fieldState.invalid}
+                        />
+                        <InputGroupAddon>
+                          <Mail />
+                        </InputGroupAddon>
+                      </InputGroup>
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
+                    </Field>
+                  )}
+                />
+
+                {/* Password */}
+                <Controller
+                  name="password"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <Field data-invalid={fieldState.invalid}>
+                      <FieldLabel htmlFor="register-password">
+                        Mật khẩu
+                      </FieldLabel>
+                      <InputGroup>
+                        <InputGroupInput
+                          {...field}
+                          id="register-password"
+                          type="password"
+                          placeholder="Nhập mật khẩu (≥ 6 ký tự)"
+                          aria-invalid={fieldState.invalid}
+                        />
+                        <InputGroupAddon>
+                          <Lock />
+                        </InputGroupAddon>
+                      </InputGroup>
+                      <FieldDescription>
+                        Mật khẩu phải có ít nhất 6 ký tự
+                      </FieldDescription>
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
+                    </Field>
+                  )}
+                />
+
+                {/* Role */}
+                <Controller
+                  name="role"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <Field data-invalid={fieldState.invalid}>
+                      <FieldLabel htmlFor="register-role">
+                        Đăng ký với vai trò
+                      </FieldLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        value={field.value}
+                      >
+                        <SelectTrigger
+                          id="register-role"
+                          aria-invalid={fieldState.invalid}
+                        >
+                          <SelectValue placeholder="Chọn vai trò" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="mentee">Mentee</SelectItem>
+                          <SelectItem value="mentor">Mentor</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
+                    </Field>
+                  )}
+                />
+
+                {/* Button */}
+                <Button
+                  type="submit"
+                  className="w-full cursor-pointer"
                 >
-                  Họ và tên
-                </label>
-                <div className="relative">
-                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                    <User className="h-4 w-4 text-slate-400" />
-                  </div>
-
-                  <Input<RegisterSchema>
-                    id="name"
-                    name="name"
-                    type="name"
-                    placeholder="Nguyễn Văn A"
-                    register={register}
-                    className="w-full rounded-xl border border-slate-200 bg-white px-9 py-2.5 text-sm shadow-sm outline-none ring-sky-100 transition focus:border-sky-300 focus:ring-4 dark:border-slate-700 dark:bg-slate-900/70 dark:text-slate-100 dark:placeholder-slate-500"
-                    errorMessages={errors.name?.message}
-                  />
-                </div>
-              </div>
-
-              {/* Email */}
-              <div>
-                <label
-                  htmlFor="email"
-                  className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-200"
-                >
-                  Email
-                </label>
-                <div className="relative">
-                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                    <Mail className="h-4 w-4 text-slate-400" />
-                  </div>
-
-                  <Input<RegisterSchema>
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="you@example.com"
-                    register={register}
-                    className="w-full rounded-xl border border-slate-200 bg-white px-9 py-2.5 text-sm shadow-sm outline-none ring-sky-100 transition focus:border-sky-300 focus:ring-4 dark:border-slate-700 dark:bg-slate-900/70 dark:text-slate-100 dark:placeholder-slate-500"
-                    errorMessages={errors.email?.message}
-                  />
-
-                  {/* <input
-                    id="email"
-                    type="email"
-                    placeholder="you@example.com"
-                    className="w-full rounded-xl border border-slate-200 bg-white px-9 py-2.5 text-sm shadow-sm outline-none ring-sky-100 transition focus:border-sky-300 focus:ring-4 dark:border-slate-700 dark:bg-slate-900/70 dark:text-slate-100 dark:placeholder-slate-500"
-                  /> */}
-                </div>
-              </div>
-
-              {/* Passwords */}
-              <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-                <div className="relative">
-                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                    <Lock className="h-4 w-4 text-slate-400" />
-                  </div>
-                  <Input<RegisterSchema>
-                    id="password"
-                    name="password"
-                    type="password"
-                    placeholder="Nhập mật khẩu"
-                    register={register}
-                    className="w-full rounded-xl border border-slate-200 bg-white px-9 py-2.5 text-sm shadow-sm outline-none ring-sky-100 transition focus:border-sky-300 focus:ring-4 dark:border-slate-700 dark:bg-slate-900/70 dark:text-slate-100 dark:placeholder-slate-500"
-                    errorMessages={errors.password?.message}
-                  />
-                </div>
-                <div className="relative">
-                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                    <Lock className="h-4 w-4 text-slate-400" />
-                  </div>
-                  {/* <input
-                    type="password"
-                    placeholder="Nhập lại mật khẩu"
-                    className="w-full rounded-xl border border-slate-200 bg-white px-9 py-2.5 text-sm shadow-sm outline-none ring-sky-100 transition focus:border-sky-300 focus:ring-4 dark:border-slate-700 dark:bg-slate-900/70 dark:text-slate-100 dark:placeholder-slate-500"
-                  /> */}
-                </div>
-              </div>
-
-              {/* Role */}
-              <div className="flex items-center justify-between gap-3">
-                <label className="text-sm font-medium text-slate-700 dark:text-slate-200">
-                  Đăng ký với vai trò
-                </label>
-                <select
-                  {...register("role")}
-                  defaultValue=""
-                  className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm outline-none transition focus:border-sky-300 focus:ring-4 focus:ring-sky-100 dark:border-slate-700 dark:bg-slate-900/70 dark:text-slate-100 dark:focus:ring-sky-900"
-                >
-                  <option value="" disabled>
-                    Chọn vai trò
-                  </option>
-                  <option value="mentee">Mentee</option>
-                  <option value="mentor">Mentor</option>
-                </select>
-                {errors.role && (
-                  <p className="mt-1 text-xs text-red-500">
-                    {errors.role.message}
-                  </p>
-                )}
-              </div>
-
-              {/* Button */}
-              <button
-                type="submit"
-                className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-sky-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-700 focus:outline-none focus:ring-4 focus:ring-sky-100 dark:focus:ring-sky-900"
-              >
-                Tạo tài khoản
-              </button>
+                  Tạo tài khoản
+                </Button>
+              </FieldGroup>
             </form>
 
             {/* Footer */}
@@ -230,7 +262,7 @@ export default function Register() {
                 Đăng nhập
               </Link>
             </p>
-          </div>
+          </Card>
         </div>
       </div>
     </section>

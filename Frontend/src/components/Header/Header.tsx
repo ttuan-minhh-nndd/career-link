@@ -2,6 +2,7 @@ import { Link, NavLink} from "react-router-dom";
 import Logo from "../Logo/Logo";
 import SearchButton from "../SearchButton/SearchButton";
 import path from "../../constants/path";
+import { Button } from "../ui/button";
 export default function Header() {
   const navLink =
     "text-sm font-medium text-slate-700 hover:text-sky-700 px-3 py-1.5 rounded-lg hover:bg-slate-50";
@@ -24,18 +25,16 @@ export default function Header() {
 
 
         <div className="flex items-center gap-2">
-          <Link
-            to={path.login}
-            className="rounded-xl border border-slate-200 px-3 py-1.5 text-sm font-semibold hover:bg-slate-50"
-          >
-            Đăng nhập
-          </Link>
-          <Link
-            to={path.register}
-            className="rounded-xl bg-sky-600 px-3 py-1.5 text-sm font-semibold text-white shadow hover:bg-sky-700"
-          >
-            Đăng ký
-          </Link>
+          <Button variant="outline" className="rounded-full cursor-pointer" asChild>
+            <Link to={path.login}>
+              Đăng nhập
+            </Link>
+          </Button>
+          <Button className="rounded-full cursor-pointer" asChild>
+            <Link to={path.register}>
+              Đăng ký
+            </Link>
+          </Button>
         </div>
       </div>
     </header>

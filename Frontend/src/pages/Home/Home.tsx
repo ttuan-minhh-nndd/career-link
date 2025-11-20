@@ -8,6 +8,7 @@ import mentor2 from "../../assets/mentors/mentor2.jpg";
 import mentor3 from "../../assets/mentors/mentor3.jpg";
 import mentor4 from "../../assets/mentors/mentor4.jpg";
 import mentor5 from "../../assets/mentors/mentor5.jpg";
+import { BackgroundRippleEffect } from "@/components/ui/ripple-background";
 
 const mentors: MentorShowcase[] = [
     {
@@ -66,7 +67,9 @@ export default function Home() {
     <>
       {/* Hero */}
       <section className="mx-auto grid min-h-[70vh] max-w-8xl place-items-center px-4">
-        <div className="text-center max-w-3xl">
+        <BackgroundRippleEffect rows={11} />
+
+        <div className="text-center max-w-3xl z-10">
             <h1 className="text-5xl font-extrabold text-slate-900">
             Chào mừng đến với <span className="text-sky-600">CareerLink</span>
             </h1>

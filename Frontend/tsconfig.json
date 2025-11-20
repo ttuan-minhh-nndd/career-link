@@ -5,6 +5,9 @@
     "moduleResolution": "bundler",
     "jsx": "react-jsx",
     "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true
   },

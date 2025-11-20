@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { User } from "../src/types/user.types";
+import { User } from "../src/types/user";
 import {
   getTokenFromLocalStorage,
   getProfileFromLocalStorage,

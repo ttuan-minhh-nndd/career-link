@@ -1,29 +1,40 @@
-import * as yup from "yup";
+import * as z from "zod";
 
 // --- SCHEMAS ---
 // These rules was taken from users.middlewaress's registerValidator
-export const registerSchema = yup.object({
-  name: yup.string().required("Name is required").trim(),
-  email: yup
+export const registerSchema = z.object({
+  name: z.string().min(1, "Họ và tên là bắt buộc").trim(),
+  email: z
     .string()
-    .required("Email is required")
-    .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Email is invalid"),
-  password: yup
+    .min(1, "Email là bắt buộc")
+    .regex(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Email không hợp lệ"),
+  password: z
     .string()
-    .required("Password is required")
-    .min(6, "Password must be at least 6 characters"),
-  role: yup
-    .string()
-    .required("Role is required")
-    .oneOf(["mentee", "mentor"], "Role must be mentee or mentor"),
+    .min(1, "Mật khẩu là bắt buộc")
+    .min(6, "Mật khẩu phải có ít nhất 6 ký tự"),
+  role: z
+    .enum(["mentee", "mentor"], {
+      message: "Vui lòng chọn vai trò",
+    }),
 });
 
-export const loginSchema = yup.object({
-  email: yup.string().required("Email is required"),
-  password: yup.string().required("Password is required"),
+export const loginSchema = z.object({
+  email: z.string().min(1, "Email là bắt buộc"),
+  password: z.string().min(1, "Mật khẩu là bắt buộc"),
+});
+
+export const quickBookingSchema = z.object({
+  name: z.string().min(1, "Họ và tên là bắt buộc").trim(),
+  email: z
+    .string()
+    .min(1, "Email là bắt buộc")
+    .regex(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Email không hợp lệ"),
+  datetime: z.string().min(1, "Vui lòng chọn ngày và giờ"),
+  goal: z.string().optional(),
 });
 
 // --- TYPES ---
-export type RegisterSchema = Required<yup.InferType<typeof registerSchema>>;
-export type LoginSchema = Required<yup.InferType<typeof loginSchema>>;
+export type RegisterSchema = z.infer<typeof registerSchema>;
+export type LoginSchema = z.infer<typeof loginSchema>;
+export type QuickBookingSchema = z.infer<typeof quickBookingSchema>;
 

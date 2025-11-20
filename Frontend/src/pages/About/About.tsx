@@ -1,3 +1,5 @@
+import QuickBookingForm from "@/components/QuickBookingForm";
+
 export default function About() {
   return (
     <section
@@ -77,75 +79,7 @@ export default function About() {
           </div>
 
           {/* Right: Quick booking form */}
-          {/* Loz nào code thẳng form vào trong page luôn? */}
-          <div className="relative">
-            <div className="absolute -inset-x-6 -top-6 -z-10 h-24 rounded-3xl bg-gradient-to-r from-sky-200/60 to-indigo-200/60 blur-2xl" />
-            <div className="overflow-hidden rounded-3xl border border-white/70 bg-white/90 shadow-2xl backdrop-blur">
-              <div className="h-12 bg-gradient-to-r from-sky-500 to-indigo-500" />
-              <div className="p-6">
-                <div className="mb-2">
-                  <div className="text-lg font-bold text-slate-900">Đăng ký phiên tư vấn nhanh</div>
-                  <div className="text-sm text-slate-600">Miễn phí huỷ trước 12h</div>
-                </div>
-
-                <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-                  <div>
-                    <label className="mb-1 block text-sm font-medium text-slate-700">
-                      Họ và tên
-                    </label>
-                    <input
-                      className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none placeholder:text-slate-400 focus:border-sky-400 focus:ring-2 focus:ring-sky-200"
-                      placeholder="VD: Nguyễn Văn A"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="mb-1 block text-sm font-medium text-slate-700">
-                      Email
-                    </label>
-                    <input
-                      className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none placeholder:text-slate-400 focus:border-sky-400 focus:ring-2 focus:ring-sky-200"
-                      placeholder="name@email.com"
-                    />
-                    <p className="mt-1 text-xs text-slate-500">
-                      Dùng email để nhận xác nhận & lịch hẹn.
-                    </p>
-                  </div>
-
-                  <div>
-                    <label className="mb-1 block text-sm font-medium text-slate-700">
-                      Ngày & giờ mong muốn
-                    </label>
-                    <input
-                      type="datetime-local"
-                      className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:border-sky-400 focus:ring-2 focus:ring-sky-200"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="mb-1 block text-sm font-medium text-slate-700">
-                      Mục tiêu buổi tư vấn (tuỳ chọn)
-                    </label>
-                    <textarea
-                      className="h-24 w-full resize-none rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none placeholder:text-slate-400 focus:border-sky-400 focus:ring-2 focus:ring-sky-200"
-                      placeholder="VD: Review CV, định hướng học Data, luyện phỏng vấn React..."
-                    />
-                  </div>
-
-                  <button className="w-full rounded-xl bg-gradient-to-r from-sky-600 to-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow hover:from-sky-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-sky-300">
-                    Xác nhận đặt lịch
-                  </button>
-
-                  <div className="mt-3 flex items-center justify-center gap-2 text-xs text-slate-500">
-                    <svg viewBox="0 0 20 20" className="h-4 w-4 fill-sky-600">
-                      <path d="M10 1.67a8.33 8.33 0 1 0 0 16.66A8.33 8.33 0 0 0 10 1.67Zm.83 12.5H9.17v-1.66h1.66v1.66Zm0-3.34H9.17V5.83h1.66v5Z" />
-                    </svg>
-                    Thời lượng mặc định: 30 phút/buổi. Có thể thay đổi sau khi ghép lịch.
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
+          <QuickBookingForm />
         </div>
 
       </div>

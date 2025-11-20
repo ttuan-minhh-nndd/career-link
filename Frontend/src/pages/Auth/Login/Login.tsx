@@ -2,34 +2,41 @@ import { Link, useNavigate } from "react-router-dom";
 import { Mail, Lock, CheckCircle2 } from "lucide-react";
 import { useContext } from "react";
 import { AppContext } from "../../../../context/app.context";
-import { loginSchema, LoginSchema } from "../../../utils/rules";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
+import { loginSchema, LoginSchema } from "@/utils/rules";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import { setProfileToLocalStorage } from "../../../utils/auth";
-import { isAxiosUnprocessableEntityError } from "../../../utils/format";
-import {
-  ErrorResponse,
-  ValidationErrorList,
-} from "../../../types/response.types";
+import { setProfileToLocalStorage } from "@/utils/auth";
+import { isAxiosUnprocessableEntityError } from "@/utils/format";
+import { ErrorResponse, ValidationErrorList } from "@/types/response";
 import { HttpStatusCode } from "axios";
 
-import usersApi from "../../../apis/auth.api";
-import path from "../../../constants/path";
-import Input from "../../../components/Input/Input";
+import usersApi from "@/apis/auth.api";
+import path from "@/constants/path";
+import { Button } from "@/components/ui/button";
+import {
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field";
+import { Card } from "@/components/ui/card";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/ui/input-group";
 
 export default function Login() {
   const { setIsAuthenticated, setProfile } = useContext(AppContext);
   const navigate = useNavigate();
 
-  const {
-    register,
-    handleSubmit,
-    setError,
-    formState: { errors },
-  } = useForm<LoginSchema>({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    resolver: yupResolver(loginSchema) as any,
+  const form = useForm<LoginSchema>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
 
   const loginAccountMutation = useMutation({
@@ -38,7 +45,7 @@ export default function Login() {
     },
   });
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = form.handleSubmit((data) => {
     loginAccountMutation.mutate(data, {
       onSuccess: async (data) => {
         setIsAuthenticated(true);
@@ -65,7 +72,7 @@ export default function Login() {
             case HttpStatusCode.UnprocessableEntity:
               if (Array.isArray(data.errors)) {
                 data.errors.forEach((err) => {
-                  setError(err.field as keyof LoginSchema, {
+                  form.setError(err.field as keyof LoginSchema, {
                     type: "Server",
                     message: err.message,
                   });
@@ -74,11 +81,11 @@ export default function Login() {
               break;
 
             case HttpStatusCode.Unauthorized:
-              setError("email", {
+              form.setError("email", {
                 type: "Server",
                 message: data.message,
               });
-              setError("password", {
+              form.setError("password", {
                 type: "Server",
                 message: data.message,
               });
@@ -110,69 +117,78 @@ export default function Login() {
           </div>
 
           {/* Card */}
-          <div className="rounded-3xl bg-white/90 p-6 shadow-xl ring-1 ring-slate-100 backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:bg-slate-900/60 dark:ring-white/10">
-            <form className="space-y-4" onSubmit={onSubmit} noValidate>
-              {/* Email */}
-              <div>
-                <label
-                  htmlFor="email"
-                  className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-200"
+          <Card className="p-6">
+            <form
+              id="login-form"
+              className="space-y-4"
+              onSubmit={onSubmit}
+              noValidate
+            >
+              <FieldGroup>
+                {/* Email */}
+                <Controller
+                  name="email"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <Field data-invalid={fieldState.invalid}>
+                      <FieldLabel htmlFor="login-email">Email</FieldLabel>
+                      <InputGroup>
+                        <InputGroupInput
+                          {...field}
+                          id="login-email"
+                          type="email"
+                          placeholder="you@example.com"
+                          autoComplete="email"
+                          aria-invalid={fieldState.invalid}
+                        />
+                        <InputGroupAddon>
+                          <Mail />
+                        </InputGroupAddon>
+                      </InputGroup>
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
+                    </Field>
+                  )}
+                />
+
+                {/* Password */}
+                <Controller
+                  name="password"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <Field data-invalid={fieldState.invalid}>
+                      <FieldLabel htmlFor="login-password">
+                        Mật khẩu
+                      </FieldLabel>
+                      <InputGroup>
+                        <InputGroupInput
+                          {...field}
+                          id="login-password"
+                          type="password"
+                          placeholder="Mật khẩu (≥ 6 ký tự)"
+                          autoComplete="current-password"
+                          aria-invalid={fieldState.invalid}
+                        />
+                        <InputGroupAddon>
+                          <Lock />
+                        </InputGroupAddon>
+                      </InputGroup>
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
+                    </Field>
+                  )}
+                />
+
+                {/* Submit Button */}
+                <Button
+                  type="submit"
+                  className="w-full cursor-pointer"
                 >
-                  Email
-                </label>
-                <div className="relative">
-                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                    <Mail className="h-4 w-4 text-slate-400" />
-                  </div>
-
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="you@example.com"
-                    register={register}
-                    autoComplete="email"
-                    className="w-full rounded-xl border border-slate-200 bg-white px-9 py-2.5 text-sm shadow-sm outline-none ring-sky-100 transition focus:border-sky-300 focus:ring-4 dark:border-slate-700 dark:bg-slate-900/70 dark:text-slate-100 dark:placeholder-slate-500"
-                    errorMessages={errors.email?.message}
-                  />
-                </div>
-              </div>
-
-              {/* Password */}
-              <div>
-                <div className="flex items-center justify-between">
-                  <label
-                    htmlFor="password"
-                    className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-200"
-                  >
-                    Mật khẩu
-                  </label>
-                </div>
-                <div className="relative">
-                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                    <Lock className="h-4 w-4 text-slate-400" />
-                  </div>
-
-                  <Input
-                    id="password"
-                    name="password"
-                    type="password"
-                    placeholder="Mật khẩu (≥ 6 ký tự)"
-                    register={register}
-                    autoComplete="password"
-                    className="w-full rounded-xl border border-slate-200 bg-white px-9 py-2.5 text-sm shadow-sm outline-none ring-sky-100 transition focus:border-sky-300 focus:ring-4 dark:border-slate-700 dark:bg-slate-900/70 dark:text-slate-100 dark:placeholder-slate-500"
-                    errorMessages={errors.password?.message}
-                  />
-                </div>
-              </div>
-
-              {/* Primary Button (non-submit to keep UI-only) */}
-              <button
-                type="submit"
-                className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-sky-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-700 focus:outline-none focus:ring-4 focus:ring-sky-100 dark:focus:ring-sky-900"
-              >
-                Đăng nhập
-              </button>
+                  Đăng nhập
+                </Button>
+              </FieldGroup>
             </form>
 
             {/* Divider */}
@@ -194,7 +210,7 @@ export default function Login() {
                 Đăng ký
               </Link>
             </p>
-          </div>
+          </Card>
         </div>
       </div>
     </section>

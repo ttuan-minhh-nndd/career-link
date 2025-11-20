@@ -3,7 +3,7 @@ import {
   GetMentorsAvailabilityResponse,
   GetMentorsResponse,
   GetMeResponse,
-} from "../types/auth.types";
+} from "../types/auth";
 import http from "../http";
 
 export interface RegisterRequest {

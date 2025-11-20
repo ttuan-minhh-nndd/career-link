@@ -6,7 +6,7 @@ import {
   setTokenToLocalStorage,
 } from "./utils/auth";
 import path from "./constants/path";
-import { AuthResponse } from "./types/auth.types";
+import { AuthResponse } from "./types/auth";
 
 class Http {
   instance: AxiosInstance;
