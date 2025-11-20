@@ -338,20 +338,20 @@ export default function MenteeNavHeader() {
                   to={path.mentee_my_sessions}
                   className="block px-3 py-2 hover:bg-slate-50"
                 >
-                  My sessions
+                  Phiên của tôi
                 </Link>
                 <Link
                   to={path.mentee_profile}
                   className="block px-3 py-2 hover:bg-slate-50"
                 >
-                  My account
+                  Tài khoản
                 </Link>
 
                 <button
                   onClick={handleLogout}
                   className="block px-3 py-2 hover:bg-slate-50"
                 >
-                  Log out
+                  Đăng xuất
                 </button>
               </div>
             )}

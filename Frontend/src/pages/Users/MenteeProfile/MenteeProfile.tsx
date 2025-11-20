@@ -69,7 +69,7 @@ export default function MyAccount() {
         <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
             <h1 className="text-3xl font-bold tracking-tight text-slate-900">
-              My Account
+              Tài khoản
             </h1>
           </div>
         </div>

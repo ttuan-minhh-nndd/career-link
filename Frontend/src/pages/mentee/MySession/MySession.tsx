@@ -78,7 +78,7 @@ export default function MySessions() {
         <div className="mb-6 lg:mb-8 flex flex-col gap-2 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <h1 className="text-3xl font-bold tracking-tight text-slate-900">
-              My Sessions
+              Phiên của tôi
             </h1>
             <p className="mt-2 max-w-xl text-sm text-slate-600">
               Quản lý các buổi hẹn 1:1 với mentor: xem lịch sắp tới, lịch sử

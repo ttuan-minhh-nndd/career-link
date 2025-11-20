@@ -130,7 +130,7 @@ export default function MentorNavHeader() {
                 : "text-sm font-medium text-slate-600 hover:text-slate-900"
             }
           >
-            My sessions
+            Phiên của tôi
           </NavLink>
         </div>
 
@@ -324,14 +324,14 @@ export default function MentorNavHeader() {
                   to={path.mentor_profile}
                   className="block px-3 py-2 hover:bg-slate-50"
                 >
-                  My account
+                  Tài khoản
                 </Link>
 
                 <button
                   onClick={handleLogout}
                   className="block w-full text-left px-3 py-2 hover:bg-slate-50"
                 >
-                  Log out
+                  Đăng xuất
                 </button>
               </div>
             )}
