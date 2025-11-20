@@ -42,109 +42,80 @@ export default function MentorProfile() {
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Card: Thông tin cơ bản */}
-          <section className="rounded-3xl bg-white p-4 shadow-sm ring-1 ring-slate-200">
-            <h2 className="text-sm font-semibold text-slate-900">
-              Thông tin cá nhân & hiển thị
-            </h2>
-            <p className="mt-1 text-[11px] text-slate-500">
-              Thông tin này sẽ xuất hiện trên trang profile và trong trang đặt
-              lịch.
-            </p>
+<section className="rounded-3xl bg-white p-4 md:p-5 shadow-sm ring-1 ring-slate-200">
+  <h2 className="text-sm font-semibold text-slate-900">
+    Thông tin cá nhân & hiển thị
+  </h2>
+  <p className="mt-1 text-[11px] text-slate-500">
+    Thông tin này sẽ xuất hiện trên trang profile và trong trang đặt lịch.
+  </p>
 
-            <div className="mt-3 flex flex-col gap-4 md:flex-row">
-              {/* Avatar */}
-              <div className="flex flex-col items-center gap-2 md:w-1/3">
-                <img
-                  src={
-                    profile.avatarUrl ||
-                    "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=200&auto=format&fit=crop"
-                  }
-                  alt={profile.name}
-                  className="h-40 w-40 rounded-2xl bg-slate-100 object-cover"
-                />
-                <button
-                  type="button"
-                  className="rounded-full border border-slate-300 px-3 py-1 text-[11px] font-medium text-slate-700 hover:bg-slate-50"
-                >
-                  Đổi avatar
-                </button>
-                <p className="text-[10px] leading-snug text-slate-500 text-center">
-                  Nên dùng ảnh rõ mặt, nền sáng, phù hợp môi trường chuyên
-                  nghiệp.
-                </p>
-              </div>
+  <div className="mt-5 flex flex-col gap-6 md:flex-row md:items-start">
+    {/* Avatar */}
+<div className="flex flex-col items-center justify-center md:justify-center gap-3 md:w-1/3">
+      <img
+        src={
+          profile.avatarUrl ||
+          "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=200&auto=format&fit=crop"
+        }
+        alt={profile.name}
+        className="h-44 w-44 rounded-3xl bg-slate-100 object-cover shadow-sm"
+      />
+    </div>
 
-              {/* Fields */}
-              <div className="grid flex-1 grid-cols-2 gap-x-4 md:grid-cols-4 mx-auto w-full max-w-lg">
-                <div className="col-span-2">
-                  <label className="block text-[11px] font-medium text-slate-700">
-                    Họ và tên
-                  </label>
-                  <input
-                    className="mt-1 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm text-slate-900 shadow-sm focus:border-sky-400 focus:bg-white focus:outline-none focus:ring-1 focus:ring-sky-400"
-                    value={profile.name}
-                    onChange={(e) => handleInputChange("name", e.target.value)}
-                  />
-                </div>
-                <div className="col-span-2 md:col-span-0">
-                  <label className="block text-xs font-medium text-slate-700">
-                    Email đăng nhập / liên hệ
-                  </label>
-                  <input
-                    type="email"
-                    className="mt-1 w-full rounded-xl border border-slate-200 bg-slate-100 px-3 py-2 text-sm text-slate-900 shadow-inner"
-                    value={profile.email}
-                    disabled
-                  />
-                  <p className="mt-1 text-[11px] text-slate-500">
-                    Email được dùng để đăng nhập & nhận thông báo từ mentee.
-                  </p>
-                </div>
+    {/* FORM */}
+    <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
 
-                <div className="col-span-2 md:col-span-0">
-                  <label className="block text-xs font-medium text-slate-700">
-                    Chức danh / Job Title
-                  </label>
-                  <input
-                    className="mt-1 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-sky-400 focus:bg-white focus:outline-none focus:ring-1 focus:ring-sky-400"
-                    value={profile.mentorProfile.jobTitle ?? ""}
-                    // onChange={(e) =>
-                    //   handleInputChange("company", e.target.value)
-                    // }
-                  />
-                  <p className="mt-1 text-[11px] text-slate-500">
-                    Ví dụ:{" "}
-                    {`"PhD, Senior Lecturer in Digital Marketing @ International University, VNU-HCMC"`}
-                    .
-                  </p>
-                </div>
-                {/* ⭐ Average Rating */}
-                <div className="col-span-2 md:col-span-0 mx-auto w-full max-w-xs">
-                  <label className="block text-[11px] font-medium text-slate-700">
-                    Điểm đánh giá trung bình
-                  </label>
-                  <input
-                    disabled
-                    className="mt-1 w-full rounded-xl border border-slate-200 bg-slate-100 px-3 py-1.5 text-sm text-slate-900 shadow-inner"
-                    value={profile.mentorProfile?.averageRating ?? "0.00"}
-                  />
-                </div>
+      {/* 🟦 Row 1 */}
+      <div>
+        <label className="block text-[12px] font-medium text-slate-700">
+          Họ và tên
+        </label>
+        <input
+          className="mt-1 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-sky-400 focus:bg-white focus:ring-1 focus:ring-sky-400"
+          value={profile.name}
+          onChange={(e) => handleInputChange("name", e.target.value)}
+        />
+      </div>
 
+      <div>
+        <label className="block text-[12px] font-medium text-slate-700">
+          Email đăng nhập / liên hệ
+        </label>
+        <input
+          type="email"
+          disabled
+          className="mt-1 w-full rounded-xl border border-slate-200 bg-slate-100 px-3 py-2 text-sm text-slate-900 shadow-inner"
+          value={profile.email}
+        />
+      </div>
 
-                {/* 📝 Total Reviews */}
-                <div className="col-span-2 md:col-span-0 mx-auto w-full max-w-xs">
-                  <label className="block text-[11px] font-medium text-slate-700">
-                    Tổng số lượt đánh giá
-                  </label>
-                  <input
-                    disabled
-                    className="mt-1 w-full rounded-xl border border-slate-200 bg-slate-100 px-3 py-1.5 text-sm text-slate-900 shadow-inner"
-                    value={profile.mentorProfile?.totalReviews ?? 0}
-                  />
-                </div>
-              </div>
-            </div>
-          </section>
+      {/* 🟦 Row 2 */}
+      <div>
+        <label className="block text-[12px] font-medium text-slate-700">
+          Điểm đánh giá trung bình
+        </label>
+        <input
+          disabled
+          className="mt-1 w-full rounded-xl border border-slate-200 bg-slate-100 px-3 py-2 text-sm text-slate-900 shadow-inner"
+          value={profile.mentorProfile?.averageRating ?? "0.00"}
+        />
+      </div>
+
+      <div>
+        <label className="block text-[12px] font-medium text-slate-700">
+          Tổng số lượt đánh giá
+        </label>
+        <input
+          disabled
+          className="mt-1 w-full rounded-xl border border-slate-200 bg-slate-100 px-3 py-2 text-sm text-slate-900 shadow-inner"
+          value={profile.mentorProfile?.totalReviews ?? 0}
+        />
+      </div>
+
+    </div>
+  </div>
+</section>
 
           {/* Card: Chức danh */}
           <section className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">

@@ -8,12 +8,7 @@ export default function Booking() {
     <section className="mx-auto max-w-5xl px-4 py-12">
       {/* Top bar */}
       <div className="mb-8 flex items-center justify-between">
-        <Link
-          to={path.mentee_mentors}
-          className="text-sm font-medium text-sky-700 hover:underline"
-        >
-          ← Quay lại danh sách Mentor
-        </Link>
+
       </div>
 
       <div className="grid grid-cols-1 gap-8 md:grid-cols-12">

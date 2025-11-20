@@ -14,6 +14,8 @@ const path = {
   // Availability
   mentor_my_sessions: "/api/v1/availabilities/mentor/mine",
   create_session: "/api/v1/availabilities/bulk",
+  update_session: "/api/v1/availabilities/:id",
+  delete_session: "/api/v1/availabilities/:id",
 
   //Booking
   booking: "/api/v1/bookings",

@@ -14,9 +14,6 @@ export default function MentorDashboard() {
           <div className="rounded-3xl bg-gradient-to-br from-sky-500 to-indigo-500 p-6 text-white shadow-xl lg:p-7">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <p className="text-xs font-medium uppercase tracking-wide text-sky-100/90">
-                  Dashboard mentor
-                </p>
                 <h1 className="mt-1 text-2xl font-bold leading-tight">
                   Chào mừng trở lại,{" "}
                   <span className="whitespace-nowrap">Mentor Tuấn Minh</span>
