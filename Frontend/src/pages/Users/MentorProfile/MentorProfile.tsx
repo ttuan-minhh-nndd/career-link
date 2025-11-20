@@ -69,7 +69,7 @@ export default function MentorProfile() {
                 {/* 🟦 Row 1 */}
                 <div>
                   <label className="block text-[12px] font-medium text-slate-700">
-                    Họ và tên
+                    Họ và tên ajhfiassduia
                   </label>
                   <input
                     className="mt-1 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-sky-400 focus:bg-white focus:ring-1 focus:ring-sky-400"
