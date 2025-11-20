@@ -4,6 +4,7 @@ import {
   GetMentorsAvailabilityResponse,
   GetMentorsResponse,
   GetMeResponse,
+  ScheduleSlot,
 } from "../types/auth";
 import http from "../http";
 
@@ -54,6 +55,15 @@ const usersApi = {
       "api/v1/availabilities/bulk",
       body
     );
+  },
+  updateMentorAvailabilityById: (
+    id: number,
+    body: MentorAvailabilitySlotBody
+  ) => {
+    return http.put<ScheduleSlot>(`/api/v1/availabilities/${id}`, body);
+  },
+  deleteMentorAvailabilityById: (id: number) => {
+    return http.delete(`/api/v1/availabilities/${id}`);
   },
 };
 

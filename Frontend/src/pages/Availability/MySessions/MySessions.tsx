@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { CalendarDays, Pencil, Trash2 } from "lucide-react";
 import path from "../../../constants/path";
 import EditSessionModal from "../EditSession";
-import { useQuery } from "@tanstack/react-query";
-import usersApi from "@/apis/auth.api";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import usersApi, { MentorAvailabilitySlotBody } from "@/apis/auth.api";
 
 // =========================
 // TYPES
@@ -173,6 +173,8 @@ export default function MentorSessions() {
   });
   const availabilitiesData = getMentorsAvailabilityMutation.data?.data ?? [];
 
+  const queryClient = useQueryClient();
+
   const groups = groupSessionsByDay(availabilitiesData);
 
   // DELETE POPUP
@@ -184,9 +186,35 @@ export default function MentorSessions() {
     setDeleteOpen(true);
   };
 
+  const deleteSessionMutation = useMutation({
+    mutationFn: (id: number) => {
+      return usersApi.deleteMentorAvailabilityById(id);
+    },
+  });
+
   const confirmDelete = () => {
-    alert("Đã xóa session ID " + deleteId);
+    deleteSessionMutation.mutate(deleteId, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["mentorAvailability"] });
+      },
+    });
     setDeleteOpen(false);
+  };
+
+  const handleSaveEdit = (updated: { startTime: string; endTime: string }) => {
+    editSessionMutation.mutate(
+      {
+        id: editSession.id,
+        body: updated,
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ["mentorAvailability"] });
+        },
+      }
+    );
+    console.log("Updated session:", updated);
+    setEditOpen(false);
   };
 
   // EDIT POPUP
@@ -198,11 +226,11 @@ export default function MentorSessions() {
     setEditOpen(true);
   };
 
-  const handleSaveEdit = (updated: { startTime: string; endTime: string }) => {
-    console.log("Updated session:", updated);
-    alert("Đã cập nhật session!");
-    setEditOpen(false);
-  };
+  const editSessionMutation = useMutation({
+    mutationFn: (vars: { id: number; body: MentorAvailabilitySlotBody }) => {
+      return usersApi.updateMentorAvailabilityById(vars.id, vars.body);
+    },
+  });
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-sky-50/60 via-slate-50 to-white">
