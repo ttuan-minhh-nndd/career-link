@@ -84,8 +84,6 @@ export default function MenteeHomePage() {
 
       </section>
 
-      
-
 
       {/* FEATURED MENTORS */}
       <section className="w-full bg-gradient-to-b from-sky-50 via-indigo-50 to-white py-12">
