@@ -1,4 +1,9 @@
+import usersApi from "@/apis/auth.api";
+import path from "@/constants/path";
+import { useMutation } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 
 type Day = {
   key: string;
@@ -9,7 +14,7 @@ type TimeSlot = {
   id: string;
   label: string;
   start: string; // "HH:MM"
-  end: string;   // "HH:MM"
+  end: string; // "HH:MM"
 };
 
 const DAYS: Day[] = [
@@ -21,7 +26,6 @@ const DAYS: Day[] = [
   { key: "sat", label: "Thứ 7" },
   { key: "sun", label: "Chủ nhật" },
 ];
-
 
 const TIME_SLOTS: TimeSlot[] = [
   { id: "1", label: "Tiết 1 (07:30 - 08:15)", start: "07:30", end: "08:15" },
@@ -49,7 +53,19 @@ function getDateOfWeek(startDate: string, offset: number) {
   return d.toISOString().slice(0, 10); // "YYYY-MM-DD"
 }
 
+export interface MentorAvailabilitySlotBody {
+  startTime: string;
+  endTime: string;
+}
+
+export interface CreateMentorAvailabilitySlotBody {
+  slots: MentorAvailabilitySlotBody[];
+}
+
 export default function MentorCreateSessions() {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
   // ngày bắt đầu tuần – default: hôm nay (dạng YYYY-MM-DD)
   const todayISO = useMemo(() => {
     const d = new Date();
@@ -61,7 +77,11 @@ export default function MentorCreateSessions() {
   const [isDragging, setIsDragging] = useState(false);
   const [dragMode, setDragMode] = useState<"select" | "deselect">("select");
 
-  const toggleCell = (dayKey: string, slotId: string, mode?: "select" | "deselect") => {
+  const toggleCell = (
+    dayKey: string,
+    slotId: string,
+    mode?: "select" | "deselect"
+  ) => {
     setSelected((prev) => {
       const next = new Set(prev);
       const key = `${dayKey}-${slotId}`;
@@ -116,20 +136,32 @@ export default function MentorCreateSessions() {
 
     // sort theo startTime
     result.sort(
-      (a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime()
+      (a, b) =>
+        new Date(a.startTime).getTime() - new Date(b.startTime).getTime()
     );
 
     return result;
   }, [selected, weekStart]);
 
+  const createSlotsMutation = useMutation({
+    mutationFn: (body: CreateMentorAvailabilitySlotBody) =>
+      usersApi.createMultipleAvailabilitySlots(body),
+    onSuccess: () => {},
+  });
+
   const handleCreateSessions = () => {
     if (!slotsPayload.length) return;
 
-    const payload = { slots: slotsPayload };
-
-    // TODO: call API create-slot ở đây
-    console.log("Payload gửi API:", payload);
-    alert(`Sẽ tạo ${slotsPayload.length} session. Xem console để xem payload.`);
+    createSlotsMutation.mutate(
+      { slots: slotsPayload },
+      {
+        onSuccess: () => {
+          console.log(slotsPayload);
+          queryClient.invalidateQueries({ queryKey: ["mentorAvailability"] });
+          navigate(path.mentor_my_sessions);
+        },
+      }
+    );
   };
 
   return (
@@ -143,10 +175,11 @@ export default function MentorCreateSessions() {
         <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div>
             <h1 className="text-2xl font-bold tracking-tight text-slate-900">
-              Tạo session 
+              Tạo session
             </h1>
             <p className="mt-1 text-xs text-slate-600">
-              Kéo chọn các khung giờ cố định trong tuần để tạo nhiều session cùng lúc.
+              Kéo chọn các khung giờ cố định trong tuần để tạo nhiều session
+              cùng lúc.
             </p>
           </div>
 
@@ -246,8 +279,8 @@ export default function MentorCreateSessions() {
               {slotsPayload.length > 0 && (
                 <p className="mt-1 max-w-md text-[11px] text-slate-500">
                   Khi bấm <span className="font-semibold">Tạo session</span>, hệ
-                  thống sẽ tạo ra {slotsPayload.length} session tương ứng với các
-                  khung giờ đã chọn.
+                  thống sẽ tạo ra {slotsPayload.length} session tương ứng với
+                  các khung giờ đã chọn.
                 </p>
               )}
             </div>

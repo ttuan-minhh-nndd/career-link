@@ -61,3 +61,19 @@ export interface ScheduleSlot {
 }
 
 export type GetMentorsAvailabilityResponse = ScheduleSlot[];
+
+export interface MentorAvailabilitySlotResponse {
+  id: number;
+  mentorId: number;
+  startTime: string;
+  endTime: string;
+  isBooked: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateMentorsAvailabilityResponse {
+  created: number;
+  slots: MentorAvailabilitySlotResponse[];
+}
+

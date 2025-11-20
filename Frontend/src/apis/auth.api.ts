@@ -1,5 +1,6 @@
 import {
   AuthResponse,
+  CreateMentorsAvailabilityResponse,
   GetMentorsAvailabilityResponse,
   GetMentorsResponse,
   GetMeResponse,
@@ -16,6 +17,15 @@ export interface RegisterRequest {
 export interface LoginRequest {
   email: string;
   password: string;
+}
+
+export interface MentorAvailabilitySlotBody {
+  startTime: string;
+  endTime: string;
+}
+
+export interface CreateMentorAvailabilitySlotBody {
+  slots: MentorAvailabilitySlotBody[];
 }
 
 const usersApi = {
@@ -37,6 +47,12 @@ const usersApi = {
   getMentorsAvailability: () => {
     return http.get<GetMentorsAvailabilityResponse>(
       "/api/v1/availabilities/mentor/mine"
+    );
+  },
+  createMultipleAvailabilitySlots: (body: CreateMentorAvailabilitySlotBody) => {
+    return http.post<CreateMentorsAvailabilityResponse>(
+      "api/v1/availabilities/bulk",
+      body
     );
   },
 };

@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { CalendarDays, Pencil, Trash2 } from "lucide-react";
 import path from "../../../constants/path";
 import EditSessionModal from "../EditSession";
+import { useQuery } from "@tanstack/react-query";
+import usersApi from "@/apis/auth.api";
 
 // =========================
 // TYPES
@@ -165,7 +167,13 @@ function groupSessionsByDay(list: Session[]): DayGroup[] {
 // MAIN COMPONENT
 // =========================
 export default function MentorSessions() {
-  const groups = groupSessionsByDay(sessions);
+  const getMentorsAvailabilityMutation = useQuery({
+    queryKey: ["mentorAvailability"],
+    queryFn: () => usersApi.getMentorsAvailability(),
+  });
+  const availabilitiesData = getMentorsAvailabilityMutation.data?.data ?? [];
+
+  const groups = groupSessionsByDay(availabilitiesData);
 
   // DELETE POPUP
   const [deleteId, setDeleteId] = useState<number | null>(null);
@@ -190,10 +198,7 @@ export default function MentorSessions() {
     setEditOpen(true);
   };
 
-  const handleSaveEdit = (updated: {
-    startTime: string;
-    endTime: string;
-  }) => {
+  const handleSaveEdit = (updated: { startTime: string; endTime: string }) => {
     console.log("Updated session:", updated);
     alert("Đã cập nhật session!");
     setEditOpen(false);
