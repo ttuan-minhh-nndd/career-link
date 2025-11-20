@@ -329,7 +329,7 @@ export default function MentorNavHeader() {
 
                 <button
                   onClick={handleLogout}
-                  className="block px-3 py-2 hover:bg-slate-50"
+                  className="block w-full text-left px-3 py-2 hover:bg-slate-50"
                 >
                   Log out
                 </button>

@@ -40,11 +40,16 @@ const SESSION_TITLES = [
 ];
 
 // Một số khung giờ mẫu (start/end)
+// Một số khung giờ mẫu (start/end)
 const TIME_SLOTS = [
+  { start: "08:00", end: "09:00" },
   { start: "09:00", end: "10:00" },
   { start: "10:30", end: "11:30" },
+  { start: "13:00", end: "14:00" },
   { start: "13:30", end: "14:30" },
   { start: "15:00", end: "16:00" },
+  { start: "16:00", end: "17:00" },
+  { start: "18:00", end: "19:00" },
   { start: "19:00", end: "20:00" },
   { start: "20:00", end: "21:00" },
 ];
@@ -57,7 +62,7 @@ function getRandomInt(min: number, max: number) {
 function generateRandomSessionsForDay(day: string): Session[] {
   if (day === "Sun" && Math.random() > 0.3) return [];
 
-  const numSessions = getRandomInt(1, 3);
+  const numSessions = getRandomInt(7,8);
   const usedSlots = new Set<number>();
   const sessions: Session[] = [];
 
